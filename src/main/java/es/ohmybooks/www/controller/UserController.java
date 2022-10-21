@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.Optional;
 
 import es.ohmybooks.www.model.UserModel;
@@ -29,7 +29,7 @@ public class UserController {
    * @return a json with all users and all their fields
    */
   @GetMapping()
-  public ArrayList<UserModel> listUsers(){
+  public Map<String, Object> listUsers(){
     return userService.listUsers();
   }
 
@@ -39,7 +39,7 @@ public class UserController {
    * @return a json with the added user and all its fields
    */
   @PostMapping()
-  public UserModel addUser(@RequestBody UserModel user){
+  public Map<String, Object> addUser(@RequestBody UserModel user){
     return this.userService.addUser(user);
   }
 
@@ -59,7 +59,7 @@ public class UserController {
    * @return a json with the modified user and all its fields
    */
   @PutMapping()
-  public UserModel updateUser(@RequestBody UserModel user){
+  public Map<String, Object> updateUser(@RequestBody UserModel user){
     return this.userService.updateUser(user);
   }
 
@@ -69,13 +69,8 @@ public class UserController {
    * @return error message or success of the operation
    */
   @DeleteMapping("/{id}")
-  public String deleteUserById(@PathVariable("id") Long id) {
-    boolean ok = this.userService.deleteUser(id);
-    if(ok) {
-      return "Deleted user with id " + id;
-    } else {
-      return "Couldn't delete user with id " + id;
-    }
+  public Map<String, Object> deleteUserById(@PathVariable("id") Long id) {
+    return this.userService.deleteById(id);
   }
 
   /**
@@ -84,18 +79,26 @@ public class UserController {
    * @return a json with the searched user and all its fields
    */
   @GetMapping("/email/{email}")
-  public UserModel findUserByEmail(@PathVariable("email") String email) {
+  public Map<String, Object> findUserByEmail(@PathVariable("email") String email) {
     return this.userService.findByEmail(email);
   }
 
+  @GetMapping("/login")
+  public Map<String, Object> login(@RequestParam("email") String email, @RequestParam("password") String password) {
+    return this.userService.login(email, password);
+  }
+
   /**
-   * endpoint that returns the set of users with a status equal to the value passed in the parameter
+   * endpoint that returns the set of users with a rol equal to the value passed in the parameter
    * @param id
    * @return a json with the set of matching users and all their fields
    */
+  //TODO
+  /*
   @GetMapping("/query")
-  public ArrayList<UserModel> findUserByRol(@RequestParam("rol") String rol) {
-    return this.userService.findByRol(rol);
+  public Set<UserModel> findUserByRoles(@RequestParam("rol") Set<RoleModel> roles) {
+    return this.userService.findByRoles(roles);
   }
+  */
     
 }

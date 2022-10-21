@@ -1,5 +1,8 @@
 package es.ohmybooks.www.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -23,27 +26,44 @@ public class UserModel {
 	@Column(name = "password", nullable = false, columnDefinition = "varchar(255)")
 	private String password;
 
-	// options: admin, user, author
-	@Column(name = "rol", nullable = false, columnDefinition = "varchar(10) default 'ROLE_USER'")
-	private String rol;
+	@ManyToMany(cascade = {CascadeType.MERGE})
+	@JoinTable(
+		name = "user_role",
+		joinColumns = @JoinColumn(name = "user_id"),
+		inverseJoinColumns = @JoinColumn(name = "role_id")
+	)
+	private Set<RoleModel> roles = new HashSet<>();
 
-	@Column(name = "id_col", nullable = true, columnDefinition = "int(10)")
-	private Long idCol;
+	@ManyToMany(cascade = {CascadeType.MERGE})
+	@JoinTable(
+		name = "user_book",
+		joinColumns = @JoinColumn(name = "user_id"),
+		inverseJoinColumns = @JoinColumn(name = "book_id")
+	)
+	private Set<BookModel> books = new HashSet<>();
+	
 
 	public UserModel() {
 	}
 
-	public UserModel(Long id, String name, String lastName, String email, String password, String rol, Long idCol) {
+	public UserModel(Long id, String name, String lastName, String email, Set<RoleModel> roles) {
+		this.id = id;
+		this.name = name;
+		this.lastName = lastName;
+		this.email = email;
+		this.roles = roles;
+	}
+
+	public UserModel(Long id, String name, String lastName, String email, String password, Set<RoleModel> roles, Set<BookModel> books) {
 		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
-		this.rol = rol;
-		this.idCol = idCol;
+		this.roles = roles;
+		this.books = books;
 	}
 
-	
 	/**
 	 * @return Long return the id
 	 */
@@ -115,38 +135,31 @@ public class UserModel {
 	}
 
 	/**
-	 * @return rol return the rol
+	 * @return roles return the roles
 	 */
-	public String getRol() {
-		return rol;
+	public Set<RoleModel> getRoles() {
+		return roles;
 	}
 
 	/**
-	 * @param rol the rol to set
+	 * @param roles the roles to set
 	 */
-	public void setRol(String rol) {
-		this.rol = rol;
+	public void setRoles(Set<RoleModel> roles) {
+		this.roles = roles;
 	}
 
 	/**
-	 * @return Long return the idcol
+	 * @return Long return the books
 	 */
-	public Long getIdCol() {
-		return idCol;
+	public Set<BookModel> getBooks() {
+		return books;
 	}
 
 	/**
-	 * @param id the idcol to set
+	 * @param id the books to set
 	 */
-	public void setIdCol(Long idCol) {
-		this.idCol = idCol;
-	}
-
-
-	@Override
-	public String toString() {
-		return "UserModel [id=" + id + ", name=" + name + ", last_name=" + lastName + ", email=" + email + ", password="
-				+ password + ", rol=" + rol + "id_col=" + idCol + "]";
+	public void setBooks(Set<BookModel> books) {
+		this.books = books;
 	}
 
 }
