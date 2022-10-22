@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -31,8 +30,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Optional<UserModel> findById(Long id) {
-    return userRepository.findById(id);
+  public UserModel findById(Long id) {
+    return userRepository.findUserById(id);
   }
 
   @Override
@@ -55,8 +54,9 @@ public class UserServiceImpl implements UserService {
    * @param user
    * @return collection with user data
    */
-  public Map<String, String> returnUserData(UserModel user) {
-    Map<String, String> userData = new LinkedHashMap<String, String>();
+  public Map<String, Object> returnUserData(UserModel user) {
+    Map<String, Object> userData = new LinkedHashMap<>();
+    userData.put("id", user.getId());
     userData.put("name", user.getName());
     userData.put("lastName", user.getLastName());
     userData.put("email", user.getEmail());
@@ -66,16 +66,15 @@ public class UserServiceImpl implements UserService {
     for (RoleModel role : roles) {
       listRoles.add(role.getName());
     }
-    userData.put("roles", listRoles.toString());
+    userData.put("roles", listRoles);
+    userData.put("books", user.getBooks());
     return userData;
   }
 
-  public List<UserModel> returnListUserData(List<UserModel> list) {
-    List<UserModel> users = new ArrayList<>();
+  public List<Map<String, Object>> returnListUserData(List<UserModel> list) {
+    List<Map<String, Object>> users = new ArrayList<>();
     for (UserModel user : list) {
-      UserModel userAdd = new UserModel(user.getId(), user.getName(), user.getLastName(), user.getEmail(),
-          user.getRoles());
-      users.add(userAdd);
+      users.add(returnUserData(user));
     }
     return users;
   }

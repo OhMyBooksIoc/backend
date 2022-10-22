@@ -7,6 +7,7 @@ import es.ohmybooks.www.model.UserModel;
 
 @Repository
 public interface UserRepository extends JpaRepository <UserModel, Long> {
+    public abstract UserModel findUserById(Long id);
     public abstract UserModel findByEmail(String Email);
     public abstract UserModel deleteByEmail(String email);
 }
