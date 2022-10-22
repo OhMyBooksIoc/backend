@@ -5,8 +5,11 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 @Entity
 @Table(name = "users")
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class UserModel {
 
 	@Id
