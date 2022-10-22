@@ -2,8 +2,11 @@ package es.ohmybooks.www.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 @Entity
 @Table (name="roles")
+@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class RoleModel {
 
 	@Id

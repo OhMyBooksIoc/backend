@@ -9,7 +9,4 @@ import es.ohmybooks.www.model.UserModel;
 public interface UserRepository extends JpaRepository <UserModel, Long> {
     public abstract UserModel findByEmail(String Email);
     public abstract UserModel deleteByEmail(String email);
-
-    //TODO public abstract Set<UserModel> findByRoles(Set<RoleModel> roles);
-
 }

@@ -2,19 +2,20 @@ package es.ohmybooks.www.service;
 
 import es.ohmybooks.www.model.UserModel;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public interface UserService {
 
-  public abstract Map<String, Object> listUsers();
-  public abstract Map<String, Object> addUser(UserModel user);
-  public abstract Map<String, Object> updateUser(UserModel user);
+  public abstract ArrayList<UserModel> listUsers();
+  public abstract UserModel addOrUpdateUser(UserModel user);
   public abstract Optional<UserModel> findById(Long id);
-  public abstract Map<String, Object> findByEmail(String email);
-  public abstract Map<String, Object> deleteById(Long id);
-  //TODO public abstract Set<UserModel> findByRoles(Set<RoleModel> roles);
+  public abstract UserModel findByEmail(String email);
+  public abstract boolean deleteUser(Long id);
 
-  public abstract Map<String, Object> login(String email, String password);
+  public Map<String, String> returnUserData(UserModel user);
+  public List<UserModel> returnListUserData(List<UserModel> list);
   
 }

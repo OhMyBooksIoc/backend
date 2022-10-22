@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -30,7 +32,11 @@ public class UserController {
    */
   @GetMapping()
   public Map<String, Object> listUsers(){
-    return userService.listUsers();
+    Map<String, Object> resp = new LinkedHashMap<String, Object>();
+    List<UserModel> list = userService.listUsers();
+    resp.put("message", "Status: 200 OK");
+    resp.put("users", userService.returnListUserData(list));
+    return resp;
   }
 
   /**
@@ -40,7 +46,17 @@ public class UserController {
    */
   @PostMapping()
   public Map<String, Object> addUser(@RequestBody UserModel user){
-    return this.userService.addUser(user);
+    Map<String, Object> resp = new LinkedHashMap<String, Object>();
+    UserModel findUser = userService.findByEmail(user.getEmail());
+    if (findUser == null) {
+      this.userService.addOrUpdateUser(user);
+      resp.put("message", "Status: 200 OK");
+      resp.put("user", userService.returnUserData(user));
+      return resp;
+    } else {
+      resp.put("message", "Status: 401 Unauthorized - Email duplicated");
+      return resp;
+    }
   }
 
   /**
@@ -60,7 +76,11 @@ public class UserController {
    */
   @PutMapping()
   public Map<String, Object> updateUser(@RequestBody UserModel user){
-    return this.userService.updateUser(user);
+    Map<String, Object> resp = new LinkedHashMap<String, Object>();
+    this.userService.addOrUpdateUser(user);
+    resp.put("message", "Status: 200 OK");
+    resp.put("user", userService.returnUserData(user));
+    return resp;
   }
 
   /**
@@ -70,7 +90,15 @@ public class UserController {
    */
   @DeleteMapping("/{id}")
   public Map<String, Object> deleteUserById(@PathVariable("id") Long id) {
-    return this.userService.deleteById(id);
+    Map<String, Object> resp = new LinkedHashMap<>();
+    boolean ok = this.userService.deleteUser(id);
+    if(ok) {
+      resp.put("message", "Status 200 OK - Deleted user with id " + id);
+      return resp;
+    } else {
+      resp.put("message", "Status 400 Unauthorized - Couldn't delete user with id " + id);
+      return resp;
+    }
   }
 
   /**
@@ -80,25 +108,35 @@ public class UserController {
    */
   @GetMapping("/email/{email}")
   public Map<String, Object> findUserByEmail(@PathVariable("email") String email) {
-    return this.userService.findByEmail(email);
+    Map<String, Object> resp = new LinkedHashMap<String, Object>();
+    UserModel user = this.userService.findByEmail(email);
+    if (user == null) {
+      resp.put("message", "Status: 400 ERROR - Email don't exists");
+      return resp;
+    }
+    resp.put("message", "Status: 200 OK");
+    resp.put("user", userService.returnUserData(user));
+    return resp;
   }
 
   @GetMapping("/login")
   public Map<String, Object> login(@RequestParam("email") String email, @RequestParam("password") String password) {
-    return this.userService.login(email, password);
+    Map<String, Object> resp = new LinkedHashMap<>();
+    UserModel user = this.userService.findByEmail(email);
+    if (user == null) {
+      resp.put("message", "Status: 401 Unauthorized - Email not found");
+      return resp;
+    } else {
+      if (user.getPassword().equals(password)) {
+        resp.put("message", "Status: 200 OK");
+        resp.put("user", userService.returnUserData(user));
+        return resp;
+      } else {
+        resp.put("message", "Status: 401 Unauthorized - Password incorrect");
+        return resp;
+      }
+    }
   }
 
-  /**
-   * endpoint that returns the set of users with a rol equal to the value passed in the parameter
-   * @param id
-   * @return a json with the set of matching users and all their fields
-   */
-  //TODO
-  /*
-  @GetMapping("/query")
-  public Set<UserModel> findUserByRoles(@RequestParam("rol") Set<RoleModel> roles) {
-    return this.userService.findByRoles(roles);
-  }
-  */
     
 }
