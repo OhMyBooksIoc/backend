@@ -60,6 +60,16 @@ public class UserModel {
 		this.lastName = lastName;
 		this.email = email;
 		this.roles = roles;
+		this.books = books;
+	}
+
+	public UserModel(String name, String lastName, String email, String password, Set<RoleModel> roles, Set<BookModel> books) {
+		this.name = name;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.roles = roles;
+		this.books = books;
 	}
 
 	public UserModel(Long id, String name, String lastName, String email, String password, Set<RoleModel> roles, Set<BookModel> books) {
