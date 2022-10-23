@@ -5,6 +5,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
+@Table (name="books")
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class BookModel {
 

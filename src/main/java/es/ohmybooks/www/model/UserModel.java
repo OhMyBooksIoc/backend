@@ -49,7 +49,12 @@ public class UserModel {
 	public UserModel() {
 	}
 
-	public UserModel(Long id, String name, String lastName, String email, Set<RoleModel> roles) {
+	public UserModel(String email, String password) {
+		this.email = email;
+		this.password = password;
+	}
+
+	public UserModel(Long id, String name, String lastName, String email, Set<RoleModel> roles, Set<BookModel> books) {
 		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
