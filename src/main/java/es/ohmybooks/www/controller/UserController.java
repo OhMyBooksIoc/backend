@@ -91,9 +91,10 @@ public class UserController {
   @PutMapping()
   public Map<String, Object> updateUser(@RequestBody UserModel user) {
     Map<String, Object> resp = new LinkedHashMap<String, Object>();
-    this.userService.addOrUpdateUser(user);
+    UserModel findedUser = userService.findByEmail(user.getEmail());
+    UserModel updatedUser = this.userService.addOrUpdateUser(findedUser);
     resp.put("status", "200 OK");
-    resp.put("user", userService.returnUserData(user));
+    resp.put("user", userService.returnUserData(updatedUser));
     return resp;
   }
 
