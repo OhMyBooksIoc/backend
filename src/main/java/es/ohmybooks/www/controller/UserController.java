@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,6 +21,7 @@ import es.ohmybooks.www.service.UserService;
 
 @RestController // @Controller + @ResponseBody
 @RequestMapping("/user")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST, RequestMethod.PUT})
 public class UserController {
 
   @Autowired

@@ -1,7 +1,6 @@
 --
 -- Volcado de datos para la tabla `users`
 --
-
 INSERT INTO `users` (`id`, `name`, `last_name`, `email`, `password`, `id_col`) VALUES
 (1, 'Anna', 'Carmona', 'anna@gmail.com', 'anna', NULL),
 (2, 'Pablo', 'García', 'pablo@gmail.com', 'pablo', NULL),
@@ -13,7 +12,6 @@ INSERT INTO `users` (`id`, `name`, `last_name`, `email`, `password`, `id_col`) V
 --
 -- Volcado de datos para la tabla `roles`
 --
-
 INSERT INTO `roles` (`id`, `name`) VALUES
 (1, 'ROLE_ADMIN'),
 (2, 'ROLE_USER'),
@@ -23,7 +21,6 @@ INSERT INTO `roles` (`id`, `name`) VALUES
 --
 -- Volcado de datos para la tabla `user_role`
 --
-
 INSERT INTO `user_role` (`user_id`, `role_id`) VALUES
 (1, 1),
 (1, 2),
