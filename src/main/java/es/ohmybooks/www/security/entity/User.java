@@ -26,6 +26,20 @@ public class User {
 	@Column(name = "password", nullable = false, columnDefinition = "varchar(255)")
 	private String password;
 
+	@Column(name = "picture", nullable = true, columnDefinition = "varchar(255)")
+	private String picture;
+
+	@Column(name = "status", nullable = true, columnDefinition = "int(10)")
+	private int status;
+
+	/** 
+	 * TODO
+	 * añadir campo fecha de creación
+	 * @Column(name = "create_data", nullable = false)
+	 * @Temporal(TemporalType.DATE)
+	 * private Calendar createData;
+	 */
+
 	// A user can have many roles and a role can belong to multiple users
 	// Intermediate table that will have user_id and role_id
 	@ManyToMany(cascade = {CascadeType.MERGE})
@@ -50,6 +64,15 @@ public class User {
 		this.userName = userName;
 		this.email = email;
 		this.password = password;
+	}
+
+	public User(String name, String userName, String email, String password, String picture, int status) {
+		this.name = name;
+		this.userName = userName;
+		this.email = email;
+		this.password = password;
+		this.picture = picture;
+		this.status = status;
 	}
 
 	
@@ -99,6 +122,22 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }

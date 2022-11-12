@@ -37,6 +37,17 @@ public class Book {
   @Column(name = "pages", columnDefinition = "varchar(10)")
   private int pages;
 
+  @Column(name = "cover", columnDefinition = "varchar(255)")
+  private String cover;
+
+	/** 
+	 * TODO
+	 * añadir campo fecha de creación
+	 * @Column(name = "create_data", nullable = false)
+	 * @Temporal(TemporalType.DATE)
+	 * private Calendar createData;
+	 */
+
   // A user can have many books and a book can belong to multiple users
 	// Intermediate table that will have user_id and book_id
 	@ManyToMany(cascade = {CascadeType.MERGE})
