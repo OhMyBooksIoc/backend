@@ -88,7 +88,7 @@ public class BookController {
     } else {
       Book book = new Book(bookDto.getName(), bookDto.getAuthor(), bookDto.getGenre(), bookDto.getSaga(),
           bookDto.getYear(), bookDto.getPages());
-      bookService.addOrUpdateBook(book);
+      bookService.save(book);
       return new ResponseEntity<>(new Message("Created Book"), HttpStatus.OK);
     }
   }
@@ -121,7 +121,7 @@ public class BookController {
       book.setSaga(bookDto.getSaga());
       book.setYear(bookDto.getYear());
       book.setPages(bookDto.getPages());
-      bookService.addOrUpdateBook(book);
+      bookService.save(book);
       return new ResponseEntity<>(new Message("Updated Book"), HttpStatus.OK);
     }
   }
@@ -136,7 +136,7 @@ public class BookController {
   // TODO hay que modificar autorización
   @PreAuthorize("hasRole('ADMIN')")
   @DeleteMapping("delete/{idBook}")
-  public ResponseEntity<?> borrarTorre(@PathVariable("idBook") int idBook) {
+  public ResponseEntity<?> deleteBook(@PathVariable("idBook") int idBook) {
     if (!bookService.existsById(idBook))
       return new ResponseEntity<>(new Message("The book doesn't exist"), HttpStatus.NOT_FOUND);
     bookService.deleteBookById(idBook);

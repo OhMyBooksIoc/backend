@@ -9,7 +9,7 @@ public interface BookService {
 
   public abstract List<Book> listBooks();
 
-  public abstract Book addOrUpdateBook(Book book);
+  public abstract Book save(Book book);
 
   public abstract Optional<Book> findById(int id);
 
