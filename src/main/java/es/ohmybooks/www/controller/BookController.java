@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import es.ohmybooks.www.dto.BookDto;
 import es.ohmybooks.www.dto.Message;
 import es.ohmybooks.www.entity.Book;
+import es.ohmybooks.www.security.service.UserService;
 import es.ohmybooks.www.service.BookService;
 
 @RestController // @Controller + @ResponseBody
@@ -28,6 +29,9 @@ public class BookController {
 
   @Autowired
   BookService bookService;
+
+  @Autowired
+  UserService userService;
 
   /**
    * endpoint that returns all books in the database
