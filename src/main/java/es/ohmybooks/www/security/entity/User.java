@@ -29,8 +29,8 @@ public class User {
 	@Column(name = "picture", nullable = true, columnDefinition = "varchar(255)")
 	private String picture;
 
-	@Column(name = "status", nullable = true, columnDefinition = "int(10)")
-	private int status;
+	@Column(name = "status", nullable = true, columnDefinition = "varchar(25)")
+	private String status;
 
 	/** 
 	 * TODO
@@ -66,7 +66,7 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String name, String userName, String email, String password, String picture, int status) {
+	public User(String name, String userName, String email, String password, String picture, String status) {
 		this.name = name;
 		this.userName = userName;
 		this.email = email;
@@ -132,11 +132,11 @@ public class User {
 		this.picture = picture;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

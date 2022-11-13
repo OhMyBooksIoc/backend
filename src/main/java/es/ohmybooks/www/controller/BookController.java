@@ -87,7 +87,7 @@ public class BookController {
           HttpStatus.BAD_REQUEST);
     } else {
       Book book = new Book(bookDto.getName(), bookDto.getAuthor(), bookDto.getGenre(), bookDto.getSaga(),
-          bookDto.getYear(), bookDto.getPages());
+          bookDto.getYear(), bookDto.getPages(), bookDto.getCover());
       bookService.save(book);
       return new ResponseEntity<>(new Message("Created Book"), HttpStatus.OK);
     }
@@ -121,6 +121,7 @@ public class BookController {
       book.setSaga(bookDto.getSaga());
       book.setYear(bookDto.getYear());
       book.setPages(bookDto.getPages());
+      book.setCover(bookDto.getCover());
       bookService.save(book);
       return new ResponseEntity<>(new Message("Updated Book"), HttpStatus.OK);
     }

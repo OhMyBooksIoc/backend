@@ -5,13 +5,10 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import es.ohmybooks.www.security.entity.User;
 
 @Entity
 @Table(name = "book")
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class Book {
 
   @Id
@@ -73,14 +70,16 @@ public class Book {
    * @param saga
    * @param year
    * @param pages
+   * @param cover
    */
-  public Book(String name, String author, String genre, String saga, int year, int pages) {
+  public Book(String name, String author, String genre, String saga, int year, int pages, String cover) {
     this.name = name;
     this.author = author;
     this.genre = genre;
     this.saga = saga;
     this.year = year;
     this.pages = pages;
+    this.cover = cover;
   }
 
   public int getId() {
@@ -146,5 +145,17 @@ public class Book {
 	public void setBooks(Set<User> users) {
 		this.users = users;
 	}
+
+  public String getCover() {
+    return cover;
+  }
+
+  public void setCover(String cover) {
+    this.cover = cover;
+  }
+
+  public void setUsers(Set<User> users) {
+    this.users = users;
+  }
 
 }
