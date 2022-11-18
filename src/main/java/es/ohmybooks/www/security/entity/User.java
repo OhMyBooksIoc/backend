@@ -29,7 +29,7 @@ public class User {
 	@Column(name = "picture", nullable = true, columnDefinition = "varchar(255)")
 	private String picture;
 
-	@Column(name = "status", nullable = true)
+	@Column(name = "status", nullable = true, columnDefinition = "varchar(25)")
 	private String status;
 
 	/** 

@@ -1,6 +1,10 @@
 package es.ohmybooks.www.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.constraints.*;
 
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
@@ -13,17 +17,20 @@ public class BookDto {
   private String saga;
   private int year;
   private int pages;
+  private String cover;
+  private Set<String> users = new HashSet<>();
 
   public BookDto() {
   }
 
-  public BookDto(String name, String author, String genre, String saga, int year, int pages) {
+  public BookDto(String name, String author, String genre, String saga, int year, int pages, String cover) {
     this.name = name;
     this.author = author;
     this.genre = genre;
     this.saga = saga;
     this.year = year;
     this.pages = pages;
+    this.cover = cover;
   }
 
   public String getName() {
@@ -72,6 +79,22 @@ public class BookDto {
 
   public void setPages(int pages) {
     this.pages = pages;
+  }
+
+  public String getCover() {
+    return cover;
+  }
+
+  public void setCover(String cover) {
+    this.cover = cover;
+  }
+
+  public Set<String> getUsers() {
+    return users;
+  }
+
+  public void setUsers(Set<String> users) {
+    this.users = users;
   }
 
 }
