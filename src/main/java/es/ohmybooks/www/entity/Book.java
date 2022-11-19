@@ -1,11 +1,9 @@
 package es.ohmybooks.www.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
-
-import es.ohmybooks.www.security.entity.User;
 
 @Entity
 @Table(name = "book")
@@ -45,16 +43,10 @@ public class Book {
 	 * private Calendar createData;
 	 */
 
-  // A user can have many books and a book can belong to multiple users
-	// Intermediate table that will have user_id and book_id
-	@ManyToMany(cascade = {CascadeType.MERGE})
-	@JoinTable(
-		name = "user_book",
-		joinColumns = @JoinColumn(name = "book_id"),
-		inverseJoinColumns = @JoinColumn(name = "user_id")
-	)
-	private Set<User> users = new HashSet<>();
+  @OneToMany(mappedBy = "book") 
+  private List<Collection> collection = new ArrayList<>();
 
+  
   /**
    * book constructor without parameters
    */
@@ -72,7 +64,7 @@ public class Book {
    * @param pages
    * @param cover
    */
-  public Book(String name, String author, String genre, String saga, int year, int pages, String cover) {
+  public Book(String name, String author, String genre, String saga, int year, int pages, String cover, List<Collection> collection) {
     this.name = name;
     this.author = author;
     this.genre = genre;
@@ -80,6 +72,7 @@ public class Book {
     this.year = year;
     this.pages = pages;
     this.cover = cover;
+    this.collection = collection;
   }
 
   public int getId() {
@@ -138,14 +131,6 @@ public class Book {
     this.pages = pages;
   }
 
-  public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setBooks(Set<User> users) {
-		this.users = users;
-	}
-
   public String getCover() {
     return cover;
   }
@@ -154,8 +139,12 @@ public class Book {
     this.cover = cover;
   }
 
-  public void setUsers(Set<User> users) {
-    this.users = users;
+  public List<Collection> getCollection() {
+    return collection;
+  }
+
+  public void setCollection(List<Collection> collection) {
+    this.collection = collection;
   }
 
 }

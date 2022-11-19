@@ -91,7 +91,7 @@ public class BookController {
           HttpStatus.BAD_REQUEST);
     } else {
       Book book = new Book(bookDto.getName(), bookDto.getAuthor(), bookDto.getGenre(), bookDto.getSaga(),
-          bookDto.getYear(), bookDto.getPages(), bookDto.getCover());
+          bookDto.getYear(), bookDto.getPages(), bookDto.getCover(), bookDto.getCollection());
       bookService.save(book);
       return new ResponseEntity<>(new Message("Created Book"), HttpStatus.OK);
     }

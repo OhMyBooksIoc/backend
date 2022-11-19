@@ -1,9 +1,13 @@
 package es.ohmybooks.www.security.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
+
+import es.ohmybooks.www.entity.Collection;
 
 @Entity
 @Table(name = "user")
@@ -49,6 +53,9 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name = "role_id")
 	)
 	private Set<Role> roles = new HashSet<>();
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")  
+	private List<Collection> collection = new ArrayList<>();
 	
 
 	public User() {
@@ -139,5 +146,14 @@ public class User {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public List<Collection> getCollection() {
+		return collection;
+	}
+
+	public void setCollection(List<Collection> collection) {
+		this.collection = collection;
+	}
+
 
 }

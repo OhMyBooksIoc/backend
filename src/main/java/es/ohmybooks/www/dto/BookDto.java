@@ -2,8 +2,10 @@ package es.ohmybooks.www.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.util.HashSet;
-import java.util.Set;
+import es.ohmybooks.www.entity.Collection;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.*;
 
@@ -18,12 +20,12 @@ public class BookDto {
   private int year;
   private int pages;
   private String cover;
-  private Set<String> users = new HashSet<>();
+  private List<Collection> collection = new ArrayList<>();
 
   public BookDto() {
   }
 
-  public BookDto(String name, String author, String genre, String saga, int year, int pages, String cover) {
+  public BookDto(String name, String author, String genre, String saga, int year, int pages, String cover, List<Collection> collection) {
     this.name = name;
     this.author = author;
     this.genre = genre;
@@ -31,6 +33,7 @@ public class BookDto {
     this.year = year;
     this.pages = pages;
     this.cover = cover;
+    this.collection = collection;
   }
 
   public String getName() {
@@ -89,12 +92,12 @@ public class BookDto {
     this.cover = cover;
   }
 
-  public Set<String> getUsers() {
-    return users;
+  public List<Collection> getCollection() {
+    return collection;
   }
 
-  public void setUsers(Set<String> users) {
-    this.users = users;
+  public void setCollect(List<Collection> collection) {
+    this.collection = collection;
   }
 
 }
