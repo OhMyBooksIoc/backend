@@ -11,7 +11,6 @@
 	<groupId>es.ohmybooks.www</groupId>
 	<artifactId>ohmybooks</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 	<name>ohmybooks</name>
 	<description>OhMyBooks is a SW RESTful Spring Project</description>
 	<properties>
