@@ -5,11 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 @Entity
 @Table(name = "book")
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class Book {
 
   @Id

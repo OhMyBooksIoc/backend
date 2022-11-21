@@ -1,6 +1,7 @@
 package es.ohmybooks.www.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.validation.constraints.*;
 
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
