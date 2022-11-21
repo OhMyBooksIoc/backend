@@ -1,9 +1,15 @@
 package es.ohmybooks.www.controller;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.ohmybooks.www.dto.Message;
+import es.ohmybooks.www.entity.Book;
 import es.ohmybooks.www.entity.Collectionn;
 import es.ohmybooks.www.security.dto.JwtDto;
 import es.ohmybooks.www.security.jwt.JwtProvider;
@@ -36,20 +43,22 @@ public class CollectionController {
   @Autowired
   JwtProvider jwtProvider;
 
-  /*
-  @GetMapping("userName/{userName}")
-  public ResponseEntity<?> listBooksByUser(@PathVariable("userName") String userName) {
+  
+  @GetMapping("list")
+  public ResponseEntity<?> listBooksByUser(@RequestBody JwtDto jwtDto) {
+    String userName = jwtProvider.getUserNameFromToken(jwtDto.getToken());
     List<Book> collect = new ArrayList<>();
     if (!userService.existsByUserName(userName)) {
       return new ResponseEntity<>(new Message("The user doesn't exist"), HttpStatus.NOT_FOUND);
-    } else {
+    } 
+    else {
       List<Book> books = new ArrayList<>();
       books = bookService.listBooks();
       for (int i = 0; i < books.size(); i++) {
-        Set<User> users = new HashSet<>();
-        users = books.get(i).getUsers();
-        for (User id : users) {
-          if (id.getId() == idUser) {
+        Set<Collectionn> collectionn = new HashSet<>();
+        collectionn = books.get(i).getCollection();
+        for (Collectionn item : collectionn) {
+          if (item.getIdUser() == userService.getByUserName(userName).get().getId()) {
             collect.add(books.get(i));
           }
         }
@@ -57,7 +66,6 @@ public class CollectionController {
       return new ResponseEntity<>(collect, HttpStatus.OK);
     }
   }
-  */
 
   @PutMapping("/add")
   public ResponseEntity<?> addCollectionnBook(@RequestBody JwtDto jwtDto, @RequestParam("idBook") int idBook) {

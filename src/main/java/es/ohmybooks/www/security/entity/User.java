@@ -1,8 +1,6 @@
 package es.ohmybooks.www.security.entity;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -55,7 +53,7 @@ public class User {
 	private Set<Role> roles = new HashSet<>();
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")  
-	private List<Collectionn> collectionn = new ArrayList<>();
+	private Set<Collectionn> collectionn = new HashSet<>();
 	
 
 	public User() {
@@ -83,7 +81,7 @@ public class User {
 	}
 	
 	public User(int id, String name, String userName, String email, String password, String picture, int status,
-			Set<Role> roles, List<Collectionn> collectionn) {
+			Set<Role> roles, Set<Collectionn> collectionn) {
 		this.id = id;
 		this.name = name;
 		this.userName = userName;
@@ -160,11 +158,11 @@ public class User {
 		this.status = status;
 	}
 
-	public List<Collectionn> getCollection() {
+	public Set<Collectionn> getCollection() {
 		return collectionn;
 	}
 
-	public void setCollection(List<Collectionn> collectionn) {
+	public void setCollection(Set<Collectionn> collectionn) {
 		this.collectionn = collectionn;
 	}
 

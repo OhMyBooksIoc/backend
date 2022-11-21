@@ -1,7 +1,7 @@
 package es.ohmybooks.www.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -47,7 +47,7 @@ public class Book {
 	 */
 
   @OneToMany(mappedBy = "book") 
-  private List<Collectionn> collectionn = new ArrayList<>();
+  private Set<Collectionn> collectionn = new HashSet<>();
 
   /**
    * book constructor without parameters
@@ -77,7 +77,7 @@ public class Book {
   }
 
   public Book(int id, String name, String author, String genre, String saga, int year, int pages, String cover,
-      List<Collectionn> collectionn) {
+      Set<Collectionn> collectionn) {
     this.id = id;
     this.name = name;
     this.author = author;
@@ -153,11 +153,11 @@ public class Book {
     this.cover = cover;
   }
 
-  public List<Collectionn> getCollection() {
+  public Set<Collectionn> getCollection() {
     return collectionn;
   }
 
-  public void setCollection(List<Collectionn> collection) {
+  public void setCollection(Set<Collectionn> collection) {
     this.collectionn = collection;
   }
 

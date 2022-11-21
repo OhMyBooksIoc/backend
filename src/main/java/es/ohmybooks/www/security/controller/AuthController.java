@@ -78,6 +78,7 @@ public class AuthController {
 			roles.add(roleService.getByRoleName(RoleName.ROLE_AUTHOR).get());
 		}
 		user.setRoles(roles);
+		user.setStatus(1);
 
 		userService.save(user);
 
