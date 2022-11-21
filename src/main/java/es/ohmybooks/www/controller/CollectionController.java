@@ -42,7 +42,8 @@ public class CollectionController {
 
   
   @GetMapping("list")
-  public ResponseEntity<?> listBooksByUser(@RequestHeader String token) {
+  public ResponseEntity<?> listBooksByUser(@RequestHeader String authorization) {
+    String token = authorization.substring(7);
     String userName = jwtProvider.getUserNameFromToken(token);
     List<Book> collect = new ArrayList<>();
     if (!userService.existsByUserName(userName)) {
@@ -67,7 +68,8 @@ public class CollectionController {
   }
 
   @PutMapping("/add")
-  public ResponseEntity<?> addCollectionnBook(@RequestHeader String token, @RequestParam("idBook") int idBook) {
+  public ResponseEntity<?> addCollectionnBook(@RequestHeader String authorization, @RequestParam("idBook") int idBook) {
+    String token = authorization.substring(7);
     String userName = jwtProvider.getUserNameFromToken(token);
     Collectionn collectionn = new Collectionn();
     collectionn.setIdBook(idBook);

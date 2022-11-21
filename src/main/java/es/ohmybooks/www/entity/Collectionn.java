@@ -53,20 +53,15 @@ public class Collectionn {
    * 
    * collection constructor with all parameters
    * 
-   * @param id
    * @param idUser
    * @param idBook
-   * @param user
-   * @param book
    * @param comment
    * @param read
    * @param hide
    */
-  public Collectionn(int idUser, int idBook, User user, Book book, String comment, int readd, int hide) {
+  public Collectionn(int idUser, int idBook, String comment, int readd, int hide) {
     this.idUser = idUser;
     this.idBook = idBook;
-    this.user = user;
-    this.book = book;
     this.comment = comment;
     this.readd = readd;
     this.hide = hide;

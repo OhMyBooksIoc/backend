@@ -68,7 +68,8 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("update")
-	public ResponseEntity<?> updateUser(@RequestHeader String token, @RequestBody UserDto userDto, BindingResult bindingResult) {
+	public ResponseEntity<?> updateUser(@RequestHeader String authorization, @RequestBody UserDto userDto, BindingResult bindingResult) {
+		String token = authorization.substring(7);
 		String userName = jwtProvider.getUserNameFromToken(token);
 		User user = userService.getByUserName(userName).get();
 		if (bindingResult.hasErrors()) {
@@ -97,7 +98,8 @@ public class UserController {
 	}
 
 	@PostMapping("disable")
-	public ResponseEntity<?> disableUser(@RequestHeader String token) {
+	public ResponseEntity<?> disableUser(@RequestHeader String authorization) {
+		String token = authorization.substring(7);
 		String userName = jwtProvider.getUserNameFromToken(token);
 		User user = userService.getByUserName(userName).get();
 		user.setName(user.getName());
