@@ -31,7 +31,7 @@ public class User {
 	@Column(name = "picture", nullable = true, columnDefinition = "varchar(255)")
 	private String picture;
 
-	@Column(name = "status", nullable = true, columnDefinition = "int(10)")
+	@Column(name = "status", columnDefinition = "tinyint(1)")
 	private int status;
 
 	/** 

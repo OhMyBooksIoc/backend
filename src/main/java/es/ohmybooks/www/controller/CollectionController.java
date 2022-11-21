@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.ohmybooks.www.dto.Message;
 import es.ohmybooks.www.entity.Book;
 import es.ohmybooks.www.entity.Collectionn;
-import es.ohmybooks.www.security.dto.JwtDto;
 import es.ohmybooks.www.security.jwt.JwtProvider;
 import es.ohmybooks.www.security.service.UserService;
 import es.ohmybooks.www.service.BookService;
@@ -45,13 +44,14 @@ public class CollectionController {
 
   
   @GetMapping("list")
-  public ResponseEntity<?> listBooksByUser(@RequestBody JwtDto jwtDto) {
-    String userName = jwtProvider.getUserNameFromToken(jwtDto.getToken());
+  public ResponseEntity<?> listBooksByUser(@RequestHeader String token) {
+    String userName = jwtProvider.getUserNameFromToken(token);
     List<Book> collect = new ArrayList<>();
     if (!userService.existsByUserName(userName)) {
       return new ResponseEntity<>(new Message("The user doesn't exist"), HttpStatus.NOT_FOUND);
     } 
     else {
+      /*
       List<Book> books = new ArrayList<>();
       books = bookService.listBooks();
       for (int i = 0; i < books.size(); i++) {
@@ -63,13 +63,14 @@ public class CollectionController {
           }
         }
       }
+      */
       return new ResponseEntity<>(collect, HttpStatus.OK);
     }
   }
 
   @PutMapping("/add")
-  public ResponseEntity<?> addCollectionnBook(@RequestBody JwtDto jwtDto, @RequestParam("idBook") int idBook) {
-    String userName = jwtProvider.getUserNameFromToken(jwtDto.getToken());
+  public ResponseEntity<?> addCollectionnBook(@RequestHeader String token, @RequestParam("idBook") int idBook) {
+    String userName = jwtProvider.getUserNameFromToken(token);
     Collectionn collectionn = new Collectionn();
     collectionn.setIdBook(idBook);
     collectionn.setIdUser(userService.getByUserName(userName).get().getId());
