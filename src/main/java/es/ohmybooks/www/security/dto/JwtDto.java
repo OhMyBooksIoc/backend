@@ -11,6 +11,10 @@ public class JwtDto {
 	private String userName;
 	private Collection<? extends GrantedAuthority> authorities;
 
+	public JwtDto(String token) {
+		this.token = token;
+	}
+
 	public JwtDto(String token, String userName, Collection<? extends GrantedAuthority> authorities) {
 		this.token = token;
 		this.userName = userName;
