@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import es.ohmybooks.www.dto.Message;
 import es.ohmybooks.www.security.dto.UserDto;
 import es.ohmybooks.www.security.entity.User;
+import es.ohmybooks.www.security.jwt.JwtProvider;
 import es.ohmybooks.www.security.service.UserService;
 
 
@@ -28,6 +29,9 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	JwtProvider jwtProvider;
 
   /**
    * endpoint that returns all users in the database
@@ -47,12 +51,12 @@ public class UserController {
    * @param id
    * @return a error message or a json with the searched user and all its fields
    */
-  @PostMapping("id/{id}")
-  public ResponseEntity<?> findUserByUserName(@PathVariable("id") int id) {
-    if (!userService.existsById(id)) {
+  @PostMapping("userName/{userName}")
+  public ResponseEntity<?> findUserByUserName(@PathVariable("userName") String userName) {
+    if (!userService.existsByUserName(userName)) {
       return new ResponseEntity<>(new Message("The user doesn't exist"), HttpStatus.NOT_FOUND);
     } else {
-      return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
+      return new ResponseEntity<>(userService.getByUserName(userName), HttpStatus.OK);
     }
   }
 
@@ -63,9 +67,11 @@ public class UserController {
 	 * @param bindingResult
 	 * @return
 	 */
-	@PostMapping("update/{idUser}")
-	public ResponseEntity<?> updateUser(@PathVariable("idUser") int idUser, @RequestBody UserDto userDto, BindingResult bindingResult) {
-		User user = userService.findById(idUser).get();
+	@PostMapping("update")
+	public ResponseEntity<?> updateUser(@RequestHeader String authorization, @RequestBody UserDto userDto, BindingResult bindingResult) {
+		String token = authorization.substring(7);
+		String userName = jwtProvider.getUserNameFromToken(token);
+		User user = userService.getByUserName(userName).get();
 		if (bindingResult.hasErrors()) {
 			return new ResponseEntity<>(new Message("Wrong fields or invalid email"), HttpStatus.BAD_REQUEST);
 		}
@@ -91,35 +97,28 @@ public class UserController {
 		return new ResponseEntity<>(new Message("Modified user"), HttpStatus.CREATED);
 	}
 
-	/**
-	 * TODO error al cambiar estado a disable
-	 * 
-	 * @param idUser
-	 * @param status
-	 * @return
-	 */
-	/*
-	@PostMapping("disable/{idUser}")
-	public ResponseEntity<?> disableUser(@PathVariable("idUser") int idUser, @RequestParam String status) {
-		User user = userService.findById(idUser).get();
+	@PostMapping("disable")
+	public ResponseEntity<?> disableUser(@RequestHeader String authorization) {
+		String token = authorization.substring(7);
+		String userName = jwtProvider.getUserNameFromToken(token);
+		User user = userService.getByUserName(userName).get();
 		user.setName(user.getName());
 		user.setUserName(user.getUserName());
 		user.setEmail(user.getEmail());
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		user.setPicture(user.getPicture());
-		user.setStatus(status);
+		user.setStatus(0);
 
 		userService.save(user);
 		return new ResponseEntity<>(new Message("Disable user"), HttpStatus.CREATED);
 	}
-	*/
 
 	@PreAuthorize("hasRole('ADMIN')")
-  @DeleteMapping("delete/{idUser}")
-  public ResponseEntity<?> deleteBook(@PathVariable("idUser") int idUser) {
-    if (!userService.existsById(idUser))
+  @DeleteMapping("delete/userName/{userName}")
+  public ResponseEntity<?> delete(@PathVariable("userName") String userName) {
+    if (!userService.existsByUserName(userName))
       return new ResponseEntity<>(new Message("The user doesn't exist"), HttpStatus.NOT_FOUND);
-    userService.deleteUserById(idUser);
+    userService.deleteUserById(userService.getByUserName(userName).get().getId());
     return new ResponseEntity<>(new Message("Deleted User"), HttpStatus.OK);
   }
 

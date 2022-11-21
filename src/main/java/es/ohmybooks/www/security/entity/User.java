@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import es.ohmybooks.www.entity.Collectionn;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -29,8 +31,8 @@ public class User {
 	@Column(name = "picture", nullable = true, columnDefinition = "varchar(255)")
 	private String picture;
 
-	@Column(name = "status", nullable = true, columnDefinition = "varchar(25)")
-	private String status;
+	@Column(name = "status", columnDefinition = "tinyint(1)")
+	private int status;
 
 	/** 
 	 * TODO
@@ -49,6 +51,9 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name = "role_id")
 	)
 	private Set<Role> roles = new HashSet<>();
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")  
+	private Set<Collectionn> collectionn = new HashSet<>();
 	
 
 	public User() {
@@ -66,7 +71,7 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String name, String userName, String email, String password, String picture, String status) {
+	public User(String name, String userName, String email, String password, String picture, int status) {
 		this.name = name;
 		this.userName = userName;
 		this.email = email;
@@ -74,8 +79,21 @@ public class User {
 		this.picture = picture;
 		this.status = status;
 	}
-
 	
+	public User(int id, String name, String userName, String email, String password, String picture, int status,
+			Set<Role> roles, Set<Collectionn> collectionn) {
+		this.id = id;
+		this.name = name;
+		this.userName = userName;
+		this.email = email;
+		this.password = password;
+		this.picture = picture;
+		this.status = status;
+		this.roles = roles;
+		this.collectionn = collectionn;
+	}
+
+
 	public int getId() {
 		return id;
 	}
@@ -132,12 +150,20 @@ public class User {
 		this.picture = picture;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public Set<Collectionn> getCollection() {
+		return collectionn;
+	}
+
+	public void setCollection(Set<Collectionn> collectionn) {
+		this.collectionn = collectionn;
 	}
 
 }

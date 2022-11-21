@@ -5,8 +5,6 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import es.ohmybooks.www.security.entity.User;
-
 @Entity
 @Table(name = "book")
 public class Book {
@@ -45,15 +43,8 @@ public class Book {
 	 * private Calendar createData;
 	 */
 
-  // A user can have many books and a book can belong to multiple users
-	// Intermediate table that will have user_id and book_id
-	@ManyToMany(cascade = {CascadeType.MERGE})
-	@JoinTable(
-		name = "user_book",
-		joinColumns = @JoinColumn(name = "book_id"),
-		inverseJoinColumns = @JoinColumn(name = "user_id")
-	)
-	private Set<User> users = new HashSet<>();
+  @OneToMany(mappedBy = "book") 
+  private Set<Collectionn> collectionn = new HashSet<>();
 
   /**
    * book constructor without parameters
@@ -80,6 +71,19 @@ public class Book {
     this.year = year;
     this.pages = pages;
     this.cover = cover;
+  }
+
+  public Book(int id, String name, String author, String genre, String saga, int year, int pages, String cover,
+      Set<Collectionn> collectionn) {
+    this.id = id;
+    this.name = name;
+    this.author = author;
+    this.genre = genre;
+    this.saga = saga;
+    this.year = year;
+    this.pages = pages;
+    this.cover = cover;
+    this.collectionn = collectionn;
   }
 
   public int getId() {
@@ -138,14 +142,6 @@ public class Book {
     this.pages = pages;
   }
 
-  public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setBooks(Set<User> users) {
-		this.users = users;
-	}
-
   public String getCover() {
     return cover;
   }
@@ -154,8 +150,12 @@ public class Book {
     this.cover = cover;
   }
 
-  public void setUsers(Set<User> users) {
-    this.users = users;
+  public Set<Collectionn> getCollection() {
+    return collectionn;
+  }
+
+  public void setCollection(Set<Collectionn> collection) {
+    this.collectionn = collection;
   }
 
 }
