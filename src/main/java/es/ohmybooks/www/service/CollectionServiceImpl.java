@@ -8,7 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.ohmybooks.www.entity.Collection;
+import es.ohmybooks.www.entity.Collectionn;
 import es.ohmybooks.www.repository.CollectionRepository;
 
 @Service
@@ -19,12 +19,12 @@ public class CollectionServiceImpl implements CollectionService {
   CollectionRepository collectionRepository;
 
   @Override
-  public List<Collection> listCollection(){
+  public List<Collectionn> listCollection(){
     return collectionRepository.findAll();
   }
 
   @Override
-  public Collection save(Collection collection) {
+  public Collectionn save(Collectionn collection) {
     return collectionRepository.save(collection);
   }
 
@@ -39,13 +39,13 @@ public class CollectionServiceImpl implements CollectionService {
   }
 
   @Override
-  public Optional<Collection> findByIdUser(int idUser) {
+  public Optional<Collectionn> findByIdUser(int idUser) {
     return collectionRepository.findByIdUser(idUser);
 
   }
 
   @Override
-  public Optional<Collection> findByIdBook(int idBook) {
+  public Optional<Collectionn> findByIdBook(int idBook) {
     return collectionRepository.findByIdBook(idBook);
   }
 

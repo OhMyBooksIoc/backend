@@ -1,13 +1,11 @@
 package es.ohmybooks.www.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import es.ohmybooks.www.security.entity.User;
 
 @Entity
 @Table(name = "book")
@@ -48,15 +46,8 @@ public class Book {
 	 * private Calendar createData;
 	 */
 
-  // A user can have many books and a book can belong to multiple users
-	// Intermediate table that will have user_id and book_id
-	@ManyToMany(cascade = {CascadeType.MERGE})
-	@JoinTable(
-		name = "user_book",
-		joinColumns = @JoinColumn(name = "book_id"),
-		inverseJoinColumns = @JoinColumn(name = "user_id")
-	)
-	private Set<User> users = new HashSet<>();
+  @OneToMany(mappedBy = "book") 
+  private List<Collectionn> collectionn = new ArrayList<>();
 
   /**
    * book constructor without parameters
@@ -73,14 +64,29 @@ public class Book {
    * @param saga
    * @param year
    * @param pages
+   * @param cover
    */
-  public Book(String name, String author, String genre, String saga, int year, int pages) {
+  public Book(String name, String author, String genre, String saga, int year, int pages, String cover) {
     this.name = name;
     this.author = author;
     this.genre = genre;
     this.saga = saga;
     this.year = year;
     this.pages = pages;
+    this.cover = cover;
+  }
+
+  public Book(int id, String name, String author, String genre, String saga, int year, int pages, String cover,
+      List<Collectionn> collectionn) {
+    this.id = id;
+    this.name = name;
+    this.author = author;
+    this.genre = genre;
+    this.saga = saga;
+    this.year = year;
+    this.pages = pages;
+    this.cover = cover;
+    this.collectionn = collectionn;
   }
 
   public int getId() {
@@ -139,12 +145,20 @@ public class Book {
     this.pages = pages;
   }
 
-  public Set<User> getUsers() {
-		return users;
-	}
+  public String getCover() {
+    return cover;
+  }
 
-	public void setBooks(Set<User> users) {
-		this.users = users;
-	}
+  public void setCover(String cover) {
+    this.cover = cover;
+  }
+
+  public List<Collectionn> getCollection() {
+    return collectionn;
+  }
+
+  public void setCollection(List<Collectionn> collection) {
+    this.collectionn = collection;
+  }
 
 }

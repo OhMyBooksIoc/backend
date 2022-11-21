@@ -5,14 +5,14 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import es.ohmybooks.www.entity.Collection;
+import es.ohmybooks.www.entity.Collectionn;
 
 @Repository
-public interface CollectionRepository extends JpaRepository<Collection, Integer> {
+public interface CollectionRepository extends JpaRepository<Collectionn, Integer> {
 
-  Optional<Collection> findByIdUser(int idUser);
+  Optional<Collectionn> findByIdUser(int idUser);
   
-  Optional<Collection> findByIdBook(int idBook);
+  Optional<Collectionn> findByIdBook(int idBook);
 
   boolean existsByIdUser(int idUser);
 

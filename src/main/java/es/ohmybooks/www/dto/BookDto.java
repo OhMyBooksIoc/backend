@@ -13,17 +13,19 @@ public class BookDto {
   private String saga;
   private int year;
   private int pages;
+  private String cover;
 
   public BookDto() {
   }
 
-  public BookDto(String name, String author, String genre, String saga, int year, int pages) {
+  public BookDto(String name, String author, String genre, String saga, int year, int pages, String cover) {
     this.name = name;
     this.author = author;
     this.genre = genre;
     this.saga = saga;
     this.year = year;
     this.pages = pages;
+    this.cover = cover;
   }
 
   public String getName() {
@@ -72,6 +74,14 @@ public class BookDto {
 
   public void setPages(int pages) {
     this.pages = pages;
+  }
+
+  public String getCover() {
+    return cover;
+  }
+
+  public void setCover(String cover) {
+    this.cover = cover;
   }
 
 }

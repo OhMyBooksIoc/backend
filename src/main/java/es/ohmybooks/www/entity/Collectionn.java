@@ -7,7 +7,7 @@ import es.ohmybooks.www.security.entity.User;
 @Entity
 @Table(name = "collection")
 @IdClass(CollectionId.class)
-public class Collection {
+public class Collectionn {
 
   @Id
   @Column(name = "idUser", unique = true, nullable = false, columnDefinition = "int(10)")
@@ -46,7 +46,7 @@ public class Collection {
   /**
    * collection constructor without parameters
    */
-  public Collection() {
+  public Collectionn() {
   }
 
   /**
@@ -62,7 +62,7 @@ public class Collection {
    * @param read
    * @param hide
    */
-  public Collection(int idUser, int idBook, User user, Book book, String comment, int readd, int hide) {
+  public Collectionn(int idUser, int idBook, User user, Book book, String comment, int readd, int hide) {
     this.idUser = idUser;
     this.idBook = idBook;
     this.user = user;
