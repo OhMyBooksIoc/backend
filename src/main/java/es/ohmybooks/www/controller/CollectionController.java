@@ -75,7 +75,8 @@ public class CollectionController {
     Collectionn collectionn = new Collectionn();
     collectionn.setBookId(idBook);
     collectionn.setUserId(userService.getByUserName(userName).get().getId());
-    collectionn.setHide(1);
+    collectionn.setHide(0); //default is visible(0)
+    collectionn.setReadd(0); //default is unread(0)
     collectionService.save(collectionn);
     return new ResponseEntity<>(new Message("Added Book to Collection"), HttpStatus.OK);
   }
