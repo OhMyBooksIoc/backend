@@ -38,7 +38,7 @@ public class UserController {
    * 
    * @return a json with all users and all their fields
    */
-  @PostMapping("list")
+  @GetMapping("list")
   public ResponseEntity<?> listUsers() {
     return new ResponseEntity<>(userService.listUsers(), HttpStatus.OK);
   }
@@ -51,7 +51,7 @@ public class UserController {
    * @param id
    * @return a error message or a json with the searched user and all its fields
    */
-  @PostMapping("userName/{userName}")
+  @GetMapping("userName/{userName}")
   public ResponseEntity<?> findUserByUserName(@PathVariable("userName") String userName) {
     if (!userService.existsByUserName(userName)) {
       return new ResponseEntity<>(new Message("The user doesn't exist"), HttpStatus.NOT_FOUND);
@@ -60,7 +60,7 @@ public class UserController {
     }
   }
 
-	@PostMapping("update")
+	@PutMapping("update")
 	public ResponseEntity<?> updateUser(@RequestHeader String authorization, @RequestBody UserDto userDto, BindingResult bindingResult) {
 		String token = authorization.substring(7);
 		String userName = jwtProvider.getUserNameFromToken(token);
@@ -90,7 +90,7 @@ public class UserController {
 		return new ResponseEntity<>(new Message("Modified user"), HttpStatus.CREATED);
 	}
 
-	@PostMapping("disable")
+	@PutMapping("disable")
 	public ResponseEntity<?> disableUser(@RequestHeader String authorization) {
 		String token = authorization.substring(7);
 		String userName = jwtProvider.getUserNameFromToken(token);
