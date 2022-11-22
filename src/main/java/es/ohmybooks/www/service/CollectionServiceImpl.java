@@ -39,14 +39,14 @@ public class CollectionServiceImpl implements CollectionService {
   }
 
   @Override
-  public Optional<Collectionn> findByIdUser(int idUser) {
-    return collectionRepository.findByIdUser(idUser);
+  public Optional<Collectionn> findByUserId(int userId) {
+    return collectionRepository.findByUserId(userId);
 
   }
 
   @Override
-  public Optional<Collectionn> findByIdBook(int idBook) {
-    return collectionRepository.findByIdBook(idBook);
+  public Optional<Collectionn> findByBookId(int bookId) {
+    return collectionRepository.findByBookId(bookId);
   }
 
   @Override

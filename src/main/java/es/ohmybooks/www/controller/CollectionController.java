@@ -68,12 +68,13 @@ public class CollectionController {
   }
 
   @PutMapping("/add")
-  public ResponseEntity<?> addCollectionnBook(@RequestHeader String authorization, @RequestParam("idBook") int idBook) {
+  public ResponseEntity<?> addBookToUser(@RequestHeader String authorization, @RequestParam("idBook") int idBook) {
     String token = authorization.substring(7);
     String userName = jwtProvider.getUserNameFromToken(token);
     Collectionn collectionn = new Collectionn();
-    collectionn.setIdBook(idBook);
-    collectionn.setIdUser(userService.getByUserName(userName).get().getId());
+    collectionn.setBookId(idBook);
+    collectionn.setUserId(userService.getByUserName(userName).get().getId());
+    collectionn.setHide(1);
     collectionService.save(collectionn);
     return new ResponseEntity<>(new Message("Added Book to Collection"), HttpStatus.OK);
   }

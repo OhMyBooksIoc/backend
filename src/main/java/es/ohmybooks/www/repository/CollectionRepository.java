@@ -10,12 +10,12 @@ import es.ohmybooks.www.entity.Collectionn;
 @Repository
 public interface CollectionRepository extends JpaRepository<Collectionn, Integer> {
 
-  Optional<Collectionn> findByIdUser(int idUser);
+  Optional<Collectionn> findByUserId(int userId);
   
-  Optional<Collectionn> findByIdBook(int idBook);
+  Optional<Collectionn> findByBookId(int bookId);
 
-  boolean existsByIdUser(int idUser);
+  boolean existsByUserId(int userId);
 
-  boolean existsByIdBook(int idBook);
+  boolean existsByBookId(int bookId);
 
 }

@@ -1,6 +1,9 @@
 package es.ohmybooks.www.security.entity;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -9,7 +12,9 @@ import es.ohmybooks.www.entity.Collectionn;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,27 +39,17 @@ public class User {
 	@Column(name = "status", columnDefinition = "tinyint(1)")
 	private int status;
 
-	/** 
-	 * TODO
-	 * añadir campo fecha de creación
-	 * @Column(name = "create_data", nullable = false)
-	 * @Temporal(TemporalType.DATE)
-	 * private Calendar createData;
-	 */
+	@Column(name = "created_at")
+	private Date createdAt = new Date();
 
 	// A user can have many roles and a role can belong to multiple users
 	// Intermediate table that will have user_id and role_id
-	@ManyToMany(cascade = {CascadeType.MERGE})
-	@JoinTable(
-		name = "user_role",
-		joinColumns = @JoinColumn(name = "user_id"),
-		inverseJoinColumns = @JoinColumn(name = "role_id")
-	)
+	@ManyToMany(cascade = { CascadeType.MERGE })
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")  
-	private Set<Collectionn> collectionn = new HashSet<>();
-	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	private Set<Collectionn> books = new HashSet<>();
 
 	public User() {
 	}
@@ -79,9 +74,9 @@ public class User {
 		this.picture = picture;
 		this.status = status;
 	}
-	
+
 	public User(int id, String name, String userName, String email, String password, String picture, int status,
-			Set<Role> roles, Set<Collectionn> collectionn) {
+			Set<Role> roles, Set<Collectionn> books) {
 		this.id = id;
 		this.name = name;
 		this.userName = userName;
@@ -90,9 +85,8 @@ public class User {
 		this.picture = picture;
 		this.status = status;
 		this.roles = roles;
-		this.collectionn = collectionn;
+		this.books = books;
 	}
-
 
 	public int getId() {
 		return id;
@@ -109,7 +103,7 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getUserName() {
 		return userName;
 	}
@@ -158,12 +152,37 @@ public class User {
 		this.status = status;
 	}
 
-	public Set<Collectionn> getCollection() {
-		return collectionn;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setCollection(Set<Collectionn> collectionn) {
-		this.collectionn = collectionn;
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Set<Collectionn> getBooks() {
+		return books;
+	}
+
+	public void setBooks(Set<Collectionn> books) {
+		this.books = books;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		User user = (User) o;
+		return Objects.equals(userName, user.userName);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(userName);
 	}
 
 }
