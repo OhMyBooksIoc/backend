@@ -1,5 +1,8 @@
 package es.ohmybooks.www.entity;
 
+import java.util.Date;
+import java.util.Objects;
+
 import javax.persistence.*;
 
 import es.ohmybooks.www.security.entity.User;
@@ -10,19 +13,17 @@ import es.ohmybooks.www.security.entity.User;
 public class Collectionn {
 
   @Id
-  @Column(name = "idUser", unique = true, nullable = false, columnDefinition = "int(10)")
-  private int idUser;
+  private int userId;
 
   @Id
-  @Column(name = "idBook", unique = true, nullable = false, columnDefinition = "int(10)")
-  private int idBook;
+  private int bookId;
 
   @ManyToOne
-  @JoinColumn(name = "idUser", referencedColumnName = "id", insertable = false, updatable = false)
+  @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
   private User user;
 
   @ManyToOne
-  @JoinColumn(name = "idBook", referencedColumnName = "id", insertable = false, updatable = false)
+  @JoinColumn(name = "book_id", referencedColumnName = "id", insertable = false, updatable = false)
   private Book book;
 
   @Column(name = "comment", columnDefinition = "varchar(500)")
@@ -34,53 +35,42 @@ public class Collectionn {
   @Column(name = "hide", columnDefinition = "tinyint(1)")
   private int hide;
 
-  /**
-   * TODO
-   * añadir campo fecha de creación
-   * 
-   * @Column(name = "create_data", nullable = false)
-   * @Temporal(TemporalType.DATE)
-   *                              private Calendar createData;
-   */
+  @Column(name = "created_at")
+  private Date createdAt = new Date();
 
-  /**
-   * collection constructor without parameters
-   */
+  
   public Collectionn() {
   }
 
-  /**
-   * 
-   * collection constructor with all parameters
-   * 
-   * @param idUser
-   * @param idBook
-   * @param comment
-   * @param read
-   * @param hide
-   */
-  public Collectionn(int idUser, int idBook, String comment, int readd, int hide) {
-    this.idUser = idUser;
-    this.idBook = idBook;
+  public Collectionn(User user, Book book) {
+    this.user = user;
+    this.book = book;
+  }
+
+  public Collectionn(int userId, int bookId, String comment, int readd, int hide, Date createdAt) {
+    this.userId = userId;
+    this.bookId = bookId;
     this.comment = comment;
     this.readd = readd;
     this.hide = hide;
+    this.createdAt = createdAt;
   }
 
-  public int getIdUser() {
-    return idUser;
+
+  public int getUserId() {
+    return userId;
   }
 
-  public void setIdUser(int idUser) {
-    this.idUser = idUser;
+  public void setUserId(int userId) {
+    this.userId = userId;
   }
 
-  public int getIdBook() {
-    return idBook;
+  public int getBookId() {
+    return bookId;
   }
 
-  public void setIdBook(int idBook) {
-    this.idBook = idBook;
+  public void setBookId(int bookId) {
+    this.bookId = bookId;
   }
 
   public User getUser() {
@@ -121,6 +111,33 @@ public class Collectionn {
 
   public void setHide(int hide) {
     this.hide = hide;
+  }
+
+  public Date getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
+  }
+
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+
+    if (o == null || getClass() != o.getClass())
+      return false;
+
+    Collectionn that = (Collectionn) o;
+    return Objects.equals(user, that.user) &&
+        Objects.equals(book, that.book);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(user, book);
   }
 
 }

@@ -11,9 +11,9 @@ public interface CollectionService {
 
   public abstract Collectionn save(Collectionn collection);
 
-  public abstract Optional<Collectionn> findByIdUser(int idUser);
+  public abstract Optional<Collectionn> findByUserId(int userId);
 
-  public abstract Optional<Collectionn> findByIdBook(int idBook);
+  public abstract Optional<Collectionn> findByBookId(int bookId);
 
   public abstract boolean deleteCollectionById(int id);
 

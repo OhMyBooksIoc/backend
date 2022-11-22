@@ -1,7 +1,9 @@
 package es.ohmybooks.www.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,30 +52,30 @@ public class CollectionController {
       return new ResponseEntity<>(new Message("The user doesn't exist"), HttpStatus.NOT_FOUND);
     } 
     else {
-      /*
       List<Book> books = new ArrayList<>();
       books = bookService.listBooks();
       for (int i = 0; i < books.size(); i++) {
         Set<Collectionn> collectionn = new HashSet<>();
-        collectionn = books.get(i).getCollection();
+        collectionn = books.get(i).getUsers();
         for (Collectionn item : collectionn) {
-          if (item.getIdUser() == userService.getByUserName(userName).get().getId()) {
+          if (item.getUserId() == userService.getByUserName(userName).get().getId()) {
             collect.add(books.get(i));
           }
         }
       }
-      */
       return new ResponseEntity<>(collect, HttpStatus.OK);
     }
   }
 
   @PutMapping("/add")
-  public ResponseEntity<?> addCollectionnBook(@RequestHeader String authorization, @RequestParam("idBook") int idBook) {
+  public ResponseEntity<?> addBookToUser(@RequestHeader String authorization, @RequestParam("idBook") int idBook) {
+    // TODO comprobar si el libro ya existe en collection
     String token = authorization.substring(7);
     String userName = jwtProvider.getUserNameFromToken(token);
     Collectionn collectionn = new Collectionn();
-    collectionn.setIdBook(idBook);
-    collectionn.setIdUser(userService.getByUserName(userName).get().getId());
+    collectionn.setBookId(idBook);
+    collectionn.setUserId(userService.getByUserName(userName).get().getId());
+    collectionn.setHide(1);
     collectionService.save(collectionn);
     return new ResponseEntity<>(new Message("Added Book to Collection"), HttpStatus.OK);
   }

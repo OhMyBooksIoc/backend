@@ -1,13 +1,20 @@
 package es.ohmybooks.www.entity;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "book")
-public class Book {
+public class Book implements Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,16 +42,11 @@ public class Book {
   @Column(name = "cover", columnDefinition = "varchar(255)")
   private String cover;
 
-	/** 
-	 * TODO
-	 * añadir campo fecha de creación
-	 * @Column(name = "create_data", nullable = false)
-	 * @Temporal(TemporalType.DATE)
-	 * private Calendar createData;
-	 */
+  @Column(name = "created_at")
+  private Date createdAt = new Date();
 
-  @OneToMany(mappedBy = "book") 
-  private Set<Collectionn> collectionn = new HashSet<>();
+  @OneToMany(mappedBy = "book")
+  private Set<Collectionn> users = new HashSet<>();
 
   /**
    * book constructor without parameters
@@ -74,7 +76,7 @@ public class Book {
   }
 
   public Book(int id, String name, String author, String genre, String saga, int year, int pages, String cover,
-      Set<Collectionn> collectionn) {
+      Set<Collectionn> users) {
     this.id = id;
     this.name = name;
     this.author = author;
@@ -83,7 +85,7 @@ public class Book {
     this.year = year;
     this.pages = pages;
     this.cover = cover;
-    this.collectionn = collectionn;
+    this.users = users;
   }
 
   public int getId() {
@@ -150,12 +152,36 @@ public class Book {
     this.cover = cover;
   }
 
-  public Set<Collectionn> getCollection() {
-    return collectionn;
+  @JsonIgnore
+  public Set<Collectionn> getUsers() {
+    return users;
   }
 
-  public void setCollection(Set<Collectionn> collection) {
-    this.collectionn = collection;
+  public void setUsers(Set<Collectionn> users) {
+    this.users = users;
+  }
+
+  public Date getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    Book book = (Book) o;
+    return Objects.equals(name, book.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name);
   }
 
 }

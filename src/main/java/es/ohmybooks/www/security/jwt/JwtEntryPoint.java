@@ -18,7 +18,7 @@ import java.io.IOException;
 @Component
 public class JwtEntryPoint implements AuthenticationEntryPoint {
 
-	// Implementamos un logger para ver cual metodo da error en caso de falla
+	// Implementamos un logger para ver qué metodo da error en caso de falla
 	private final static Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
 
 	@Override

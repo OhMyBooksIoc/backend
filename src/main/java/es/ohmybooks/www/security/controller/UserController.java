@@ -60,13 +60,6 @@ public class UserController {
     }
   }
 
-	/**
-	 * TODO
-	 * 
-	 * @param userDto
-	 * @param bindingResult
-	 * @return
-	 */
 	@PostMapping("update")
 	public ResponseEntity<?> updateUser(@RequestHeader String authorization, @RequestBody UserDto userDto, BindingResult bindingResult) {
 		String token = authorization.substring(7);

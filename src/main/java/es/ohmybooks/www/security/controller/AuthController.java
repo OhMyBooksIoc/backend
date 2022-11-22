@@ -46,13 +46,6 @@ public class AuthController {
 	@Autowired
 	JwtProvider jwtProvider;
 
-	/**
-	 * TODO
-	 * 
-	 * @param newUser
-	 * @param bindingResult
-	 * @return
-	 */
 	@PostMapping("/newUser")
 	public ResponseEntity<?> newUser(@RequestBody NewUser newUser, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
@@ -85,13 +78,6 @@ public class AuthController {
 		return new ResponseEntity<>(new Message("Created user"), HttpStatus.CREATED);
 	}
 
-	/**
-	 * TODO
-	 * 
-	 * @param loginUsuario
-	 * @param bindingResult
-	 * @return
-	 */
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody Login login, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
