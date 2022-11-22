@@ -104,7 +104,6 @@ public class BookController {
    * @param bookDto
    * @return a confirmation or error message
    */
-  // TODO hay que modificar autorización
   @PreAuthorize("hasRole('ADMIN')")
   @PutMapping("update/{idBook}")
   public ResponseEntity<?> updateBook(@PathVariable("idBook") int idBook, @RequestBody BookDto bookDto) {
@@ -135,10 +134,9 @@ public class BookController {
    * endpoint that removes the book with the id equal to the value passed in the
    * parameter
    * 
-   * @param bookDto
+   * @param idBook
    * @return a confirmation or error message
    */
-  // TODO hay que modificar autorización
   @PreAuthorize("hasRole('ADMIN')")
   @DeleteMapping("delete/{idBook}")
   public ResponseEntity<?> deleteBook(@PathVariable("idBook") int idBook) {

@@ -8,6 +8,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import es.ohmybooks.www.entity.Collectionn;
 
 @Entity
@@ -120,6 +122,7 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -128,6 +131,7 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
+	@JsonIgnore
 	public Set<Role> getRoles() {
 		return roles;
 	}
@@ -160,6 +164,7 @@ public class User implements Serializable {
 		this.createdAt = createdAt;
 	}
 
+	@JsonIgnore
 	public Set<Collectionn> getBooks() {
 		return books;
 	}

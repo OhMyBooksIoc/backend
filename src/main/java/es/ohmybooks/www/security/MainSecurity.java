@@ -20,10 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 //TODO traducir al inglés
 @Configuration
 @EnableWebSecurity
-// con perPostEnabled se usa para indicar a q metodos puede acceder solo el
-// admin
-// Los metodos que no lleven anotación pueden acceder el admin como un generic
-// user
+// con perPostEnabled se usa para indicar a q metodos puede acceder solo el admin
+// Los metodos que no lleven anotación pueden acceder el admin como un generic user
 // @preauthorized solo puede acceder el admin
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MainSecurity extends WebSecurityConfigurerAdapter {
@@ -63,8 +61,7 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		// Desactivamos cookies ya que enviamos un token
-		// cada vez que hacemos una petición
+		// desactivar cookies ya que se envía un token cada vez que se hace una petición
 		http.cors().and().csrf().disable()
 				.authorizeRequests()
 				.antMatchers("/auth/**").permitAll()

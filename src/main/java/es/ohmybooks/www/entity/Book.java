@@ -1,15 +1,14 @@
 package es.ohmybooks.www.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "book")
@@ -153,6 +152,7 @@ public class Book implements Serializable {
     this.cover = cover;
   }
 
+  @JsonIgnore
   public Set<Collectionn> getUsers() {
     return users;
   }
