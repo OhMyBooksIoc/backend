@@ -18,7 +18,7 @@ import es.ohmybooks.www.security.service.UserService;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.DELETE, RequestMethod.PUT})
 public class UserController {
 
 	@Autowired
