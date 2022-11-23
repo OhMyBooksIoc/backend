@@ -28,7 +28,7 @@ import es.ohmybooks.www.service.CollectionService;
 
 @RestController // @Controller + @ResponseBody
 @RequestMapping("collection")
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST })
 public class CollectionController {
 
   @Autowired
