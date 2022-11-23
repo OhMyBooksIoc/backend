@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,7 +68,7 @@ public class CollectionController {
     }
   }
 
-  @PutMapping("/add")
+  @PostMapping("/add")
   public ResponseEntity<?> addBookToUser(@RequestHeader String authorization, @RequestParam("idBook") int idBook) {
     // TODO comprobar si el libro ya existe en collection
     String token = authorization.substring(7);
