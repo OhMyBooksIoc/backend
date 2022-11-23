@@ -10,7 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import es.ohmybooks.www.dto.Message;
-import es.ohmybooks.www.security.dto.UserDto;
+import es.ohmybooks.www.security.dto.UpdateUserDto;
 import es.ohmybooks.www.security.entity.User;
 import es.ohmybooks.www.security.jwt.JwtProvider;
 import es.ohmybooks.www.security.service.UserService;
@@ -61,30 +61,22 @@ public class UserController {
   }
 
 	@PutMapping("update")
-	public ResponseEntity<?> updateUser(@RequestHeader String authorization, @RequestBody UserDto userDto, BindingResult bindingResult) {
+	public ResponseEntity<?> updateUser(@RequestHeader String authorization, @RequestBody UpdateUserDto updateUserDto, BindingResult bindingResult) {
 		String token = authorization.substring(7);
 		String userName = jwtProvider.getUserNameFromToken(token);
 		User user = userService.getByUserName(userName).get();
 		if (bindingResult.hasErrors()) {
 			return new ResponseEntity<>(new Message("Wrong fields or invalid email"), HttpStatus.BAD_REQUEST);
 		}
-		if (!userDto.getUserName().equals(user.getUserName())){
-		 	if (userService.existsByUserName(userDto.getUserName())) {
-				return new ResponseEntity<>(new Message("This username already exists"), HttpStatus.BAD_REQUEST);
-			}
-		}	
-		if (!userDto.getEmail().equals(user.getEmail())){
-			if (userService.existsByEmail(userDto.getEmail())) {
+		if (!updateUserDto.getEmail().equals(user.getEmail())){
+			if (userService.existsByEmail(updateUserDto.getEmail())) {
 				return new ResponseEntity<>(new Message("This email already exists"), HttpStatus.BAD_REQUEST);
 			}
 		}
 
-		user.setName(userDto.getName());
-		user.setUserName(userDto.getUserName());
-		user.setEmail(userDto.getEmail());
-		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-		user.setPicture(userDto.getPicture());
-		user.setStatus(user.getStatus());
+		user.setName(updateUserDto.getName());
+		user.setEmail(updateUserDto.getEmail());
+		user.setPicture(updateUserDto.getPicture());
 
 		userService.save(user);
 		return new ResponseEntity<>(new Message("Modified user"), HttpStatus.CREATED);
