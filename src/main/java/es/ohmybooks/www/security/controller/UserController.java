@@ -10,7 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import es.ohmybooks.www.dto.Message;
-import es.ohmybooks.www.security.dto.UpdateUserDto;
+import es.ohmybooks.www.security.dto.UserDto;
 import es.ohmybooks.www.security.entity.User;
 import es.ohmybooks.www.security.jwt.JwtProvider;
 import es.ohmybooks.www.security.service.UserService;
@@ -61,22 +61,22 @@ public class UserController {
   }
 
 	@PutMapping("update")
-	public ResponseEntity<?> updateUser(@RequestHeader String authorization, @RequestBody UpdateUserDto updateUserDto, BindingResult bindingResult) {
+	public ResponseEntity<?> updateUser(@RequestHeader String authorization, @RequestBody UserDto userDto, BindingResult bindingResult) {
 		String token = authorization.substring(7);
 		String userName = jwtProvider.getUserNameFromToken(token);
 		User user = userService.getByUserName(userName).get();
 		if (bindingResult.hasErrors()) {
 			return new ResponseEntity<>(new Message("Wrong fields or invalid email"), HttpStatus.BAD_REQUEST);
 		}
-		if (!updateUserDto.getEmail().equals(user.getEmail())){
-			if (userService.existsByEmail(updateUserDto.getEmail())) {
+		if (!userDto.getEmail().equals(user.getEmail())){
+			if (userService.existsByEmail(userDto.getEmail())) {
 				return new ResponseEntity<>(new Message("This email already exists"), HttpStatus.BAD_REQUEST);
 			}
 		}
 
-		user.setName(updateUserDto.getName());
-		user.setEmail(updateUserDto.getEmail());
-		user.setPicture(updateUserDto.getPicture());
+		user.setName(userDto.getName());
+		user.setEmail(userDto.getEmail());
+		user.setPicture(userDto.getPicture());
 
 		userService.save(user);
 		return new ResponseEntity<>(new Message("Modified user"), HttpStatus.CREATED);
@@ -87,13 +87,7 @@ public class UserController {
 		String token = authorization.substring(7);
 		String userName = jwtProvider.getUserNameFromToken(token);
 		User user = userService.getByUserName(userName).get();
-		user.setName(user.getName());
-		user.setUserName(user.getUserName());
-		user.setEmail(user.getEmail());
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user.setPicture(user.getPicture());
 		user.setStatus(0);
-
 		userService.save(user);
 		return new ResponseEntity<>(new Message("Disable user"), HttpStatus.CREATED);
 	}
