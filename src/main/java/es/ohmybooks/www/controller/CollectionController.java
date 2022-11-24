@@ -68,6 +68,11 @@ public class CollectionController {
     }
   }
 
+  @GetMapping("listCol")
+  public ResponseEntity<?> listCol () {
+    return new ResponseEntity<>(collectionService.listCollection(), HttpStatus.OK);
+  }
+
   @PostMapping("/add")
   public ResponseEntity<?> addBookToUser(@RequestHeader String authorization, @RequestParam("idBook") int idBook) {
     // TODO comprobar si el libro ya existe en collection
@@ -76,8 +81,8 @@ public class CollectionController {
     Collectionn collectionn = new Collectionn();
     collectionn.setBookId(idBook);
     collectionn.setUserId(userService.getByUserName(userName).get().getId());
-    collectionn.setHide(0); //default is visible(0)
-    collectionn.setReadd(0); //default is unread(0)
+    collectionn.setHide(false); //default is visible(false)
+    collectionn.setReadd(false); //default is unread(false)
     collectionService.save(collectionn);
     return new ResponseEntity<>(new Message("Added Book to Collection"), HttpStatus.OK);
   }

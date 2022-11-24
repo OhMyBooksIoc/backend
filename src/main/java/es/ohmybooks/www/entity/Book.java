@@ -161,6 +161,7 @@ public class Book implements Serializable {
     this.users = users;
   }
 
+  @JsonIgnore
   public Date getCreatedAt() {
     return createdAt;
   }

@@ -13,7 +13,7 @@ public class UserDto {
 	@NotBlank
 	private String password;
 	private String picture;
-	private String status;
+	private Boolean status;
 
 	public UserDto() {
 	}
@@ -23,7 +23,7 @@ public class UserDto {
 	}
 
 	public UserDto(@NotBlank String name, @NotBlank String userName, @Email String email, @NotBlank String password,
-			String picture, String status) {
+			String picture, Boolean status) {
 		this.name = name;
 		this.userName = userName;
 		this.email = email;
@@ -78,11 +78,11 @@ public class UserDto {
 		this.picture = picture;
 	}
 
-	public String getStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 
