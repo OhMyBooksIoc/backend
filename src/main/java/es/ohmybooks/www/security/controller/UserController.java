@@ -82,6 +82,16 @@ public class UserController {
 		return new ResponseEntity<>(new Message("Modified user"), HttpStatus.CREATED);
 	}
 
+	@PostMapping("updatePass")
+	public ResponseEntity<?> updatePass(@RequestHeader String authorization, @RequestBody UserDto userDto) {
+		String token = authorization.substring(7);
+		String userName = jwtProvider.getUserNameFromToken(token);
+		User user = userService.getByUserName(userName).get();
+		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		userService.save(user);
+		return new ResponseEntity<>(new Message("Modified password"), HttpStatus.CREATED);
+	}
+
 	@PutMapping("disable")
 	public ResponseEntity<?> disableUser(@RequestHeader String authorization) {
 		String token = authorization.substring(7);
