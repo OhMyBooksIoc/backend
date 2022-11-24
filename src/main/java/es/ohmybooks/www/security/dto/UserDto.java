@@ -15,7 +15,6 @@ public class UserDto {
 	private String picture;
 	private String status;
 
-	
 	public UserDto() {
 	}
 
@@ -27,6 +26,12 @@ public class UserDto {
 		this.password = password;
 		this.picture = picture;
 		this.status = status;
+	}
+
+	public UserDto(@NotBlank String name, @Email String email, String picture) {
+		this.name = name;
+		this.email = email;
+		this.picture = picture;
 	}
 
 	public String getName() {

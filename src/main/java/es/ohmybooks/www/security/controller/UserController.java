@@ -68,11 +68,6 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			return new ResponseEntity<>(new Message("Wrong fields or invalid email"), HttpStatus.BAD_REQUEST);
 		}
-		if (!userDto.getUserName().equals(user.getUserName())){
-		 	if (userService.existsByUserName(userDto.getUserName())) {
-				return new ResponseEntity<>(new Message("This username already exists"), HttpStatus.BAD_REQUEST);
-			}
-		}	
 		if (!userDto.getEmail().equals(user.getEmail())){
 			if (userService.existsByEmail(userDto.getEmail())) {
 				return new ResponseEntity<>(new Message("This email already exists"), HttpStatus.BAD_REQUEST);
@@ -80,11 +75,8 @@ public class UserController {
 		}
 
 		user.setName(userDto.getName());
-		user.setUserName(userDto.getUserName());
 		user.setEmail(userDto.getEmail());
-		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 		user.setPicture(userDto.getPicture());
-		user.setStatus(user.getStatus());
 
 		userService.save(user);
 		return new ResponseEntity<>(new Message("Modified user"), HttpStatus.CREATED);
@@ -95,13 +87,7 @@ public class UserController {
 		String token = authorization.substring(7);
 		String userName = jwtProvider.getUserNameFromToken(token);
 		User user = userService.getByUserName(userName).get();
-		user.setName(user.getName());
-		user.setUserName(user.getUserName());
-		user.setEmail(user.getEmail());
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user.setPicture(user.getPicture());
 		user.setStatus(0);
-
 		userService.save(user);
 		return new ResponseEntity<>(new Message("Disable user"), HttpStatus.CREATED);
 	}
