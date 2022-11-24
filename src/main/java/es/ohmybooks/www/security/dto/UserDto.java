@@ -18,6 +18,10 @@ public class UserDto {
 	public UserDto() {
 	}
 
+	public UserDto(String password) {
+		this.password = password;
+	}
+
 	public UserDto(@NotBlank String name, @NotBlank String userName, @Email String email, @NotBlank String password,
 			String picture, String status) {
 		this.name = name;
