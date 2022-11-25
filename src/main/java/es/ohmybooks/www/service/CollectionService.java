@@ -16,6 +16,8 @@ public interface CollectionService {
 
   public abstract boolean deleteCollectionById(int id);
 
+  public abstract boolean deleteCollectionByUserId(int userId);
+
   public boolean existsById(int id);
 
 }

@@ -109,10 +109,12 @@ public class UserController {
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("delete/userName/{userName}")
 	public ResponseEntity<?> delete(@PathVariable("userName") String userName) {
-		if (!userService.existsByUserName(userName))
+		if (!userService.existsByUserName(userName)) {
 			return new ResponseEntity<>(new Message("The user doesn't exist"), HttpStatus.NOT_FOUND);
-		userService.deleteUserById(userService.getByUserName(userName).get().getId());
-		return new ResponseEntity<>(new Message("Deleted User"), HttpStatus.OK);
+		} else {
+			userService.deleteUserById(userService.getByUserName(userName).get().getId());
+			return new ResponseEntity<>(new Message("Deleted User"), HttpStatus.OK);
+		}
 	}
 
 }

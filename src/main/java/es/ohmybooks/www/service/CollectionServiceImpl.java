@@ -38,6 +38,17 @@ public class CollectionServiceImpl implements CollectionService {
   }
 
   @Override
+  public boolean deleteCollectionByUserId(int userId) {
+    try {
+      collectionRepository.deleteByUserId(userId);
+      return true;
+    } catch (Exception e){ 
+      return false;
+    }
+  }
+
+
+  @Override
   public List<Collectionn> findByUserId(int userId) {
     return collectionRepository.findByUserId(userId);
 
