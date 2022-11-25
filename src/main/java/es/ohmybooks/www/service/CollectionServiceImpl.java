@@ -1,7 +1,6 @@
 package es.ohmybooks.www.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -39,13 +38,13 @@ public class CollectionServiceImpl implements CollectionService {
   }
 
   @Override
-  public Optional<Collectionn> findByUserId(int userId) {
+  public List<Collectionn> findByUserId(int userId) {
     return collectionRepository.findByUserId(userId);
 
   }
 
   @Override
-  public Optional<Collectionn> findByBookId(int bookId) {
+  public List<Collectionn> findByBookId(int bookId) {
     return collectionRepository.findByBookId(bookId);
   }
 

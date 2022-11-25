@@ -101,7 +101,7 @@ public class UserController {
 		String token = authorization.substring(7);
 		String userName = jwtProvider.getUserNameFromToken(token);
 		User user = userService.getByUserName(userName).get();
-		user.setStatus(0);
+		user.setStatus(false);
 		userService.save(user);
 		return new ResponseEntity<>(new Message("Disable user"), HttpStatus.CREATED);
 	}

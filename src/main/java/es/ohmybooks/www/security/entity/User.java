@@ -39,7 +39,7 @@ public class User implements Serializable {
 	private String picture;
 
 	@Column(name = "status", columnDefinition = "tinyint(1)")
-	private int status;
+	private boolean status;
 
 	@Column(name = "created_at")
 	private Date createdAt = new Date();
@@ -68,7 +68,7 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public User(String name, String userName, String email, String password, String picture, int status) {
+	public User(String name, String userName, String email, String password, String picture, boolean status) {
 		this.name = name;
 		this.userName = userName;
 		this.email = email;
@@ -77,7 +77,7 @@ public class User implements Serializable {
 		this.status = status;
 	}
 
-	public User(int id, String name, String userName, String email, String password, String picture, int status,
+	public User(int id, String name, String userName, String email, String password, String picture, boolean status,
 			Set<Role> roles, Set<Collectionn> books) {
 		this.id = id;
 		this.name = name;
@@ -148,14 +148,15 @@ public class User implements Serializable {
 		this.picture = picture;
 	}
 
-	public int getStatus() {
+	public boolean getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 
+	@JsonIgnore
 	public Date getCreatedAt() {
 		return createdAt;
 	}

@@ -71,7 +71,7 @@ public class AuthController {
 			roles.add(roleService.getByRoleName(RoleName.ROLE_AUTHOR).get());
 		}
 		user.setRoles(roles);
-		user.setStatus(1); //default is enabled(1)
+		user.setStatus(true); //default is enabled(true)
 
 		userService.save(user);
 

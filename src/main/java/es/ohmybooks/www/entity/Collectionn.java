@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import es.ohmybooks.www.security.entity.User;
 
 @Entity
@@ -30,10 +32,10 @@ public class Collectionn {
   private String comment;
 
   @Column(name = "readd", columnDefinition = "tinyint(1)")
-  private int readd;
+  private boolean readd;
 
   @Column(name = "hide", columnDefinition = "tinyint(1)")
-  private int hide;
+  private boolean hide;
 
   @Column(name = "created_at")
   private Date createdAt = new Date();
@@ -47,7 +49,7 @@ public class Collectionn {
     this.book = book;
   }
 
-  public Collectionn(int userId, int bookId, String comment, int readd, int hide, Date createdAt) {
+  public Collectionn(int userId, int bookId, String comment, boolean readd, boolean hide, Date createdAt) {
     this.userId = userId;
     this.bookId = bookId;
     this.comment = comment;
@@ -65,6 +67,7 @@ public class Collectionn {
     this.userId = userId;
   }
 
+  @JsonIgnore
   public int getBookId() {
     return bookId;
   }
@@ -73,6 +76,7 @@ public class Collectionn {
     this.bookId = bookId;
   }
 
+  @JsonIgnore
   public User getUser() {
     return user;
   }
@@ -97,22 +101,23 @@ public class Collectionn {
     this.comment = comment;
   }
 
-  public int getReadd() {
+  public boolean getReadd() {
     return readd;
   }
 
-  public void setReadd(int readd) {
+  public void setReadd(boolean readd) {
     this.readd = readd;
   }
 
-  public int getHide() {
+  public boolean getHide() {
     return hide;
   }
 
-  public void setHide(int hide) {
+  public void setHide(boolean hide) {
     this.hide = hide;
   }
 
+  @JsonIgnore
   public Date getCreatedAt() {
     return createdAt;
   }
