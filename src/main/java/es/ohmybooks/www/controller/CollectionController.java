@@ -1,10 +1,15 @@
 package es.ohmybooks.www.controller;
 
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,21 +41,27 @@ public class CollectionController {
   @Autowired
   JwtProvider jwtProvider;
 
-  @GetMapping("user")
-  public ResponseEntity<?> listBooksByUser(@RequestHeader String authorization) {
+  @GetMapping("/user")
+  public ResponseEntity<?> getMyCollection(@RequestHeader String authorization) {
     String token = authorization.substring(7);
     String userName = jwtProvider.getUserNameFromToken(token);
     int idUser = userService.getByUserName(userName).get().getId();
     return new ResponseEntity<>(collectionService.findByUserId(idUser), HttpStatus.OK);
   }
 
-  @GetMapping("book")
-  public ResponseEntity<?> list (@RequestHeader String authorization, @RequestParam("idBook") int idBook) {
+  @GetMapping("/user/{userName}")
+  public ResponseEntity<?> getCollectionByUser(@RequestHeader String authorization, @PathVariable("userName") String userName) {
+    int idUser = userService.getByUserName(userName).get().getId();
+    return new ResponseEntity<>(collectionService.findByUserId(idUser), HttpStatus.OK);
+  }
+
+  @GetMapping("book/{idBook}")
+  public ResponseEntity<?> getBookAtCollections(@RequestHeader String authorization, @PathVariable("idBook") int idBook) {
     return new ResponseEntity<>(collectionService.findByBookId(idBook), HttpStatus.OK);
   }
 
-  @PostMapping("/add")
-  public ResponseEntity<?> addBookToUser(@RequestHeader String authorization, @RequestParam("idBook") int idBook) {
+  @PostMapping("/addBook/{idBook}")
+  public ResponseEntity<?> addBookToUser(@RequestHeader String authorization, @PathVariable("idBook") int idBook) {
     // TODO comprobar si el libro ya existe en collection
     String token = authorization.substring(7);
     String userName = jwtProvider.getUserNameFromToken(token);
@@ -62,5 +73,5 @@ public class CollectionController {
     collectionService.save(collectionn);
     return new ResponseEntity<>(new Message("Added Book to Collection"), HttpStatus.OK);
   }
-
+  
 }

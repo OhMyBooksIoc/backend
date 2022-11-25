@@ -14,6 +14,8 @@ public interface CollectionRepository extends JpaRepository<Collectionn, Integer
   
   List<Collectionn> findByBookId(int bookId);
 
+  boolean deleteByUserId(int userId);
+
   boolean existsByUserId(int userId);
 
   boolean existsByBookId(int bookId);
