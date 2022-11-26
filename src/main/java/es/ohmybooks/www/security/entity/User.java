@@ -148,7 +148,7 @@ public class User implements Serializable {
 		this.picture = picture;
 	}
 
-	public boolean getStatus() {
+	public boolean isStatus() {
 		return status;
 	}
 
