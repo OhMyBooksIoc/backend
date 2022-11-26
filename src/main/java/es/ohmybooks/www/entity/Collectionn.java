@@ -31,7 +31,7 @@ public class Collectionn {
   @Column(name = "comment", columnDefinition = "varchar(500)")
   private String comment;
 
-  @Column(name = "readd", columnDefinition = "boolean")
+  @Column(name = "readd", columnDefinition = "tinyint(1)")
   private boolean readd;
 
   @Column(name = "hide", columnDefinition = "tinyint(1)")
