@@ -74,4 +74,24 @@ public class CollectionController {
     return new ResponseEntity<>(new Message("Added Book to Collection"), HttpStatus.OK);
   }
 
+  @PostMapping("/readd")
+	public ResponseEntity<?> markReadd(@RequestHeader String authorization, @PathVariable("readd") boolean readd) {
+    String token = authorization.substring(7);
+    String userName = jwtProvider.getUserNameFromToken(token);
+    Collectionn collectionn = new Collectionn();
+    if(collectionn.isStatus()==false){
+      return new ResponseEntity<>(new Message("The collection doesn't exist"), HttpStatus.NOT_FOUND);
+    } else if(collectionn.getReadd()==false){
+      collectionn.setUserId(userService.getByUserName(userName).get().getId());
+		  collectionn.setReadd(true);
+		  collectionService.save(collectionn);
+      return new ResponseEntity<>(new Message("Book read"), HttpStatus.CREATED);
+    } else {
+      collectionn.setUserId(userService.getByUserName(userName).get().getId());
+		  collectionn.setReadd(false);
+		  collectionService.save(collectionn);
+      return new ResponseEntity<>(new Message("Book not read"), HttpStatus.CREATED);
+    }
+		
+    }
 }
