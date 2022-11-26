@@ -15,6 +15,7 @@ import es.ohmybooks.www.security.dto.UserDto;
 import es.ohmybooks.www.security.entity.User;
 import es.ohmybooks.www.security.jwt.JwtProvider;
 import es.ohmybooks.www.security.service.UserService;
+import es.ohmybooks.www.service.CollectionService;
 
 @RestController
 @RequestMapping("/user")
@@ -29,6 +30,9 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	CollectionService collectionService;
 
 	@Autowired
 	JwtProvider jwtProvider;
@@ -52,7 +56,7 @@ public class UserController {
 	 */
 	@GetMapping("userName/{userName}")
 	public ResponseEntity<?> findUserByUserName(@PathVariable("userName") String userName) {
-		if (!userService.existsByUserName(userName)) {
+		if (!userService.existsByUserName(userName) || userService.getByUserName(userName).get().isStatus()==false) {
 			return new ResponseEntity<>(new Message("The user doesn't exist"), HttpStatus.NOT_FOUND);
 		} else {
 			return new ResponseEntity<>(userService.getByUserName(userName), HttpStatus.OK);
@@ -96,14 +100,22 @@ public class UserController {
 		}
 	}
 
-	@PutMapping("disable")
-	public ResponseEntity<?> disableUser(@RequestHeader String authorization) {
+	@PutMapping("changeStatus")
+	public ResponseEntity<?> changeStatusUser(@RequestHeader String authorization) {
 		String token = authorization.substring(7);
 		String userName = jwtProvider.getUserNameFromToken(token);
 		User user = userService.getByUserName(userName).get();
-		user.setStatus(false);
-		userService.save(user);
-		return new ResponseEntity<>(new Message("Disable user"), HttpStatus.CREATED);
+		if (user.isStatus() == true) {
+			user.setStatus(false);
+			userService.save(user);
+			collectionService.changeStatusByUserId(user.getId());
+			return new ResponseEntity<>(new Message("Disable user"), HttpStatus.CREATED);
+		} else {
+			user.setStatus(true);
+			userService.save(user);
+			collectionService.changeStatusByUserId(user.getId());
+			return new ResponseEntity<>(new Message("Enable user"), HttpStatus.CREATED);
+		}
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")

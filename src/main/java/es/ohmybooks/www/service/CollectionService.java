@@ -14,10 +14,10 @@ public interface CollectionService {
 
   public abstract List<Collectionn> findByBookId(int bookId);
 
-  public abstract boolean deleteCollectionById(int id);
-
   public abstract boolean deleteCollectionByUserId(int userId);
 
   public boolean existsById(int id);
+
+  public void changeStatusByUserId(int userId);
 
 }

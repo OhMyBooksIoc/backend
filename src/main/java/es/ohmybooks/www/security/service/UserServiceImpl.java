@@ -3,6 +3,7 @@ package es.ohmybooks.www.security.service;
 import es.ohmybooks.www.security.entity.User;
 import es.ohmybooks.www.security.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,15 +20,22 @@ public class UserServiceImpl implements UserService {
   UserRepository userRepository;
 
   @Override
-  public List<User> listUsers(){
-    return userRepository.findAll();
+  public List<User> listUsers() {
+    List<User> us = userRepository.findAll();
+    List<User> enableUsers = new ArrayList<User>();
+    for (User u : us) {
+      if (u.isStatus() == true) {
+        enableUsers.add(u);
+      }
+    }
+    return enableUsers;
   }
 
   @Override
   public Optional<User> findById(int id) {
     return userRepository.findById(id);
   }
-  
+
   @Override
   public Optional<User> getByUserName(String userName) {
     return userRepository.findByUserName(userName);
@@ -53,7 +61,7 @@ public class UserServiceImpl implements UserService {
     try {
       userRepository.deleteById(id);
       return true;
-    } catch (Exception e){ 
+    } catch (Exception e) {
       return false;
     }
   }
