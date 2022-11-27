@@ -1,5 +1,7 @@
 package es.ohmybooks.www.security.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -107,11 +109,13 @@ public class UserController {
 		User user = userService.getByUserName(userName).get();
 		if (user.isStatus() == true) {
 			user.setStatus(false);
+			user.setDisableAt(new Date());
 			userService.save(user);
 			collectionService.changeStatusByUserId(user.getId());
 			return new ResponseEntity<>(new Message("Disable user"), HttpStatus.CREATED);
 		} else {
 			user.setStatus(true);
+			user.setDisableAt(null);
 			userService.save(user);
 			collectionService.changeStatusByUserId(user.getId());
 			return new ResponseEntity<>(new Message("Enable user"), HttpStatus.CREATED);

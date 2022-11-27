@@ -97,6 +97,7 @@ public class AuthController {
 		User user = userService.getByUserName(jwtDto.getUserName()).get();
 		if(user.isStatus()==false) {
 			user.setStatus(true);
+			user.setDisableAt(null);
 			userService.save(user);
 			collectionService.changeStatusByUserId(user.getId());
 		}
