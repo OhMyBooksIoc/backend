@@ -40,6 +40,9 @@ public class Collectionn {
   @Column(name = "status", columnDefinition = "tinyint(1)")
   private boolean status;
 
+  @Column(name = "exchange", columnDefinition = "tinyint(1)")
+  private boolean exchange;
+
   @Column(name = "created_at")
   private Date createdAt = new Date();
 
@@ -138,6 +141,14 @@ public class Collectionn {
     this.status = status;
   }
 
+  public boolean isExchange() {
+    return exchange;
+  }
+
+  public void setExchange(boolean exchange) {
+    this.exchange = exchange;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o)
@@ -155,5 +166,5 @@ public class Collectionn {
   public int hashCode() {
     return Objects.hash(user, book);
   }
-
+ 
 }
