@@ -16,20 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import es.ohmybooks.www.dto.Message;
-import es.ohmybooks.www.entity.Collectionn;
+import es.ohmybooks.www.entity.UserBook;
 import es.ohmybooks.www.security.entity.User;
 import es.ohmybooks.www.security.jwt.JwtProvider;
 import es.ohmybooks.www.security.service.UserService;
 import es.ohmybooks.www.service.BookService;
-import es.ohmybooks.www.service.CollectionService;
+import es.ohmybooks.www.service.UserBookService;
 
 @RestController // @Controller + @ResponseBody
-@RequestMapping("collection")
+@RequestMapping("userBook")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST })
-public class CollectionController {
+public class UserBookController {
 
   @Autowired
-  CollectionService collectionService;
+  UserBookService userBookService;
 
   @Autowired
   BookService bookService;
@@ -41,42 +41,42 @@ public class CollectionController {
   JwtProvider jwtProvider;
 
   @GetMapping("/user")
-  public ResponseEntity<?> getMyCollection(@RequestHeader String authorization) {
+  public ResponseEntity<?> getRegisteredUserBooks(@RequestHeader String authorization) {
     String token = authorization.substring(7);
     String userName = jwtProvider.getUserNameFromToken(token);
     int userId = userService.getByUserName(userName).get().getId();
-    return new ResponseEntity<>(collectionService.findByUserId(userId), HttpStatus.OK);
+    return new ResponseEntity<>(userBookService.findByUserId(userId), HttpStatus.OK);
   }
 
   @GetMapping("/user/{userName}")
-  public ResponseEntity<?> getCollectionByUser(@RequestHeader String authorization,
+  public ResponseEntity<?> getBooksByUserName(@RequestHeader String authorization,
       @PathVariable("userName") String userName) {
     User user = userService.getByUserName(userName).get();
     if (user.isStatus() == false) {
       return new ResponseEntity<>(new Message("The user doesn't exist"), HttpStatus.NOT_FOUND);
     }
-    return new ResponseEntity<>(collectionService.findByUserIdAndHide(user.getId(), false), HttpStatus.OK);
+    return new ResponseEntity<>(userBookService.findByUserIdAndHide(user.getId(), false), HttpStatus.OK);
   }
 
   @GetMapping("book/{bookId}")
-  public ResponseEntity<?> getBookAtCollections(@RequestHeader String authorization,
+  public ResponseEntity<?> getBookFromAllUsers(@RequestHeader String authorization,
       @PathVariable("bookId") int bookId) {
-    return new ResponseEntity<>(collectionService.findByBookId(bookId), HttpStatus.OK);
+    return new ResponseEntity<>(userBookService.findByBookId(bookId), HttpStatus.OK);
   }
 
   @PostMapping("/addBook/{bookId}")
   public ResponseEntity<?> addBookToUser(@RequestHeader String authorization, @PathVariable("bookId") int bookId) {
-    // TODO comprobar si el libro ya existe en collection
+    // TODO comprobar si el libro ya existe en userbook
     String token = authorization.substring(7);
     String userName = jwtProvider.getUserNameFromToken(token);
-    Collectionn collectionn = new Collectionn();
-    collectionn.setBookId(bookId);
-    collectionn.setUserId(userService.getByUserName(userName).get().getId());
-    collectionn.setHide(false); // default is visible(false)
-    collectionn.setReadd(false); // default is unread(false)
-    collectionn.setStatus(true); // default is enable(true)
-    collectionService.save(collectionn);
-    return new ResponseEntity<>(new Message("Added Book to Collection"), HttpStatus.OK);
+    UserBook userBook = new UserBook();
+    userBook.setBookId(bookId);
+    userBook.setUserId(userService.getByUserName(userName).get().getId());
+    userBook.setHide(false); // default is visible(false)
+    userBook.setReadd(false); // default is unread(false)
+    userBook.setStatus(true); // default is enable(true)
+    userBookService.save(userBook);
+    return new ResponseEntity<>(new Message("Added Book to User"), HttpStatus.OK);
   }
 
 
@@ -86,14 +86,14 @@ public class CollectionController {
     String userName = jwtProvider.getUserNameFromToken(token);
     User user = userService.getByUserName(userName).get();
     int userId = user.getId();
-    Collectionn collectionn = collectionService.findByUserIdAndBookId(userId, idBook);
-    if (collectionn.getHide() == false) {
-      collectionn.setHide(true);
-      collectionService.save(collectionn);
+    UserBook userBook = userBookService.findByUserIdAndBookId(userId, idBook);
+    if (userBook.getHide() == false) {
+      userBook.setHide(true);
+      userBookService.save(userBook);
       return new ResponseEntity<>(new Message("Hidden Book"), HttpStatus.CREATED);
     } else {
-      collectionn.setHide(false);
-      collectionService.save(collectionn);
+      userBook.setHide(false);
+      userBookService.save(userBook);
       return new ResponseEntity<>(new Message("Visible Book"), HttpStatus.CREATED);
     }
   }
@@ -104,14 +104,14 @@ public class CollectionController {
     String userName = jwtProvider.getUserNameFromToken(token);
     User user = userService.getByUserName(userName).get();
     int userId = user.getId();
-    Collectionn collectionn = collectionService.findByUserIdAndBookId(userId, idBook);
-    if (collectionn.isExchange() == false) {
-      collectionn.setExchange(true);
-      collectionService.save(collectionn);
+    UserBook userBook = userBookService.findByUserIdAndBookId(userId, idBook);
+    if (userBook.isExchange() == false) {
+      userBook.setExchange(true);
+      userBookService.save(userBook);
       return new ResponseEntity<>(new Message("Book available for exchange"), HttpStatus.CREATED);
     } else {
-      collectionn.setExchange(false);
-      collectionService.save(collectionn);
+      userBook.setExchange(false);
+      userBookService.save(userBook);
       return new ResponseEntity<>(new Message("Book not available for exchange"), HttpStatus.CREATED);
     }
   }
@@ -121,20 +121,20 @@ public class CollectionController {
     String token = authorization.substring(7);
     String userName = jwtProvider.getUserNameFromToken(token);
     User user = userService.getByUserName(userName).get();
-    List<Collectionn> collectionList = collectionService.findByUserId(user.getId());
-    Collectionn selectedCollection = null;
-    for (Collectionn collection : collectionList ){
-      if (collection.getBookId() == idBook){
-        selectedCollection = collection;
+    List<UserBook> userBookList = userBookService.findByUserId(user.getId());
+    UserBook selectedUserBook= null;
+    for (UserBook userBook : userBookList ){
+      if (userBook.getBookId() == idBook){
+        selectedUserBook = userBook;
       }
     }
 
-    if (selectedCollection == null) {
-      return new ResponseEntity<>(new Message("This book isn't in your collection"), HttpStatus.NOT_FOUND);
+    if (selectedUserBook == null) {
+      return new ResponseEntity<>(new Message("This book isn't in your library"), HttpStatus.NOT_FOUND);
     }
-    Boolean previousState = selectedCollection.getReadd();
-    selectedCollection.setReadd(!previousState);
-    collectionService.save(selectedCollection);
+    Boolean previousState = selectedUserBook.getReadd();
+    selectedUserBook.setReadd(!previousState);
+    userBookService.save(selectedUserBook);
     return new ResponseEntity<>(new Message(previousState ? "Book set to unread" : "Book set to read"), HttpStatus.CREATED);
   }
 
