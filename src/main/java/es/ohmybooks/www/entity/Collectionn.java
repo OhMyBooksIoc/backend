@@ -37,6 +37,12 @@ public class Collectionn {
   @Column(name = "hide", columnDefinition = "tinyint(1)")
   private boolean hide;
 
+  @Column(name = "status", columnDefinition = "tinyint(1)")
+  private boolean status;
+
+  @Column(name = "exchange", columnDefinition = "tinyint(1)")
+  private boolean exchange;
+
   @Column(name = "created_at")
   private Date createdAt = new Date();
 
@@ -49,12 +55,13 @@ public class Collectionn {
     this.book = book;
   }
 
-  public Collectionn(int userId, int bookId, String comment, boolean readd, boolean hide, Date createdAt) {
+  public Collectionn(int userId, int bookId, String comment, boolean readd, boolean hide, boolean status, Date createdAt) {
     this.userId = userId;
     this.bookId = bookId;
     this.comment = comment;
     this.readd = readd;
     this.hide = hide;
+    this.status = status;
     this.createdAt = createdAt;
   }
 
@@ -126,6 +133,21 @@ public class Collectionn {
     this.createdAt = createdAt;
   }
 
+  public boolean isStatus() {
+    return status;
+  }
+
+  public void setStatus(boolean status) {
+    this.status = status;
+  }
+
+  public boolean isExchange() {
+    return exchange;
+  }
+
+  public void setExchange(boolean exchange) {
+    this.exchange = exchange;
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -144,5 +166,6 @@ public class Collectionn {
   public int hashCode() {
     return Objects.hash(user, book);
   }
-
+  
 }
+

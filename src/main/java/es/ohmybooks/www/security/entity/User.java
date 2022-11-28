@@ -41,6 +41,9 @@ public class User implements Serializable {
 	@Column(name = "status", columnDefinition = "tinyint(1)")
 	private boolean status;
 
+	@Column(name = "disable_at")
+	private Date disableAt;
+
 	@Column(name = "created_at")
 	private Date createdAt = new Date();
 
@@ -148,12 +151,20 @@ public class User implements Serializable {
 		this.picture = picture;
 	}
 
-	public boolean getStatus() {
+	public boolean isStatus() {
 		return status;
 	}
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	public Date getDisableAt() {
+		return disableAt;
+	}
+
+	public void setDisableAt(Date disableAt) {
+		this.disableAt = disableAt;
 	}
 
 	@JsonIgnore
@@ -191,4 +202,7 @@ public class User implements Serializable {
 		return Objects.hash(userName);
 	}
 
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 }

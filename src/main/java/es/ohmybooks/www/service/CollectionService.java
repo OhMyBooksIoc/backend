@@ -6,18 +6,22 @@ import es.ohmybooks.www.entity.Collectionn;
 
 public interface CollectionService {
 
-  public abstract List<Collectionn> listCollection();
-
   public abstract Collectionn save(Collectionn collection);
 
   public abstract List<Collectionn> findByUserId(int userId);
 
-  public abstract List<Collectionn> findByBookId(int bookId);
+  public abstract List<Collectionn> findByUserIdAndHide(int userId, boolean hide);
 
-  public abstract boolean deleteCollectionById(int id);
+  public abstract List<Collectionn> findByBookId(int bookId);
 
   public abstract boolean deleteCollectionByUserId(int userId);
 
   public boolean existsById(int id);
+
+  public void changeStatusByUserId(int userId);
+
+  public Collectionn findByUserIdAndBookId(int userId, int bookId);
+
+  public boolean deleteByUserIdAndBookId(int userId, int bookId);//BORRAR?
 
 }
