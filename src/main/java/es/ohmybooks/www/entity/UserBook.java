@@ -10,9 +10,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.ohmybooks.www.security.entity.User;
 
 @Entity
-@Table(name = "collection")
-@IdClass(CollectionId.class)
-public class Collectionn {
+@Table(name = "userBook")
+@IdClass(UserBookId.class)
+public class UserBook {
 
   @Id
   private int userId;
@@ -47,15 +47,15 @@ public class Collectionn {
   private Date createdAt = new Date();
 
   
-  public Collectionn() {
+  public UserBook() {
   }
 
-  public Collectionn(User user, Book book) {
+  public UserBook(User user, Book book) {
     this.user = user;
     this.book = book;
   }
 
-  public Collectionn(int userId, int bookId, String comment, boolean readd, boolean hide, boolean status, Date createdAt) {
+  public UserBook(int userId, int bookId, String comment, boolean readd, boolean hide, boolean status, Date createdAt) {
     this.userId = userId;
     this.bookId = bookId;
     this.comment = comment;
@@ -157,7 +157,7 @@ public class Collectionn {
     if (o == null || getClass() != o.getClass())
       return false;
 
-    Collectionn that = (Collectionn) o;
+    UserBook that = (UserBook) o;
     return Objects.equals(user, that.user) &&
         Objects.equals(book, that.book);
   }

@@ -17,7 +17,7 @@ import es.ohmybooks.www.security.dto.UserDto;
 import es.ohmybooks.www.security.entity.User;
 import es.ohmybooks.www.security.jwt.JwtProvider;
 import es.ohmybooks.www.security.service.UserService;
-import es.ohmybooks.www.service.CollectionService;
+import es.ohmybooks.www.service.UserBookService;
 
 @RestController
 @RequestMapping("/user")
@@ -34,7 +34,7 @@ public class UserController {
 	UserService userService;
 
 	@Autowired
-	CollectionService collectionService;
+	UserBookService userBookService;
 
 	@Autowired
 	JwtProvider jwtProvider;
@@ -111,13 +111,13 @@ public class UserController {
 			user.setStatus(false);
 			user.setDisableAt(new Date());
 			userService.save(user);
-			collectionService.changeStatusByUserId(user.getId());
+			userBookService.changeStatusByUserId(user.getId());
 			return new ResponseEntity<>(new Message("Disable user"), HttpStatus.CREATED);
 		} else {
 			user.setStatus(true);
 			user.setDisableAt(null);
 			userService.save(user);
-			collectionService.changeStatusByUserId(user.getId());
+			userBookService.changeStatusByUserId(user.getId());
 			return new ResponseEntity<>(new Message("Enable user"), HttpStatus.CREATED);
 		}
 	}
@@ -129,7 +129,7 @@ public class UserController {
 		if (!userService.existsByUserName(userName)) {
 			return new ResponseEntity<>(new Message("The user doesn't exist"), HttpStatus.NOT_FOUND);
 		} else {
-			collectionService.deleteCollectionByUserId(user.getId());
+			userBookService.deleteRelationUserBook(user.getId());
 			userService.deleteUserById(userService.getByUserName(userName).get().getId());
 			return new ResponseEntity<>(new Message("Deleted User"), HttpStatus.OK);
 		}

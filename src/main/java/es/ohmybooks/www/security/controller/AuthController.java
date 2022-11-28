@@ -22,7 +22,7 @@ import es.ohmybooks.www.security.enums.RoleName;
 import es.ohmybooks.www.security.jwt.JwtProvider;
 import es.ohmybooks.www.security.service.RoleService;
 import es.ohmybooks.www.security.service.UserService;
-import es.ohmybooks.www.service.CollectionService;
+import es.ohmybooks.www.service.UserBookService;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -42,7 +42,7 @@ public class AuthController {
 	UserService userService;
 
 	@Autowired
-	CollectionService collectionService;
+	UserBookService userBookService;
 
 	@Autowired
 	RoleService roleService;

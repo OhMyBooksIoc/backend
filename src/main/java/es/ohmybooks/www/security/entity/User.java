@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import es.ohmybooks.www.entity.Collectionn;
+import es.ohmybooks.www.entity.UserBook;
 
 @Entity
 @Table(name = "user")
@@ -54,7 +54,7 @@ public class User implements Serializable {
 	private Set<Role> roles = new HashSet<>();
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-	private Set<Collectionn> books = new HashSet<>();
+	private Set<UserBook> books = new HashSet<>();
 
 	public User() {
 	}
@@ -81,7 +81,7 @@ public class User implements Serializable {
 	}
 
 	public User(int id, String name, String userName, String email, String password, String picture, boolean status,
-			Set<Role> roles, Set<Collectionn> books) {
+			Set<Role> roles, Set<UserBook> books) {
 		this.id = id;
 		this.name = name;
 		this.userName = userName;
@@ -177,11 +177,11 @@ public class User implements Serializable {
 	}
 
 	@JsonIgnore
-	public Set<Collectionn> getBooks() {
+	public Set<UserBook> getBooks() {
 		return books;
 	}
 
-	public void setBooks(Set<Collectionn> books) {
+	public void setBooks(Set<UserBook> books) {
 		this.books = books;
 	}
 

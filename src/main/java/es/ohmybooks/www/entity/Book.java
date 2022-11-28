@@ -46,7 +46,7 @@ public class Book implements Serializable {
   private Date createdAt = new Date();
 
   @OneToMany(mappedBy = "book")
-  private Set<Collectionn> users = new HashSet<>();
+  private Set<UserBook> users = new HashSet<>();
 
   /**
    * book constructor without parameters
@@ -76,7 +76,7 @@ public class Book implements Serializable {
   }
 
   public Book(int id, String name, String author, String genre, String saga, int year, int pages, String cover,
-      Set<Collectionn> users) {
+      Set<UserBook> users) {
     this.id = id;
     this.name = name;
     this.author = author;
@@ -153,11 +153,11 @@ public class Book implements Serializable {
   }
 
   @JsonIgnore
-  public Set<Collectionn> getUsers() {
+  public Set<UserBook> getUsers() {
     return users;
   }
 
-  public void setUsers(Set<Collectionn> users) {
+  public void setUsers(Set<UserBook> users) {
     this.users = users;
   }
 

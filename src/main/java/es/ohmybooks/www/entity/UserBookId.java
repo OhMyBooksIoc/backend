@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 
-public class CollectionId implements Serializable {
+public class UserBookId implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -15,10 +15,10 @@ public class CollectionId implements Serializable {
   @Column(name = "book_id")
   private int bookId;
 
-  public CollectionId() {
+  public UserBookId() {
   }
 
-  public CollectionId(int userId, int bookId) {
+  public UserBookId(int userId, int bookId) {
     this.userId = userId;
     this.bookId = bookId;
   }
@@ -47,7 +47,7 @@ public class CollectionId implements Serializable {
     if (o == null || getClass() != o.getClass())
       return false;
 
-    CollectionId that = (CollectionId) o;
+    UserBookId that = (UserBookId) o;
     return Objects.equals(userId, that.userId) &&
         Objects.equals(bookId, that.bookId);
   }
