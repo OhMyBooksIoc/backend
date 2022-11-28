@@ -94,13 +94,6 @@ public class AuthController {
 		String jwt = jwtProvider.generateToken(authentication);
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
-		User user = userService.getByUserName(jwtDto.getUserName()).get();
-		if(user.isStatus()==false) {
-			user.setStatus(true);
-			user.setDisableAt(null);
-			userService.save(user);
-			collectionService.changeStatusByUserId(user.getId());
-		}
 		return new ResponseEntity<>(jwtDto, HttpStatus.OK);
 	}
 }
