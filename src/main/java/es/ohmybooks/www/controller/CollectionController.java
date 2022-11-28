@@ -80,37 +80,6 @@ public class CollectionController {
     return new ResponseEntity<>(new Message("Added Book to Collection"), HttpStatus.OK);
   }
 
-  @DeleteMapping("deleteBook/{bookId}")
-  public ResponseEntity<?> deleteBook(@RequestHeader String authorization, @PathVariable("bookId") int bookId) {
-    String token = authorization.substring(7);
-    String userName = jwtProvider.getUserNameFromToken(token);
-    int userId = userService.getByUserName(userName).get().getId();
-    collectionService.deleteByUserIdAndBookId(userId, bookId);
-    return new ResponseEntity<>(new Message("Deleted Collection Book"), HttpStatus.OK);
-  }
-
-  @PutMapping("/read/{idBook}")
-  public ResponseEntity<?> markReadd(@RequestHeader String authorization, @PathVariable("idBook") int idBook) {
-    String token = authorization.substring(7);
-    String userName = jwtProvider.getUserNameFromToken(token);
-    User user = userService.getByUserName(userName).get();
-    List<Collectionn> collectionList = collectionService.findByUserId(user.getId());
-    Collectionn selectedCollection = null;
-    for (Collectionn collection : collectionList) {
-      if (collection.getBookId() == idBook) {
-        selectedCollection = collection;
-      }
-    }
-
-    if (selectedCollection == null) {
-      return new ResponseEntity<>(new Message("This book isn't in your collection"), HttpStatus.NOT_FOUND);
-    }
-    Boolean previousState = selectedCollection.getReadd();
-    selectedCollection.setReadd(!previousState);
-    collectionService.save(selectedCollection);
-    return new ResponseEntity<>(new Message(previousState ? "Book set to unread" : "Book set to read"),
-        HttpStatus.CREATED);
-  }
 
   @PutMapping("hide/{idBook}")
   public ResponseEntity<?> hideBook(@RequestHeader String authorization, @PathVariable("idBook") int idBook) {

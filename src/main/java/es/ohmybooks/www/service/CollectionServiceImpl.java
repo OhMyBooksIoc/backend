@@ -65,16 +65,6 @@ public class CollectionServiceImpl implements CollectionService {
     return collectionRepository.findByUserIdAndBookId(userId, bookId);
   }
 
-  @Override////BORRAR?
-  public boolean deleteByUserIdAndBookId(int userId, int bookId) {
-    try {
-      collectionRepository.deleteByUserIdAndBookId(userId, bookId);
-      return true;
-    } catch (Exception e) {
-      return false;
-    }
-  }
-
 
   public void changeStatusByUserId(int userId) {
     List<Collectionn> listCol = collectionRepository.findByUserId(userId);

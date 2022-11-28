@@ -22,6 +22,5 @@ public interface CollectionService {
 
   public Collectionn findByUserIdAndBookId(int userId, int bookId);
 
-  public boolean deleteByUserIdAndBookId(int userId, int bookId);//BORRAR?
 
 }
