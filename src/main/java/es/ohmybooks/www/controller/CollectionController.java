@@ -44,8 +44,8 @@ public class CollectionController {
   public ResponseEntity<?> getMyCollection(@RequestHeader String authorization) {
     String token = authorization.substring(7);
     String userName = jwtProvider.getUserNameFromToken(token);
-    int idUser = userService.getByUserName(userName).get().getId();
-    return new ResponseEntity<>(collectionService.findByUserId(idUser), HttpStatus.OK);
+    int userId = userService.getByUserName(userName).get().getId();
+    return new ResponseEntity<>(collectionService.findByUserId(userId), HttpStatus.OK);
   }
 
   @GetMapping("/user/{userName}")
@@ -55,28 +55,65 @@ public class CollectionController {
     if (user.isStatus() == false) {
       return new ResponseEntity<>(new Message("The user doesn't exist"), HttpStatus.NOT_FOUND);
     }
-    return new ResponseEntity<>(collectionService.findByUserId(user.getId()), HttpStatus.OK);
+    return new ResponseEntity<>(collectionService.findByUserIdAndHide(user.getId(), false), HttpStatus.OK);
   }
 
-  @GetMapping("book/{idBook}")
+  @GetMapping("book/{bookId}")
   public ResponseEntity<?> getBookAtCollections(@RequestHeader String authorization,
-      @PathVariable("idBook") int idBook) {
-    return new ResponseEntity<>(collectionService.findByBookId(idBook), HttpStatus.OK);
+      @PathVariable("bookId") int bookId) {
+    return new ResponseEntity<>(collectionService.findByBookId(bookId), HttpStatus.OK);
   }
 
-  @PostMapping("/addBook/{idBook}")
-  public ResponseEntity<?> addBookToUser(@RequestHeader String authorization, @PathVariable("idBook") int idBook) {
+  @PostMapping("/addBook/{bookId}")
+  public ResponseEntity<?> addBookToUser(@RequestHeader String authorization, @PathVariable("bookId") int bookId) {
     // TODO comprobar si el libro ya existe en collection
     String token = authorization.substring(7);
     String userName = jwtProvider.getUserNameFromToken(token);
     Collectionn collectionn = new Collectionn();
-    collectionn.setBookId(idBook);
+    collectionn.setBookId(bookId);
     collectionn.setUserId(userService.getByUserName(userName).get().getId());
     collectionn.setHide(false); // default is visible(false)
     collectionn.setReadd(false); // default is unread(false)
     collectionn.setStatus(true); // default is enable(true)
     collectionService.save(collectionn);
     return new ResponseEntity<>(new Message("Added Book to Collection"), HttpStatus.OK);
+  }
+
+
+  @PutMapping("hide/{idBook}")
+  public ResponseEntity<?> hideBook(@RequestHeader String authorization, @PathVariable("idBook") int idBook) {
+    String token = authorization.substring(7);
+    String userName = jwtProvider.getUserNameFromToken(token);
+    User user = userService.getByUserName(userName).get();
+    int userId = user.getId();
+    Collectionn collectionn = collectionService.findByUserIdAndBookId(userId, idBook);
+    if (collectionn.getHide() == false) {
+      collectionn.setHide(true);
+      collectionService.save(collectionn);
+      return new ResponseEntity<>(new Message("Hidden Book"), HttpStatus.CREATED);
+    } else {
+      collectionn.setHide(false);
+      collectionService.save(collectionn);
+      return new ResponseEntity<>(new Message("Visible Book"), HttpStatus.CREATED);
+    }
+  }
+
+  @PutMapping("exchange/{idBook}")
+  public ResponseEntity<?> exchangeBook(@RequestHeader String authorization, @PathVariable("idBook") int idBook) {
+    String token = authorization.substring(7);
+    String userName = jwtProvider.getUserNameFromToken(token);
+    User user = userService.getByUserName(userName).get();
+    int userId = user.getId();
+    Collectionn collectionn = collectionService.findByUserIdAndBookId(userId, idBook);
+    if (collectionn.isExchange() == false) {
+      collectionn.setExchange(true);
+      collectionService.save(collectionn);
+      return new ResponseEntity<>(new Message("Book available for exchange"), HttpStatus.CREATED);
+    } else {
+      collectionn.setExchange(false);
+      collectionService.save(collectionn);
+      return new ResponseEntity<>(new Message("Book not available for exchange"), HttpStatus.CREATED);
+    }
   }
 
   @PutMapping("/read/{idBook}")
@@ -100,4 +137,5 @@ public class CollectionController {
     collectionService.save(selectedCollection);
     return new ResponseEntity<>(new Message(previousState ? "Book set to unread" : "Book set to read"), HttpStatus.CREATED);
   }
+
 }

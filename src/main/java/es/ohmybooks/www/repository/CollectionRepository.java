@@ -11,6 +11,8 @@ import es.ohmybooks.www.entity.Collectionn;
 public interface CollectionRepository extends JpaRepository<Collectionn, Integer> {
 
   List<Collectionn> findByUserId(int userId);
+
+  List<Collectionn> findByUserIdAndHide(int userId, boolean hide);
   
   List<Collectionn> findByBookId(int bookId);
 
@@ -19,5 +21,8 @@ public interface CollectionRepository extends JpaRepository<Collectionn, Integer
   boolean existsByUserId(int userId);
 
   boolean existsByBookId(int bookId);
+
+  Collectionn findByUserIdAndBookId(int userId, int bookId);
+  
 
 }

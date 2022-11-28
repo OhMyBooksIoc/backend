@@ -19,11 +19,6 @@ public class CollectionServiceImpl implements CollectionService {
   CollectionRepository collectionRepository;
 
   @Override
-  public List<Collectionn> listCollection() {
-    return collectionRepository.findAll();
-  }
-
-  @Override
   public Collectionn save(Collectionn collection) {
     return collectionRepository.save(collection);
   }
@@ -44,6 +39,11 @@ public class CollectionServiceImpl implements CollectionService {
   }
 
   @Override
+  public List<Collectionn> findByUserIdAndHide(int userId, boolean hide) {
+    return collectionRepository.findByUserIdAndHide(userId, hide);
+  }
+
+  @Override
   public List<Collectionn> findByBookId(int bookId) {
     List<Collectionn> col = collectionRepository.findByBookId(bookId);
     List<Collectionn> filterCollection = new ArrayList<>();
@@ -60,9 +60,15 @@ public class CollectionServiceImpl implements CollectionService {
     return collectionRepository.existsById(id);
   }
 
+  @Override
+  public Collectionn findByUserIdAndBookId(int userId, int bookId) {
+    return collectionRepository.findByUserIdAndBookId(userId, bookId);
+  }
+
+
   public void changeStatusByUserId(int userId) {
-    List<Collectionn> col = collectionRepository.findByUserId(userId);
-    for (Collectionn c : col) {
+    List<Collectionn> listCol = collectionRepository.findByUserId(userId);
+    for (Collectionn c : listCol) {
       if (c.isStatus() == false) {
         c.setStatus(true);
       } else {
