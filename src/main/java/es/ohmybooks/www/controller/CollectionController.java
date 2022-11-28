@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -115,6 +114,28 @@ public class CollectionController {
       collectionService.save(collectionn);
       return new ResponseEntity<>(new Message("Book not available for exchange"), HttpStatus.CREATED);
     }
+  }
+
+  @PutMapping("/read/{idBook}")
+  public ResponseEntity<?> markReadd(@RequestHeader String authorization, @PathVariable("idBook") int idBook) {
+    String token = authorization.substring(7);
+    String userName = jwtProvider.getUserNameFromToken(token);
+    User user = userService.getByUserName(userName).get();
+    List<Collectionn> collectionList = collectionService.findByUserId(user.getId());
+    Collectionn selectedCollection = null;
+    for (Collectionn collection : collectionList ){
+      if (collection.getBookId() == idBook){
+        selectedCollection = collection;
+      }
+    }
+
+    if (selectedCollection == null) {
+      return new ResponseEntity<>(new Message("This book isn't in your collection"), HttpStatus.NOT_FOUND);
+    }
+    Boolean previousState = selectedCollection.getReadd();
+    selectedCollection.setReadd(!previousState);
+    collectionService.save(selectedCollection);
+    return new ResponseEntity<>(new Message(previousState ? "Book set to unread" : "Book set to read"), HttpStatus.CREATED);
   }
 
 }
