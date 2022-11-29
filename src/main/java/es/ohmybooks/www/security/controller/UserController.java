@@ -58,7 +58,7 @@ public class UserController {
 	 */
 	@GetMapping("userName/{userName}")
 	public ResponseEntity<?> findUserByUserName(@PathVariable("userName") String userName) {
-		if (!userService.existsByUserName(userName) || userService.getByUserName(userName).get().isStatus()==false) {
+		if (!userService.existsByUserName(userName)) {
 			return new ResponseEntity<>(new Message("The user doesn't exist"), HttpStatus.NOT_FOUND);
 		} else {
 			return new ResponseEntity<>(userService.getByUserName(userName), HttpStatus.OK);
@@ -88,7 +88,7 @@ public class UserController {
 		return new ResponseEntity<>(new Message("Modified user"), HttpStatus.CREATED);
 	}
 
-	@PostMapping("updatePass")
+	@PutMapping("updatePass")
 	public ResponseEntity<?> updatePass(@RequestHeader String authorization, @RequestBody Password password) {
 		String token = authorization.substring(7);
 		String userName = jwtProvider.getUserNameFromToken(token);
