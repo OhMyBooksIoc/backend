@@ -98,7 +98,7 @@ public class UserController {
 			userService.save(user);
 			return new ResponseEntity<>(new Message("Modified password"), HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<>(new Message("The actual password is not correct"), HttpStatus.CREATED);
+			return new ResponseEntity<>(new Message("The actual password is not correct"), HttpStatus.BAD_REQUEST);
 		}
 	}
 
