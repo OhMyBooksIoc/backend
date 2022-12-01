@@ -22,4 +22,6 @@ public interface UserBookService {
 
   public UserBook findByUserIdAndBookId(int userId, int bookId);
 
+  public abstract List<UserBook> findByTrade(boolean trade);
+
 }

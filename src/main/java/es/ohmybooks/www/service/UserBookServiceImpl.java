@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import es.ohmybooks.www.entity.UserBook;
 import es.ohmybooks.www.repository.UserBookRepository;
+import es.ohmybooks.www.security.entity.User;
 
 @Service
 @Transactional
@@ -65,6 +66,10 @@ public class UserBookServiceImpl implements UserBookService {
     return userBookRepository.findByUserIdAndBookId(userId, bookId);
   }
 
+  @Override
+  public List<UserBook> findByTrade(boolean trade) {
+    return userBookRepository.findByTrade(trade);
+  }
 
   public void changeStatusByUserId(int userId) {
     List<UserBook> listCol = userBookRepository.findByUserId(userId);

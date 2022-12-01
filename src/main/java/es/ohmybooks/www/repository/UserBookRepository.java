@@ -24,4 +24,6 @@ public interface UserBookRepository extends JpaRepository<UserBook, Integer> {
 
   UserBook findByUserIdAndBookId(int userId, int bookId);
 
+  List<UserBook> findByTrade(boolean trade);
+
 }
