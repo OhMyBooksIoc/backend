@@ -93,7 +93,7 @@ public class BookController {
       Book book = new Book(bookDto.getName(), bookDto.getAuthor(), bookDto.getGenre(), bookDto.getSaga(),
           bookDto.getYear(), bookDto.getPages(), bookDto.getCover());
       bookService.save(book);
-      return new ResponseEntity<>(new Message("Created Book"), HttpStatus.OK);
+      return new ResponseEntity<>(bookService.findByNameAndAuthor(book.getName(), book.getAuthor()), HttpStatus.OK);
     }
   }
 

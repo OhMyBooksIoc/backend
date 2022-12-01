@@ -25,4 +25,6 @@ public interface BookService {
 
   public boolean existsByAuthor(String author);
 
+  public abstract Book findByNameAndAuthor(String name, String Author);
+
 }

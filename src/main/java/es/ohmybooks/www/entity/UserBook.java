@@ -40,8 +40,8 @@ public class UserBook {
   @Column(name = "status", columnDefinition = "tinyint(1)")
   private boolean status;
 
-  @Column(name = "exchange", columnDefinition = "tinyint(1)")
-  private boolean exchange;
+  @Column(name = "trade", columnDefinition = "tinyint(1)")
+  private boolean trade;
 
   @Column(name = "created_at")
   private Date createdAt = new Date();
@@ -141,12 +141,12 @@ public class UserBook {
     this.status = status;
   }
 
-  public boolean isExchange() {
-    return exchange;
+  public boolean isTrade() {
+    return trade;
   }
 
-  public void setExchange(boolean exchange) {
-    this.exchange = exchange;
+  public void setTrade(boolean trade) {
+    this.trade = trade;
   }
 
   @Override

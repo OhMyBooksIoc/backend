@@ -1,5 +1,6 @@
 package es.ohmybooks.www.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
   boolean existsByAuthor(String author);
 
+  Book findByNameAndAuthor(String name, String Author);
+  
 }
