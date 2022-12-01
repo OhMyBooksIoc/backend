@@ -49,8 +49,7 @@ public class UserBookController {
   }
 
   @GetMapping("/user/{userName}")
-  public ResponseEntity<?> getBooksByUserName(@RequestHeader String authorization,
-      @PathVariable("userName") String userName) {
+  public ResponseEntity<?> getBooksByUserName(@PathVariable("userName") String userName) {
     User user = userService.getByUserName(userName).get();
     if (user.isStatus() == false) {
       return new ResponseEntity<>(new Message("The user doesn't exist"), HttpStatus.NOT_FOUND);
@@ -59,9 +58,13 @@ public class UserBookController {
   }
 
   @GetMapping("book/{bookId}")
-  public ResponseEntity<?> getBookFromAllUsers(@RequestHeader String authorization,
-      @PathVariable("bookId") int bookId) {
+  public ResponseEntity<?> getBookFromAllUsers(@PathVariable("bookId") int bookId) {
     return new ResponseEntity<>(userBookService.findByBookId(bookId), HttpStatus.OK);
+  }
+
+  @GetMapping("toTrade")
+  public ResponseEntity<?> getBooksToTrade() {
+    return new ResponseEntity<>(userBookService.findByTrade(true), HttpStatus.OK);
   }
 
   @PostMapping("/addBook/{bookId}")
