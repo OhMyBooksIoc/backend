@@ -22,5 +22,4 @@ public interface UserBookService {
 
   public UserBook findByUserIdAndBookId(int userId, int bookId);
 
-
 }

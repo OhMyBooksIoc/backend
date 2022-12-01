@@ -23,6 +23,5 @@ public interface UserBookRepository extends JpaRepository<UserBook, Integer> {
   boolean existsByBookId(int bookId);
 
   UserBook findByUserIdAndBookId(int userId, int bookId);
-  
 
 }

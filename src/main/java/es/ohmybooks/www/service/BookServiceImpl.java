@@ -44,6 +44,11 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
+  public Book findByNameAndAuthor(String name, String author) {
+    return bookRepository.findByNameAndAuthor(name, author);
+  }
+
+  @Override
   public boolean deleteBookById(int id) {
     try {
       bookRepository.deleteById(id);

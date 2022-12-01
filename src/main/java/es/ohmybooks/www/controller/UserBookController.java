@@ -87,32 +87,40 @@ public class UserBookController {
     User user = userService.getByUserName(userName).get();
     int userId = user.getId();
     UserBook userBook = userBookService.findByUserIdAndBookId(userId, idBook);
-    if (userBook.getHide() == false) {
-      userBook.setHide(true);
-      userBookService.save(userBook);
-      return new ResponseEntity<>(new Message("Hidden Book"), HttpStatus.CREATED);
+    if(userBook == null) {
+      return new ResponseEntity<>(new Message("This book isn't in your library"), HttpStatus.NOT_FOUND);
     } else {
-      userBook.setHide(false);
-      userBookService.save(userBook);
-      return new ResponseEntity<>(new Message("Visible Book"), HttpStatus.CREATED);
+      if (userBook.getHide() == false) {
+        userBook.setHide(true);
+        userBookService.save(userBook);
+        return new ResponseEntity<>(new Message("Hidden Book"), HttpStatus.CREATED);
+      } else {
+        userBook.setHide(false);
+        userBookService.save(userBook);
+        return new ResponseEntity<>(new Message("Visible Book"), HttpStatus.CREATED);
+      }
     }
   }
 
-  @PutMapping("exchange/{idBook}")
-  public ResponseEntity<?> exchangeBook(@RequestHeader String authorization, @PathVariable("idBook") int idBook) {
+  @PutMapping("trade/{idBook}")
+  public ResponseEntity<?> tradeBook(@RequestHeader String authorization, @PathVariable("idBook") int idBook) {
     String token = authorization.substring(7);
     String userName = jwtProvider.getUserNameFromToken(token);
     User user = userService.getByUserName(userName).get();
     int userId = user.getId();
     UserBook userBook = userBookService.findByUserIdAndBookId(userId, idBook);
-    if (userBook.isExchange() == false) {
-      userBook.setExchange(true);
-      userBookService.save(userBook);
-      return new ResponseEntity<>(new Message("Book available for exchange"), HttpStatus.CREATED);
+    if(userBook == null) {
+      return new ResponseEntity<>(new Message("This book isn't in your library"), HttpStatus.NOT_FOUND);
     } else {
-      userBook.setExchange(false);
-      userBookService.save(userBook);
-      return new ResponseEntity<>(new Message("Book not available for exchange"), HttpStatus.CREATED);
+      if (userBook.isTrade() == false) {
+        userBook.setTrade(true);
+        userBookService.save(userBook);
+        return new ResponseEntity<>(new Message("Book available for trade"), HttpStatus.CREATED);
+      } else {
+        userBook.setTrade(false);
+        userBookService.save(userBook);
+        return new ResponseEntity<>(new Message("Book not available for trade"), HttpStatus.CREATED);
+      }
     }
   }
 
