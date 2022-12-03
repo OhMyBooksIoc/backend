@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.github.cliftonlabs.json_simple.JsonObject;
+
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import es.ohmybooks.www.security.entity.User;
 import es.ohmybooks.www.security.jwt.JwtProvider;
 import es.ohmybooks.www.security.service.UserService;
 import es.ohmybooks.www.service.BookService;
@@ -31,14 +35,21 @@ public class StatsController {
   @Autowired
   JwtProvider jwtProvider;
 
-  //Estadístiques de perfil
+//#region Estadístiques de perfil
+  @GetMapping("/totalBooks")
+  public ResponseEntity<?> getBooks( @RequestHeader String authorization) {
+    String token = authorization.substring(7);
+    String userName = jwtProvider.getUserNameFromToken(token);
+    User user = userService.getByUserName(userName).get();
+    int userId = user.getId();
+    JsonObject json = new JsonObject();
+    json.put("Message", "Total books from "+ user.getName());
+    json.put("Result", userBookService.countByUserId(userId));
+    return new ResponseEntity<>(json, HttpStatus.OK);
 
-  /*@GetMapping("/totalBooks")
-  public ResponseEntity<?> getBooks(@RequestHeader String authorization) {
-    return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @GetMapping("/readBooks")
+  /*@GetMapping("/readBooks")
   public ResponseEntity<?> getReadBooks(@RequestHeader String authorization) {
     return new ResponseEntity<>(HttpStatus.OK);
   }
@@ -51,21 +62,18 @@ public class StatsController {
   @GetMapping("/booksToTrade")
   public ResponseEntity<?> getAvailableTrade(@RequestHeader String authorization) {
     return new ResponseEntity<>(HttpStatus.OK);
-  }
+  }*/
 
-  @GetMapping("/lastBook")
-  public ResponseEntity<?> lastAddedBook(@RequestHeader String authorization) {
+//#endregion
+
+//#region Estadístiques home(Llibres)
+
+  /*@GetMapping("/totalBooksApp")
+  public ResponseEntity<?> totalBooksApp(@RequestHeader String authorization) {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  //Estadístiques home(Llibres)
-
-  @GetMapping("/mostRead")
-  public ResponseEntity<?> mostReadedBook(@RequestHeader String authorization) {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  @GetMapping("/mostPurchased")
+  @GetMapping("/totalBooks")
   public ResponseEntity<?> mostPurchasedBook(@RequestHeader String authorization) {
     return new ResponseEntity<>(HttpStatus.OK);
   }
@@ -98,11 +106,12 @@ public class StatsController {
   @GetMapping("/booksAdded")
   public ResponseEntity<?> kastWeekBooks(@RequestHeader String authorization) {
     return new ResponseEntity<>(HttpStatus.OK);
-  }
+  }*/
+//#endregion
 
-  //Estadístiques home (usuari)
+  //#region Estadístiques home (usuari)
 
-  @GetMapping("/userReadBooks")
+  /*@GetMapping("/userReadBooks")
   public ResponseEntity<?> userMostBooks(@RequestHeader String authorization) {
     return new ResponseEntity<>(HttpStatus.OK);
   }
@@ -116,5 +125,5 @@ public class StatsController {
   public ResponseEntity<?> weekUserReg(@RequestHeader String authorization) {
     return new ResponseEntity<>(HttpStatus.OK);
   }*/
-
+//#endregion
 }
