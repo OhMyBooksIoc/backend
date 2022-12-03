@@ -24,4 +24,6 @@ public interface UserBookService {
 
   public abstract List<UserBook> findByTrade(boolean trade);
 
+  public abstract boolean deleteByUserIdAndBookId(int userId, int bookId);
+
 }

@@ -83,4 +83,14 @@ public class UserBookServiceImpl implements UserBookService {
     }
   }
 
+  @Override
+  public boolean deleteByUserIdAndBookId(int userId, int bookId) {
+    try {
+      userBookRepository.deleteByUserIdAndBookId(userId, bookId);
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
 }
