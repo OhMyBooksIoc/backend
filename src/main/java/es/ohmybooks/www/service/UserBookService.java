@@ -16,11 +16,13 @@ public interface UserBookService {
 
   public abstract boolean deleteRelationUserBook(int userId);
 
-  public boolean existsById(int id);
+  public abstract boolean existsById(int id);
 
   public void changeStatusByUserId(int userId);
 
-  public UserBook findByUserIdAndBookId(int userId, int bookId);
+  public abstract UserBook findByUserIdAndBookId(int userId, int bookId);
+
+  public abstract int countByUserId(int userId);
 
   public abstract List<UserBook> findByTrade(boolean trade);
 

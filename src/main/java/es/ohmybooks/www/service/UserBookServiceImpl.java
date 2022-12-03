@@ -84,6 +84,11 @@ public class UserBookServiceImpl implements UserBookService {
   }
 
   @Override
+  public int countByUserId(int userId) {
+    return userBookRepository.countByUserId(userId);
+  }
+
+  @Override
   public boolean deleteByUserIdAndBookId(int userId, int bookId) {
     try {
       userBookRepository.deleteByUserIdAndBookId(userId, bookId);
