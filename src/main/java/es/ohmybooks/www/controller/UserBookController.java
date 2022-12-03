@@ -157,7 +157,7 @@ public class UserBookController {
     int userId = userService.getByUserName(userName).get().getId();
     userBookService.deleteByUserIdAndBookId(userId, idBook);
     Boolean realBook = userBookService.existsById(userId);
-    return new ResponseEntity<>(new Message(realBook ? "Book removed from the user profile" : "This book didn't exist in this profile"), HttpStatus.OK);
+    return new ResponseEntity<>(new Message(realBook ? "Book removed from the user profile" : "This book didn't exist in this profile"), HttpStatus.NO_CONTENT);
   }
 
 }
