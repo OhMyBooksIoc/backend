@@ -155,10 +155,15 @@ public class UserBookController {
     String token = authorization.substring(7);
     String userName = jwtProvider.getUserNameFromToken(token);
     int userId = userService.getByUserName(userName).get().getId();
-    userBookService.deleteByUserIdAndBookId(userId, idBook);
-    Boolean realBook = userBookService.existsById(userId);
-    return new ResponseEntity<>(new Message(realBook ? "Book removed from the user profile" : "This book didn't exist in this profile"), HttpStatus.NO_CONTENT);
-  }
 
+    UserBook userBook = userBookService.findByUserIdAndBookId(userId, idBook);
+
+    if(userBook == null) {
+      return new ResponseEntity<>(new Message("This book isn't in your library"), HttpStatus.NOT_FOUND);
+    } else {
+      userBookService.deleteByUserIdAndBookId(userId, idBook);
+      return new ResponseEntity<>(new Message("Book removed from the user profile"), HttpStatus.NO_CONTENT);
+    }
+  }
 }
 
