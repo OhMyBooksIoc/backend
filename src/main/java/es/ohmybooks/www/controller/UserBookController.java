@@ -26,7 +26,7 @@ import es.ohmybooks.www.service.UserBookService;
 
 @RestController // @Controller + @ResponseBody
 @RequestMapping("userBook")
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT })
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE })
 public class UserBookController {
 
   @Autowired
