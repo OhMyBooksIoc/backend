@@ -26,4 +26,6 @@ public interface UserBookRepository extends JpaRepository<UserBook, Integer> {
 
   List<UserBook> findByTrade(boolean trade);
 
+  boolean deleteByUserIdAndBookId(int userId, int bookId);
+
 }
