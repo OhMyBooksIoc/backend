@@ -78,4 +78,9 @@ public class UserBookServiceImpl implements UserBookService {
     }
   }
 
+  @Override
+  public int countByUserId(int userId) {
+    return userBookRepository.countByUserId(userId);
+  }
+
 }
