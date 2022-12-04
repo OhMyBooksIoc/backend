@@ -72,7 +72,7 @@ public class StatsController {
   public ResponseEntity<?> getTotalBooksInTheApp() {
     JsonObject json = new JsonObject();
     json.put("Message", "Total books in the app");
-    json.put("Result", bookService.count());
+    json.put("Result", userBookService.count());
     return new ResponseEntity<>(json, HttpStatus.OK);
   }
 

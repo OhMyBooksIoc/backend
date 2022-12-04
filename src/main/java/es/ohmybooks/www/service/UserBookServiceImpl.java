@@ -70,18 +70,6 @@ public class UserBookServiceImpl implements UserBookService {
     return userBookRepository.findByTrade(trade);
   }
 
-  public void changeStatusByUserId(int userId) {
-    List<UserBook> listCol = userBookRepository.findByUserId(userId);
-    for (UserBook c : listCol) {
-      if (c.isStatus() == false) {
-        c.setStatus(true);
-      } else {
-        c.setStatus(false);
-      }
-      userBookRepository.save(c);
-    }
-  }
-
   @Override
   public int countByUserId(int userId) {
     return userBookRepository.countByUserId(userId);
@@ -94,6 +82,29 @@ public class UserBookServiceImpl implements UserBookService {
       return true;
     } catch (Exception e) {
       return false;
+    }
+  }
+
+  @Override
+  public long count() {
+    return userBookRepository.count();
+  }
+
+  @Override
+  public int countByReadd(boolean readd) {
+    return userBookRepository.countByReadd(readd);
+  }
+
+
+  public void changeStatusByUserId(int userId) {
+    List<UserBook> listCol = userBookRepository.findByUserId(userId);
+    for (UserBook c : listCol) {
+      if (c.isStatus() == false) {
+        c.setStatus(true);
+      } else {
+        c.setStatus(false);
+      }
+      userBookRepository.save(c);
     }
   }
 
