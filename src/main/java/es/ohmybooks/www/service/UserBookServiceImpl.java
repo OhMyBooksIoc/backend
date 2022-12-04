@@ -86,18 +86,18 @@ public class UserBookServiceImpl implements UserBookService {
   }
 
   @Override
-  public long count() {
-    return userBookRepository.count();
+  public int countByStatus(boolean status) {
+    return userBookRepository.countByStatus(status);
   }
 
   @Override
-  public int countByReadd(boolean readd) {
-    return userBookRepository.countByReadd(readd);
+  public int countByReaddAndStatus(boolean readd, boolean status) {
+    return userBookRepository.countByReaddAndStatus(readd, status);
   }
 
   @Override
-  public int countByTrade(boolean trade) {
-    return userBookRepository.countByTrade(trade);
+  public int countByTradeAndStatus(boolean trade, boolean status) {
+    return userBookRepository.countByTradeAndStatus(trade, status);
   }
 
 

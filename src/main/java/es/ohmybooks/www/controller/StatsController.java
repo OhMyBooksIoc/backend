@@ -72,7 +72,7 @@ public class StatsController {
   public ResponseEntity<?> getTotalBooksInTheApp() {
     JsonObject json = new JsonObject();
     json.put("Message", "Total books in the app");
-    json.put("Result", userBookService.count());
+    json.put("Result", userBookService.countByStatus(true));
     return new ResponseEntity<>(json, HttpStatus.OK);
   }
 
@@ -80,7 +80,7 @@ public class StatsController {
   public ResponseEntity<?> getBooksReadInTheApp() {
     JsonObject json = new JsonObject();
     json.put("Message", "Total books read in the app");
-    json.put("Result", userBookService.countByReadd(true));
+    json.put("Result", userBookService.countByReaddAndStatus(true, true));
     return new ResponseEntity<>(json, HttpStatus.OK);
   }
 
@@ -88,7 +88,7 @@ public class StatsController {
   public ResponseEntity<?>getTotalBooksTradeInTheApp() {
     JsonObject json = new JsonObject();
     json.put("Message", "Total books trade in the app");
-    json.put("Result", userBookService.countByTrade(true));
+    json.put("Result", userBookService.countByTradeAndStatus(true, true));
     return new ResponseEntity<>(json, HttpStatus.OK);
   }
 
@@ -96,12 +96,15 @@ public class StatsController {
 
   //#region Home - User Stats
 
-  /*@GetMapping("/totalUsersInTheApp")
-  public ResponseEntity<?> getTotalUsersInTheApp() {
-    return new ResponseEntity<>(HttpStatus.OK);
+  @GetMapping("/totalRegisteredUsers")
+  public ResponseEntity<?> getTotalResgisteredUsers() {
+    JsonObject json = new JsonObject();
+    json.put("Message", "Total registered users in the app");
+    json.put("Result", userService.countByStatus(true));
+    return new ResponseEntity<>(json, HttpStatus.OK);
   }
-
-    @GetMapping("/userWithBooksReadMax")
+  /*
+  @GetMapping("/userWithBooksReadMax")
   public ResponseEntity<?> getUserWithBooksReadMax() {
     return new ResponseEntity<>(HttpStatus.OK);
   }

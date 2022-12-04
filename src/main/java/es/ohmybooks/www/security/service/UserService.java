@@ -23,4 +23,6 @@ public interface UserService {
 
   public void save(User user);
 
+  public int countByStatus(boolean status);
+
 }

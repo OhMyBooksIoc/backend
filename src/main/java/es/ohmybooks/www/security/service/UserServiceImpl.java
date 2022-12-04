@@ -71,4 +71,9 @@ public class UserServiceImpl implements UserService {
     userRepository.save(user);
   }
 
+  @Override
+  public int countByStatus(boolean status) {
+    return userRepository.countByStatus(status);
+  }
+ 
 }
