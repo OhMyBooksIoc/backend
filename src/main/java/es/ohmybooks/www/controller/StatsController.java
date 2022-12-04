@@ -49,12 +49,19 @@ public class StatsController {
     return new ResponseEntity<>(json, HttpStatus.OK);
   }
 
-  /*@GetMapping("/totalBooksReadFromUser")
+  @GetMapping("/totalBooksReadFromUser")
   public ResponseEntity<?> getTotalBooksReadFromUser(@RequestHeader String authorization) {
-    return new ResponseEntity<>(HttpStatus.OK);
+    String token = authorization.substring(7);
+    String userName = jwtProvider.getUserNameFromToken(token);
+    User user = userService.getByUserName(userName).get();
+    int userId = user.getId();
+    JsonObject json = new JsonObject();
+    json.put("Message", "Total books readed from " + user.getName());
+    json.put("Result", userBookService.countByUserIdAndReadd(userId, true));
+    return new ResponseEntity<>(json, HttpStatus.OK);
   }
 
-  @GetMapping("/totalPagesReadFromUser")
+  /*@GetMapping("/totalPagesReadFromUser")
   public ResponseEntity<?> getTotalPagesReadFromUser(@RequestHeader String authorization) {
     return new ResponseEntity<>(HttpStatus.OK);
   }
