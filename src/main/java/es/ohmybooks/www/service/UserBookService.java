@@ -24,11 +24,14 @@ public interface UserBookService {
 
   public abstract int countByUserId(int userId);
 
+  public abstract int countByUserIdAndReadd(int userId, boolean readd);
+
   public abstract List<UserBook> findByTrade(boolean trade);
 
   public abstract boolean deleteByUserIdAndBookId(int userId, int bookId);
 
   public abstract int countByStatus(boolean status);
+
 
   public abstract int countByReaddAndStatus(boolean readd, boolean status);
 
