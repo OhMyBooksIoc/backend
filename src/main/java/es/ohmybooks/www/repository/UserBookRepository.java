@@ -32,4 +32,6 @@ public interface UserBookRepository extends JpaRepository<UserBook, Integer> {
 
   int countByReadd(boolean readd);
 
+  int countByTrade(boolean trade);
+
 }
