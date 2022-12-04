@@ -28,4 +28,8 @@ public interface UserBookService {
 
   public abstract boolean deleteByUserIdAndBookId(int userId, int bookId);
 
+  public abstract long count();
+
+  public abstract int countByReadd(boolean readd);
+
 }

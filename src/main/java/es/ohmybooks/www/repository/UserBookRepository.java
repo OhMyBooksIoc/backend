@@ -30,4 +30,6 @@ public interface UserBookRepository extends JpaRepository<UserBook, Integer> {
 
   boolean deleteByUserIdAndBookId(int userId, int bookId);
 
+  int countByReadd(boolean readd);
+
 }

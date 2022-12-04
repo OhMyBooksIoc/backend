@@ -72,15 +72,18 @@ public class StatsController {
   public ResponseEntity<?> getTotalBooksInTheApp() {
     JsonObject json = new JsonObject();
     json.put("Message", "Total books in the app");
-    json.put("Result", bookService.count());
+    json.put("Result", userBookService.count());
+    return new ResponseEntity<>(json, HttpStatus.OK);
+  }
+
+  @GetMapping("/totalBooksReadInTheApp")
+  public ResponseEntity<?> getBooksReadInTheApp() {
+    JsonObject json = new JsonObject();
+    json.put("Message", "Total books read in the app");
+    json.put("Result", userBookService.countByReadd(true));
     return new ResponseEntity<>(json, HttpStatus.OK);
   }
   /*
-  @GetMapping("/totalBooksReadInTheApp")
-  public ResponseEntity<?> getTotalBooksReadInTheApp() {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
   @GetMapping("/totalBooksTradeInTheApp")
   public ResponseEntity<?>getTotalBooksTradeInTheApp() {
     return new ResponseEntity<>(HttpStatus.OK);
