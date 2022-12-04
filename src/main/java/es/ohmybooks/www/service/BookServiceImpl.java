@@ -72,5 +72,10 @@ public class BookServiceImpl implements BookService {
   public boolean existsByAuthor(String author) {
     return bookRepository.existsByAuthor(author);
   }
+
+  @Override
+  public long count() {
+    return bookRepository.count();
+  }
   
 }

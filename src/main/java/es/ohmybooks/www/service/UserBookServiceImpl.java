@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import es.ohmybooks.www.entity.UserBook;
 import es.ohmybooks.www.repository.UserBookRepository;
-import es.ohmybooks.www.security.entity.User;
 
 @Service
 @Transactional

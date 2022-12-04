@@ -35,95 +35,75 @@ public class StatsController {
   @Autowired
   JwtProvider jwtProvider;
 
-//#region Estadístiques de perfil
-  @GetMapping("/totalBooks")
-  public ResponseEntity<?> getBooks( @RequestHeader String authorization) {
+  //#region Profile Stats
+
+  @GetMapping("/totalBooksFromUser")
+  public ResponseEntity<?> getTotalBooksFromUser( @RequestHeader String authorization) {
     String token = authorization.substring(7);
     String userName = jwtProvider.getUserNameFromToken(token);
     User user = userService.getByUserName(userName).get();
     int userId = user.getId();
     JsonObject json = new JsonObject();
-    json.put("Message", "Total books from "+ user.getName());
+    json.put("Message", "Total books from " + user.getName());
     json.put("Result", userBookService.countByUserId(userId));
     return new ResponseEntity<>(json, HttpStatus.OK);
-
   }
 
-  /*@GetMapping("/readBooks")
-  public ResponseEntity<?> getReadBooks(@RequestHeader String authorization) {
+  /*@GetMapping("/totalBooksReadFromUser")
+  public ResponseEntity<?> getTotalBooksReadFromUser(@RequestHeader String authorization) {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @GetMapping("/readPages")
-  public ResponseEntity<?> getReadPages(@RequestHeader String authorization) {
+  @GetMapping("/totalPagesReadFromUser")
+  public ResponseEntity<?> getTotalPagesReadFromUser(@RequestHeader String authorization) {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @GetMapping("/booksToTrade")
-  public ResponseEntity<?> getAvailableTrade(@RequestHeader String authorization) {
+  @GetMapping("/totalBooksToTradeForTheUser")
+  public ResponseEntity<?> getUserAvailableTrade(@RequestHeader String authorization) {
     return new ResponseEntity<>(HttpStatus.OK);
   }*/
 
-//#endregion
+  //#endregion
 
-//#region Estadístiques home(Llibres)
+  //#region Home - Book Stats
 
-  /*@GetMapping("/totalBooksApp")
-  public ResponseEntity<?> totalBooksApp(@RequestHeader String authorization) {
+  @GetMapping("/totalBooksInTheApp")
+  public ResponseEntity<?> getTotalBooksInTheApp() {
+    JsonObject json = new JsonObject();
+    json.put("Message", "Total books in the app");
+    json.put("Result", bookService.count());
+    return new ResponseEntity<>(json, HttpStatus.OK);
+  }
+  /*
+  @GetMapping("/totalBooksReadInTheApp")
+  public ResponseEntity<?> getTotalBooksReadInTheApp() {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @GetMapping("/totalBooks")
-  public ResponseEntity<?> mostPurchasedBook(@RequestHeader String authorization) {
+  @GetMapping("/totalBooksTradeInTheApp")
+  public ResponseEntity<?>getTotalBooksTradeInTheApp() {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @GetMapping("/popularSaga")
-  public ResponseEntity<?> popularSaga(@RequestHeader String authorization) {
+  //#endregion
+
+  //#region Home - User Stats
+
+  /*@GetMapping("/totalUsersInTheApp")
+  public ResponseEntity<?> getTotalUsersInTheApp() {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @GetMapping("/morePages")
-  public ResponseEntity<?> morePages(@RequestHeader String authorization) {
+    @GetMapping("/userWithBooksReadMax")
+  public ResponseEntity<?> getUserWithBooksReadMax() {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @GetMapping("/popularGenre")
-  public ResponseEntity<?> popularGenre(@RequestHeader String authorization) {
+  @GetMapping("/userWithMostPagesRead")
+  public ResponseEntity<?> getUserWithMostPagesRead() {
     return new ResponseEntity<>(HttpStatus.OK);
   }
-
-  @GetMapping("/lastBook")
-  public ResponseEntity<?> lastBookAdded(@RequestHeader String authorization) {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  @GetMapping("/booksToTrade")
-  public ResponseEntity<?> bookToTrade(@RequestHeader String authorization) {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  @GetMapping("/booksAdded")
-  public ResponseEntity<?> kastWeekBooks(@RequestHeader String authorization) {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }*/
-//#endregion
-
-  //#region Estadístiques home (usuari)
-
-  /*@GetMapping("/userReadBooks")
-  public ResponseEntity<?> userMostBooks(@RequestHeader String authorization) {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  @GetMapping("/userReadPages")
-  public ResponseEntity<?> userMostPages(@RequestHeader String authorization) {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  @GetMapping("/usersRegistered")
-  public ResponseEntity<?> weekUserReg(@RequestHeader String authorization) {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }*/
-//#endregion
+  */
+  //#endregion
 }
