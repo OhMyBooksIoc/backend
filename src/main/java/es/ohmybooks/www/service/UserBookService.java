@@ -28,10 +28,10 @@ public interface UserBookService {
 
   public abstract boolean deleteByUserIdAndBookId(int userId, int bookId);
 
-  public abstract long count();
+  public abstract int countByStatus(boolean status);
 
-  public abstract int countByReadd(boolean readd);
+  public abstract int countByReaddAndStatus(boolean readd, boolean status);
 
-  public abstract int countByTrade(boolean trade);
+  public abstract int countByTradeAndStatus(boolean trade, boolean status);
 
 }
