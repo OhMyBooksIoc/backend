@@ -32,4 +32,6 @@ public interface UserBookService {
 
   public abstract int countByReadd(boolean readd);
 
+  public abstract int countByTrade(boolean trade);
+
 }

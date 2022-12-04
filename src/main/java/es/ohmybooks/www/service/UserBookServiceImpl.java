@@ -95,6 +95,11 @@ public class UserBookServiceImpl implements UserBookService {
     return userBookRepository.countByReadd(readd);
   }
 
+  @Override
+  public int countByTrade(boolean trade) {
+    return userBookRepository.countByTrade(trade);
+  }
+
 
   public void changeStatusByUserId(int userId) {
     List<UserBook> listCol = userBookRepository.findByUserId(userId);
