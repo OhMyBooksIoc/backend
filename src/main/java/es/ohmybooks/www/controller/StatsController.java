@@ -84,52 +84,23 @@ public class StatsController {
   //#endregion
 
   //#region Home - Book Stats
-
-  @GetMapping("/totalBooksInTheApp")
+  
+  @GetMapping("/public")
   public ResponseEntity<?> getTotalBooksInTheApp() {
     JsonObject json = new JsonObject();
-    json.put("Message", "Total books in the app");
-    json.put("Result", userBookService.countByStatus(true));
+    json.put("totalBooksApp", userBookService.countByStatus(true));
+    json.put("totalBooksReaded", userBookService.countByReaddAndStatus(true, true));
+    json.put("totalBooksTraded", userBookService.countByTradeAndStatus(true, true));
+    json.put("totalRegistredUsers", userService.countByStatus(true));
+
+    int userIdMoreRead = userBookService.getUserIdMoreRead();
+    User userMoreBooksRead = userService.findById(userIdMoreRead).get();
+    json.put("userWithMoreReads", userMoreBooksRead.getUserName());
+
+    int userIdMorePagesRead = userBookService.getUserIdMorePageRead();
+    User userMorePagesRead = userService.findById(userIdMorePagesRead).get();
+    json.put("userWithMorePagesRead", userMorePagesRead.getUserName());
+    
     return new ResponseEntity<>(json, HttpStatus.OK);
   }
-
-  @GetMapping("/totalBooksReadInTheApp")
-  public ResponseEntity<?> getBooksReadInTheApp() {
-    JsonObject json = new JsonObject();
-    json.put("Message", "Total books read in the app");
-    json.put("Result", userBookService.countByReaddAndStatus(true, true));
-    return new ResponseEntity<>(json, HttpStatus.OK);
-  }
-
-  @GetMapping("/totalBooksTradeInTheApp")
-  public ResponseEntity<?>getTotalBooksTradeInTheApp() {
-    JsonObject json = new JsonObject();
-    json.put("Message", "Total books trade in the app");
-    json.put("Result", userBookService.countByTradeAndStatus(true, true));
-    return new ResponseEntity<>(json, HttpStatus.OK);
-  }
-
-  //#endregion
-
-  //#region Home - User Stats
-
-  @GetMapping("/totalRegisteredUsers")
-  public ResponseEntity<?> getTotalResgisteredUsers() {
-    JsonObject json = new JsonObject();
-    json.put("Message", "Total registered users in the app");
-    json.put("Result", userService.countByStatus(true));
-    return new ResponseEntity<>(json, HttpStatus.OK);
-  }
-  /*
-  @GetMapping("/userWithBooksReadMax")
-  public ResponseEntity<?> getUserWithBooksReadMax() {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  @GetMapping("/userWithMostPagesRead")
-  public ResponseEntity<?> getUserWithMostPagesRead() {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-  */
-  //#endregion
 }
