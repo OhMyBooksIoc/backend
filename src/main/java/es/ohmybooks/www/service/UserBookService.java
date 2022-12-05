@@ -26,6 +26,8 @@ public interface UserBookService {
 
   public abstract int countByUserIdAndReadd(int userId, boolean readd);
 
+  public abstract int countByUserIdAndTrade(int userId, boolean trade);
+
   public abstract List<UserBook> findByTrade(boolean trade);
 
   public abstract boolean deleteByUserIdAndBookId(int userId, int bookId);

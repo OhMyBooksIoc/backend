@@ -118,4 +118,9 @@ public class UserBookServiceImpl implements UserBookService {
     return userBookRepository.countByUserIdAndReadd(userId, readd);
   }
 
+  @Override
+  public int countByUserIdAndTrade(int userId, boolean trade) {
+    return userBookRepository.countByUserIdAndReadd(userId, trade);
+  }
+
 }

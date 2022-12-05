@@ -61,15 +61,25 @@ public class StatsController {
     return new ResponseEntity<>(json, HttpStatus.OK);
   }
 
+  @GetMapping("/totalBooksTradeFromUser")
+  public ResponseEntity<?> getUserAvailableTrade(@RequestHeader String authorization) {
+    String token = authorization.substring(7);
+    String userName = jwtProvider.getUserNameFromToken(token);
+    User user = userService.getByUserName(userName).get();
+    int userId = user.getId();
+    JsonObject json = new JsonObject();
+    json.put("Message", "Total books available for trade from " + user.getName());
+    json.put("Result", userBookService.countByUserIdAndTrade(userId, true));
+    return new ResponseEntity<>(json, HttpStatus.OK);
+  }
+  
+  
   /*@GetMapping("/totalPagesReadFromUser")
   public ResponseEntity<?> getTotalPagesReadFromUser(@RequestHeader String authorization) {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  @GetMapping("/totalBooksToTradeForTheUser")
-  public ResponseEntity<?> getUserAvailableTrade(@RequestHeader String authorization) {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }*/
+  */
 
   //#endregion
 
