@@ -87,15 +87,18 @@ public class StatsController {
     return new ResponseEntity<>(json, HttpStatus.OK);
   }
 
-   /*
+ 
   @GetMapping("/userWithBooksReadMax")
   public ResponseEntity<?> getUserWithBooksReadMax() {
-    return new ResponseEntity<>(HttpStatus.OK);
+    JsonObject json = new JsonObject();
+    
+    json.put("userWithBooksReadMax", 0);
+    return new ResponseEntity<>(json, HttpStatus.OK);
   }
 
   @GetMapping("/userWithMostPagesRead")
   public ResponseEntity<?> getUserWithMostPagesRead() {
     return new ResponseEntity<>(HttpStatus.OK);
   }
-  */
+  
 }

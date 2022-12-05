@@ -118,4 +118,9 @@ public class UserBookServiceImpl implements UserBookService {
     return userBookRepository.countByUserIdAndReadd(userId, readd);
   }
 
+  @Override
+  public String getUserMostBooksRead(boolean readd){
+    List<UserBook> listCol = userBookRepository.;
+    return userBookRepository.getUserMostBooksRead(readd);
+  }
 }

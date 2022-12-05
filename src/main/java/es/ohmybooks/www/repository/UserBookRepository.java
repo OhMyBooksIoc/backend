@@ -38,4 +38,6 @@ public interface UserBookRepository extends JpaRepository<UserBook, Integer> {
 
   int countByTradeAndStatus(boolean trade, boolean status);
 
+  String getUserMostBooksRead(boolean readd);
+
 }
