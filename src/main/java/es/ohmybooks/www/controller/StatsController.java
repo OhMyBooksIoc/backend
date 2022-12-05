@@ -74,7 +74,7 @@ public class StatsController {
   //#endregion
 
   //#region Home - Book Stats
-
+  
   @GetMapping("/public")
   public ResponseEntity<?> getTotalBooksInTheApp() {
     JsonObject json = new JsonObject();
@@ -82,20 +82,17 @@ public class StatsController {
     json.put("totalBooksReaded", userBookService.countByReaddAndStatus(true, true));
     json.put("totalBooksTraded", userBookService.countByTradeAndStatus(true, true));
     json.put("totalRegistredUsers", userService.countByStatus(true));
-    json.put("userWithMoreReads", "Lorem Ipsum"); // TODO: Afegir usuari amb més llibres llegits
+    int userId = userBookService.getUserIdMoreRead();
+    User user = userService.findById(userId).get();
+    json.put("userWithMoreReads", user.getUserName()); 
     json.put("userWithMorePagesRead", "Lorem Ipsum"); // TODO: Afegir usuari amb més pagines llegides (Sum totes les pagines del llbires llegits)
     return new ResponseEntity<>(json, HttpStatus.OK);
   }
-
-   /*
-  @GetMapping("/userWithBooksReadMax")
-  public ResponseEntity<?> getUserWithBooksReadMax() {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
+  
+/* 
   @GetMapping("/userWithMostPagesRead")
   public ResponseEntity<?> getUserWithMostPagesRead() {
     return new ResponseEntity<>(HttpStatus.OK);
   }
-  */
+*/
 }
