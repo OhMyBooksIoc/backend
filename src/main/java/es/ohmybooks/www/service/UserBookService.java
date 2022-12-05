@@ -28,6 +28,8 @@ public interface UserBookService {
 
   public abstract List<UserBook> findByTrade(boolean trade);
 
+  public abstract List<UserBook> findByReadd(boolean readd);
+
   public abstract boolean deleteByUserIdAndBookId(int userId, int bookId);
 
   public abstract int countByStatus(boolean status);
