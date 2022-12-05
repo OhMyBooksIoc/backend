@@ -1,7 +1,11 @@
 package es.ohmybooks.www.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.transaction.Transactional;
 
@@ -48,7 +52,7 @@ public class UserBookServiceImpl implements UserBookService {
     List<UserBook> col = userBookRepository.findByBookId(bookId);
     List<UserBook> filter = new ArrayList<>();
     for (UserBook c : col) {
-      if (c.isStatus()==true) {
+      if (c.isStatus() == true) {
         filter.add(c);
       }
     }
@@ -105,7 +109,6 @@ public class UserBookServiceImpl implements UserBookService {
     return userBookRepository.countByTradeAndStatus(trade, status);
   }
 
-
   public void changeStatusByUserId(int userId) {
     List<UserBook> listCol = userBookRepository.findByUserId(userId);
     for (UserBook c : listCol) {
@@ -123,4 +126,28 @@ public class UserBookServiceImpl implements UserBookService {
     return userBookRepository.countByUserIdAndReadd(userId, readd);
   }
 
+  public int getUserIdMoreRead() {
+    List<UserBook> bookReads = userBookRepository.findByReadd(true);
+    Map<Integer, Integer> userMap = new HashMap<Integer, Integer>();
+
+    for (UserBook bookRead : bookReads) {
+      int userId = bookRead.getUserId();
+      Integer numReadBooksByUserInMap = userMap.get(userId);
+      if (numReadBooksByUserInMap == null) {
+        userMap.put(userId, 1);
+      } else {
+        userMap.put(userId, numReadBooksByUserInMap + 1);
+      }
+    }
+
+    int maxLlibresLlegits = (Collections.max(userMap.values()));
+
+    for (Entry<Integer, Integer> entry : userMap.entrySet()) {
+      if (entry.getValue() == maxLlibresLlegits) {
+        return entry.getKey();
+      }
+    }
+
+    return 0;
+  }
 }

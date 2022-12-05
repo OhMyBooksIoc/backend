@@ -39,4 +39,6 @@ public interface UserBookService {
 
   public abstract int countByTradeAndStatus(boolean trade, boolean status);
 
+  public abstract int getUserIdMoreRead();
+
 }
