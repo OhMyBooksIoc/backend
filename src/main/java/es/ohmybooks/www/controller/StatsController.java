@@ -35,8 +35,6 @@ public class StatsController {
   @Autowired
   JwtProvider jwtProvider;
 
-  //#region Profile Stats
-
   @GetMapping("/totalBooksFromUser")
   public ResponseEntity<?> getTotalBooksFromUser( @RequestHeader String authorization) {
     String token = authorization.substring(7);
@@ -80,10 +78,6 @@ public class StatsController {
   }
 
   */
-
-  //#endregion
-
-  //#region Home - Book Stats
   
   @GetMapping("/public")
   public ResponseEntity<?> getTotalBooksInTheApp() {
