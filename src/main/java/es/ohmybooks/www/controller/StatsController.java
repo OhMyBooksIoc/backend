@@ -82,17 +82,15 @@ public class StatsController {
     json.put("totalBooksReaded", userBookService.countByReaddAndStatus(true, true));
     json.put("totalBooksTraded", userBookService.countByTradeAndStatus(true, true));
     json.put("totalRegistredUsers", userService.countByStatus(true));
-    int userId = userBookService.getUserIdMoreRead();
-    User user = userService.findById(userId).get();
-    json.put("userWithMoreReads", user.getUserName()); 
-    json.put("userWithMorePagesRead", "Lorem Ipsum"); // TODO: Afegir usuari amb més pagines llegides (Sum totes les pagines del llbires llegits)
+
+    int userIdMoreRead = userBookService.getUserIdMoreRead();
+    User userMoreBooksRead = userService.findById(userIdMoreRead).get();
+    json.put("userWithMoreReads", userMoreBooksRead.getUserName());
+
+    int userIdMorePagesRead = userBookService.getUserIdMorePageRead();
+    User userMorePagesRead = userService.findById(userIdMorePagesRead).get();
+    json.put("userWithMorePagesRead", userMorePagesRead.getUserName());
+    
     return new ResponseEntity<>(json, HttpStatus.OK);
   }
-  
-/* 
-  @GetMapping("/userWithMostPagesRead")
-  public ResponseEntity<?> getUserWithMostPagesRead() {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-*/
 }

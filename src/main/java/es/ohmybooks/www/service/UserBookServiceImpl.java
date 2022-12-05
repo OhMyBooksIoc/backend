@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import es.ohmybooks.www.entity.Book;
 import es.ohmybooks.www.entity.UserBook;
 import es.ohmybooks.www.repository.UserBookRepository;
 
@@ -21,6 +22,9 @@ public class UserBookServiceImpl implements UserBookService {
 
   @Autowired
   UserBookRepository userBookRepository;
+
+  @Autowired
+  BookService bookService;
 
   @Override
   public UserBook save(UserBook userBook) {
@@ -144,6 +148,37 @@ public class UserBookServiceImpl implements UserBookService {
 
     for (Entry<Integer, Integer> entry : userMap.entrySet()) {
       if (entry.getValue() == maxLlibresLlegits) {
+        return entry.getKey();
+      }
+    }
+
+    return 0;
+  }
+
+  public int getUserIdMorePageRead() {
+    List<UserBook> bookReads = userBookRepository.findByReadd(true);
+    Map<Integer, Integer> userMap = new HashMap<Integer, Integer>();
+
+    for (UserBook bookRead : bookReads) {
+      int userId = bookRead.getUserId();
+      int bookId = bookRead.getBookId();
+
+      Book book = bookService.findById(bookId).get();
+      int numPagesBook = book.getPages();
+
+      Integer numReadPagesByUserInMap = userMap.get(userId);
+
+      if (numReadPagesByUserInMap == null) {
+        userMap.put(userId, numPagesBook);
+      } else {
+        userMap.put(userId, numReadPagesByUserInMap + numPagesBook);
+      }
+    }
+
+    int maxPagesRead = (Collections.max(userMap.values()));
+
+    for (Entry<Integer, Integer> entry : userMap.entrySet()) {
+      if (entry.getValue() == maxPagesRead) {
         return entry.getKey();
       }
     }

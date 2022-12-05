@@ -41,4 +41,5 @@ public interface UserBookService {
 
   public abstract int getUserIdMoreRead();
 
+  public abstract int getUserIdMorePageRead();
 }
