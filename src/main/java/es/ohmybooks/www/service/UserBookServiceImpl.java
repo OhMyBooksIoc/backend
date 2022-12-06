@@ -130,6 +130,11 @@ public class UserBookServiceImpl implements UserBookService {
     return userBookRepository.countByUserIdAndReadd(userId, readd);
   }
 
+  @Override
+  public int countByUserIdAndTrade(int userId, boolean trade) {
+    return userBookRepository.countByUserIdAndTrade(userId, trade);
+  }
+
   public int getUserIdMoreRead() {
     List<UserBook> bookReads = userBookRepository.findByReadd(true);
     Map<Integer, Integer> userMap = new HashMap<Integer, Integer>();
