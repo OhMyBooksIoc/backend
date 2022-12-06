@@ -195,4 +195,15 @@ public class UserBookServiceImpl implements UserBookService {
 
     return 0;
   }
+
+  public int getTotalPagesReadFromUser(int userId) {
+    List<UserBook> bookReads = userBookRepository.findByUserIdAndReadd(userId, true);
+    int pagesRead = 0;
+    for (UserBook bookRead : bookReads) {
+      int bookId = bookRead.getBookId();
+      Book book = bookService.findById(bookId).get();
+      pagesRead = pagesRead + book.getPages();
+    }
+    return pagesRead;
+  }
 }

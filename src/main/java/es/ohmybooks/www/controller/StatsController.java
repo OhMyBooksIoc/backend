@@ -34,11 +34,6 @@ public class StatsController {
 
   @Autowired
   JwtProvider jwtProvider;
-  
-  /*@GetMapping("/totalPagesReadFromUser")
-  public ResponseEntity<?> getTotalPagesReadFromUser(@RequestHeader String authorization) {
-    return new ResponseEntity<>(HttpStatus.OK);
-  }*/
 
   @GetMapping("/private")
   public ResponseEntity<?> getPrivateStats(@RequestHeader String authorization) {
@@ -51,13 +46,11 @@ public class StatsController {
     json.put("totalBooksUser", userBookService.countByUserId(userId));
     json.put("totalBooksReadUser", userBookService.countByUserIdAndReadd(userId, true));
     json.put("totalBooksInTradeUser", userBookService.countByUserIdAndTrade(userId, true));
-    json.put("totalPagesReadUser", 0); // TODO: Mostrar número de pagines que ha llegit usuari.
+    json.put("totalPagesReadUser", userBookService.getTotalPagesReadFromUser(userId));
 
     return new ResponseEntity<>(json, HttpStatus.OK);
   }
 
-
-  
   @GetMapping("/public")
   public ResponseEntity<?> getPublicStats() {
     JsonObject json = new JsonObject();
