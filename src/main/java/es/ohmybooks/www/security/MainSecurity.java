@@ -64,7 +64,7 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
 		// desactivar cookies ya que se envía un token cada vez que se hace una petición
 		http.cors().and().csrf().disable()
 				.authorizeRequests()
-				.antMatchers("/auth/**").permitAll()
+				.antMatchers("/auth/**", "/stats/public").permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
