@@ -61,7 +61,7 @@ public class StatsController {
 
     int userIdMoreRead = userBookService.getUserIdMoreRead();
     if (userIdMoreRead == 0) {
-      json.put("userWithMoreReads", "No data available");
+      json.put("userWithMoreReads", "-");
     } else {
       User userMoreBooksRead = userService.findById(userIdMoreRead).get();
       json.put("userWithMoreReads", userMoreBooksRead.getUserName());
@@ -69,7 +69,7 @@ public class StatsController {
 
     int userIdMorePagesRead = userBookService.getUserIdMorePageRead();
     if (userIdMorePagesRead == 0) {
-      json.put("userWithMorePagesRead", "No data available");
+      json.put("userWithMorePagesRead", "-");
     } else {
       User userMorePagesRead = userService.findById(userIdMorePagesRead).get();
       json.put("userWithMorePagesRead", userMorePagesRead.getUserName());
