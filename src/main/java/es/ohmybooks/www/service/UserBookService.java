@@ -38,7 +38,6 @@ public interface UserBookService {
 
   public abstract int countByStatus(boolean status);
 
-
   public abstract int countByReaddAndStatus(boolean readd, boolean status);
 
   public abstract int countByTradeAndStatus(boolean trade, boolean status);

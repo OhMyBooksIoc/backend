@@ -60,12 +60,20 @@ public class StatsController {
     json.put("totalRegistredUsers", userService.countByStatus(true));
 
     int userIdMoreRead = userBookService.getUserIdMoreRead();
-    User userMoreBooksRead = userService.findById(userIdMoreRead).get();
-    json.put("userWithMoreReads", userMoreBooksRead.getUserName());
+    if (userIdMoreRead == 0) {
+      json.put("userWithMoreReads", "No data available");
+    } else {
+      User userMoreBooksRead = userService.findById(userIdMoreRead).get();
+      json.put("userWithMoreReads", userMoreBooksRead.getUserName());
+    }
 
     int userIdMorePagesRead = userBookService.getUserIdMorePageRead();
-    User userMorePagesRead = userService.findById(userIdMorePagesRead).get();
-    json.put("userWithMorePagesRead", userMorePagesRead.getUserName());
+    if (userIdMorePagesRead == 0) {
+      json.put("userWithMorePagesRead", "No data available");
+    } else {
+      User userMorePagesRead = userService.findById(userIdMorePagesRead).get();
+      json.put("userWithMorePagesRead", userMorePagesRead.getUserName());
+    }
     
     return new ResponseEntity<>(json, HttpStatus.OK);
   }

@@ -53,7 +53,7 @@ public class UserBookServiceImpl implements UserBookService {
 
   @Override
   public List<UserBook> findByUserIdAndReadd(int userId, boolean readd) {
-     return userBookRepository.findByUserIdAndReadd(userId, readd);
+    return userBookRepository.findByUserIdAndReadd(userId, readd);
   }
 
   @Override
@@ -143,57 +143,66 @@ public class UserBookServiceImpl implements UserBookService {
   public int getUserIdMoreRead() {
     List<UserBook> bookReads = userBookRepository.findByReadd(true);
     Map<Integer, Integer> userMap = new HashMap<Integer, Integer>();
+    int result = 0;
 
-    for (UserBook bookRead : bookReads) {
-      int userId = bookRead.getUserId();
-      Integer numReadBooksByUserInMap = userMap.get(userId);
-      if (numReadBooksByUserInMap == null) {
-        userMap.put(userId, 1);
-      } else {
-        userMap.put(userId, numReadBooksByUserInMap + 1);
+    if (bookReads.size() == 0) {
+      return result;
+    } else {
+      for (UserBook bookRead : bookReads) {
+        int userId = bookRead.getUserId();
+        Integer numReadBooksByUserInMap = userMap.get(userId);
+        if (numReadBooksByUserInMap == null) {
+          userMap.put(userId, 1);
+        } else {
+          userMap.put(userId, numReadBooksByUserInMap + 1);
+        }
       }
-    }
 
-    int maxLlibresLlegits = (Collections.max(userMap.values()));
+      int maxLlibresLlegits = (Collections.max(userMap.values()));
 
-    for (Entry<Integer, Integer> entry : userMap.entrySet()) {
-      if (entry.getValue() == maxLlibresLlegits) {
-        return entry.getKey();
+      for (Entry<Integer, Integer> entry : userMap.entrySet()) {
+        if (entry.getValue() == maxLlibresLlegits) {
+          result = entry.getKey();
+        }
       }
+      return result;
     }
-
-    return 0;
   }
 
   public int getUserIdMorePageRead() {
     List<UserBook> bookReads = userBookRepository.findByReadd(true);
     Map<Integer, Integer> userMap = new HashMap<Integer, Integer>();
 
-    for (UserBook bookRead : bookReads) {
-      int userId = bookRead.getUserId();
-      int bookId = bookRead.getBookId();
+    int result = 0;
 
-      Book book = bookService.findById(bookId).get();
-      int numPagesBook = book.getPages();
+    if (bookReads.size() == 0) {
+      return result;
+    } else {
+      for (UserBook bookRead : bookReads) {
+        int userId = bookRead.getUserId();
+        int bookId = bookRead.getBookId();
 
-      Integer numReadPagesByUserInMap = userMap.get(userId);
+        Book book = bookService.findById(bookId).get();
+        int numPagesBook = book.getPages();
 
-      if (numReadPagesByUserInMap == null) {
-        userMap.put(userId, numPagesBook);
-      } else {
-        userMap.put(userId, numReadPagesByUserInMap + numPagesBook);
+        Integer numReadPagesByUserInMap = userMap.get(userId);
+
+        if (numReadPagesByUserInMap == null) {
+          userMap.put(userId, numPagesBook);
+        } else {
+          userMap.put(userId, numReadPagesByUserInMap + numPagesBook);
+        }
       }
-    }
 
-    int maxPagesRead = (Collections.max(userMap.values()));
+      int maxPagesRead = (Collections.max(userMap.values()));
 
-    for (Entry<Integer, Integer> entry : userMap.entrySet()) {
-      if (entry.getValue() == maxPagesRead) {
-        return entry.getKey();
+      for (Entry<Integer, Integer> entry : userMap.entrySet()) {
+        if (entry.getValue() == maxPagesRead) {
+          result = entry.getKey();
+        }
       }
+      return result;
     }
-
-    return 0;
   }
 
   public int getTotalPagesReadFromUser(int userId) {
