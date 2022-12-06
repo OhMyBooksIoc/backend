@@ -34,53 +34,32 @@ public class StatsController {
 
   @Autowired
   JwtProvider jwtProvider;
-
-  @GetMapping("/totalBooksFromUser")
-  public ResponseEntity<?> getTotalBooksFromUser( @RequestHeader String authorization) {
-    String token = authorization.substring(7);
-    String userName = jwtProvider.getUserNameFromToken(token);
-    User user = userService.getByUserName(userName).get();
-    int userId = user.getId();
-    JsonObject json = new JsonObject();
-    json.put("Message", "Total books from " + user.getName());
-    json.put("Result", userBookService.countByUserId(userId));
-    return new ResponseEntity<>(json, HttpStatus.OK);
-  }
-
-  @GetMapping("/totalBooksReadFromUser")
-  public ResponseEntity<?> getTotalBooksReadFromUser(@RequestHeader String authorization) {
-    String token = authorization.substring(7);
-    String userName = jwtProvider.getUserNameFromToken(token);
-    User user = userService.getByUserName(userName).get();
-    int userId = user.getId();
-    JsonObject json = new JsonObject();
-    json.put("Message", "Total books readed from " + user.getName());
-    json.put("Result", userBookService.countByUserIdAndReadd(userId, true));
-    return new ResponseEntity<>(json, HttpStatus.OK);
-  }
-
-  @GetMapping("/totalBooksTradeFromUser")
-  public ResponseEntity<?> getUserAvailableTrade(@RequestHeader String authorization) {
-    String token = authorization.substring(7);
-    String userName = jwtProvider.getUserNameFromToken(token);
-    User user = userService.getByUserName(userName).get();
-    int userId = user.getId();
-    JsonObject json = new JsonObject();
-    json.put("Message", "Total books available for trade from " + user.getName());
-    json.put("Result", userBookService.countByUserIdAndTrade(userId, true));
-    return new ResponseEntity<>(json, HttpStatus.OK);
-  }
-  
   
   /*@GetMapping("/totalPagesReadFromUser")
   public ResponseEntity<?> getTotalPagesReadFromUser(@RequestHeader String authorization) {
     return new ResponseEntity<>(HttpStatus.OK);
+  }*/
+
+  @GetMapping("/private")
+  public ResponseEntity<?> getPrivateStats(@RequestHeader String authorization) {
+    String token = authorization.substring(7);
+    String userName = jwtProvider.getUserNameFromToken(token);
+    User user = userService.getByUserName(userName).get();
+    int userId = user.getId();
+
+    JsonObject json = new JsonObject();
+    json.put("totalBooksUser", userBookService.countByUserId(userId));
+    json.put("totalBooksReadUser", userBookService.countByUserIdAndReadd(userId, true));
+    json.put("totalBooksInTradeUser", userBookService.countByUserIdAndTrade(userId, true));
+    json.put("totalPagesReadUser", 0); // TODO: Mostrar número de pagines que ha llegit usuari.
+
+    return new ResponseEntity<>(json, HttpStatus.OK);
   }
 
-  */
+
   
   @GetMapping("/public")
-  public ResponseEntity<?> getTotalBooksInTheApp() {
+  public ResponseEntity<?> getPublicStats() {
     JsonObject json = new JsonObject();
     json.put("totalBooksApp", userBookService.countByStatus(true));
     json.put("totalBooksReaded", userBookService.countByReaddAndStatus(true, true));
