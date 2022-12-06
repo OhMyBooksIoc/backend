@@ -52,6 +52,11 @@ public class UserBookServiceImpl implements UserBookService {
   }
 
   @Override
+  public List<UserBook> findByUserIdAndReadd(int userId, boolean readd) {
+     return userBookRepository.findByUserIdAndReadd(userId, readd);
+  }
+
+  @Override
   public List<UserBook> findByBookId(int bookId) {
     List<UserBook> col = userBookRepository.findByBookId(bookId);
     List<UserBook> filter = new ArrayList<>();

@@ -13,6 +13,8 @@ public interface UserBookRepository extends JpaRepository<UserBook, Integer> {
   List<UserBook> findByUserId(int userId);
 
   List<UserBook> findByUserIdAndHide(int userId, boolean hide);
+
+  List<UserBook> findByUserIdAndReadd(int userId, boolean readd);
   
   List<UserBook> findByBookId(int bookId);
 

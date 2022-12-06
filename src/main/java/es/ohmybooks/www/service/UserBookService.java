@@ -12,6 +12,8 @@ public interface UserBookService {
 
   public abstract List<UserBook> findByUserIdAndHide(int userId, boolean hide);
 
+  public abstract List<UserBook> findByUserIdAndReadd(int userId, boolean readd);
+
   public abstract List<UserBook> findByBookId(int bookId);
 
   public abstract boolean deleteRelationUserBook(int userId);
