@@ -2,6 +2,12 @@ package es.ohmybooks.www.security.dto;
 
 import javax.validation.constraints.*;
 
+/**
+ * Clase que define un objeto password
+ * 
+ * @author Group3
+ * @version 1.0
+ */
 public class Password {
 
 	@NotBlank
@@ -10,9 +16,17 @@ public class Password {
 	private String newPassword;
 
 
+	/**
+	 * Método constructor por defecto
+	 */
 	public Password() {
 	}
 
+	/**
+	 * Método constructor con todos los parámetros
+	 * @param oldPassword
+	 * @param newPassword
+	 */
 	public Password(String oldPassword, String newPassword) {
 		this.oldPassword = oldPassword;
 		this.newPassword = newPassword;

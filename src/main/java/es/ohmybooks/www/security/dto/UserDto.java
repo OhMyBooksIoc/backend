@@ -2,6 +2,12 @@ package es.ohmybooks.www.security.dto;
 
 import javax.validation.constraints.*;
 
+/**
+ * Clase que define un objeto UserDto
+ * 
+ * @author Group3
+ * @version 1.0
+ */
 public class UserDto {
 
 	@NotBlank
@@ -15,13 +21,31 @@ public class UserDto {
 	private String picture;
 	private Boolean status;
 
+	/**
+	 * Método constructor por defecto
+	 */
 	public UserDto() {
 	}
 
+	/**
+	 * Método constructor con un parámetro
+	 * 
+	 * @param password
+	 */
 	public UserDto(String password) {
 		this.password = password;
 	}
 
+	/**
+	 * Método constructor con todos los parámetros
+	 * 
+	 * @param name
+	 * @param userName
+	 * @param email
+	 * @param password
+	 * @param picture
+	 * @param status
+	 */
 	public UserDto(@NotBlank String name, @NotBlank String userName, @Email String email, @NotBlank String password,
 			String picture, Boolean status) {
 		this.name = name;
@@ -32,6 +56,13 @@ public class UserDto {
 		this.status = status;
 	}
 
+	/**
+	 * Método constructor con 3 parámetros
+	 * 
+	 * @param name
+	 * @param email
+	 * @param picture
+	 */
 	public UserDto(@NotBlank String name, @Email String email, String picture) {
 		this.name = name;
 		this.email = email;
