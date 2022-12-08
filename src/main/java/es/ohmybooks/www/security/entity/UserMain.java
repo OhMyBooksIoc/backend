@@ -25,13 +25,13 @@ public class UserMain implements UserDetails {
 	private Collection<? extends GrantedAuthority> authorities;
 
 	/**
-	 * Método constructor con 5 parámetros que extiende de GrantedAuthority
+	 * Metodo constructor con 5 parametros que extiende de GrantedAuthority
 	 * 
-	 * @param name
-	 * @param userName
-	 * @param email
-	 * @param password
-	 * @param authorities
+	 * @param name define el nombre del usuario.
+	 * @param userName define el userName del usuario.
+	 * @param email define el email del usuario.
+	 * @param password define la constraseña del usuario.
+	 * @param authorities define la autorizacion (roles) del usuario.
 	 */
 	public UserMain(String name, String userName, String email, String password,
 			Collection<? extends GrantedAuthority> authorities) {
@@ -43,13 +43,14 @@ public class UserMain implements UserDetails {
 	}
 
 	/**
-	 * Método que assigna los privilegios (autorización)
+	 * Metodo que assigna los privilegios (autorización).
 	 * 
-	 * @param user
+	 * @param user define el objeto user con los atributos necesarios para convertir 
+	 * los roles de user a GrantedAuthority class.
 	 * @return user
 	 */
 	public static UserMain build(User user) {
-		// Convierte el del role del user a GrantedAuthority class
+		// Convierte el role del user a GrantedAuthority class
 		List<GrantedAuthority> authorities = user.getRoles()
 				.stream()
 				.map(role -> new SimpleGrantedAuthority(role.getRoleName().name()))

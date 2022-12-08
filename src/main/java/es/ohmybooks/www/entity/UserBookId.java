@@ -5,6 +5,12 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 
+/**
+ * Clase que implementa la relación entre user y book para UserBook
+ * 
+ * @author Group3
+ * @version 1.0
+ */
 public class UserBookId implements Serializable {
 
   private static final long serialVersionUID = 1L;

@@ -9,7 +9,6 @@ import es.ohmybooks.www.security.enums.RoleName;
  * 
  * @author Group3
  * @version 1.0
- * @see RoleName
  */
 @Entity
 @Table(name = "role")
@@ -25,15 +24,15 @@ public class Role {
   private RoleName roleName;
 
   /**
-   * Método constructor por defecto
+   * Metodo constructor por defecto.
    */
   public Role() {
   }
 
   /**
-   * Método constructor con un parámetro
+   * Metodo constructor con un parametro.
    * 
-   * @param roleName
+   * @param roleName define el role del usuario.
    */
   public Role(RoleName roleName) {
     this.roleName = roleName;

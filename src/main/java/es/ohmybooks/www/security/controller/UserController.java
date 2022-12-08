@@ -19,6 +19,12 @@ import es.ohmybooks.www.security.jwt.JwtProvider;
 import es.ohmybooks.www.security.service.UserService;
 import es.ohmybooks.www.service.UserBookService;
 
+/**
+ * Controller de User
+ * 
+ * @author Group3
+ * @version 1.0
+ */
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.DELETE, RequestMethod.PUT })
@@ -40,9 +46,9 @@ public class UserController {
 	JwtProvider jwtProvider;
 
 	/**
-	 * endpoint that returns all users in the database
+	 * Endpoint que devuelve todos los users de la app
 	 * 
-	 * @return a json with all users and all their fields
+	 * @return un json con todos los users y sus atributos
 	 */
 	@GetMapping("list")
 	public ResponseEntity<?> listUsers() {
@@ -50,11 +56,10 @@ public class UserController {
 	}
 
 	/**
-	 * endpoint that returns the user with the id equal to the value passed in the
-	 * parameter
+	 * Endpoint que devuelve los users con id igual al valor pasado por parametro.
 	 * 
-	 * @param id
-	 * @return a error message or a json with the searched user and all its fields
+	 * @param userName define el userName del usuario que se quiere filtrar.
+	 * @return un mensaje de error o un json con el user filtrado y sus atributos.
 	 */
 	@GetMapping("userName/{userName}")
 	public ResponseEntity<?> findUserByUserName(@PathVariable("userName") String userName) {
@@ -65,6 +70,14 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * Endpoint que modifica los datos del user logueado.
+	 * 
+   * @param authorization define el token del usuario logueado.
+	 * @param userDto define un objeto userDto que contine los atributos necesarios para modificar el usuario.
+	 * @param bindingResult validacion del objeto.
+	 * @return mensaje de error si el email ya existe o un mensaje de confirmacion si el user ha sido modificado correctamente.
+	 */
 	@PutMapping("update")
 	public ResponseEntity<?> updateUser(@RequestHeader String authorization, @RequestBody UserDto userDto,
 			BindingResult bindingResult) {
@@ -88,6 +101,14 @@ public class UserController {
 		return new ResponseEntity<>(new Message("Modified user"), HttpStatus.CREATED);
 	}
 
+	/**
+	 * Endpoint que modifica el password del user logueado con validacion de password antiguo
+	 * 
+   * @param authorization define el token del usuario logueado.
+	 * @param password define un objeto contraseña que contiene los atributos necesarios para 
+	 * validar la contraseña antigua y modificarla por la nueva.
+	 * @return mensaje de error o confirmacion.
+	 */
 	@PutMapping("updatePass")
 	public ResponseEntity<?> updatePass(@RequestHeader String authorization, @RequestBody Password password) {
 		String token = authorization.substring(7);
@@ -102,6 +123,12 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * Endpoint que cambia el status de user a enable o disable según estado actual.
+	 * 
+   * @param authorization define el token del usuario logueado.
+	 * @return mensaje de error o confirmacion.
+	 */
 	@PutMapping("changeStatus")
 	public ResponseEntity<?> changeStatusUser(@RequestHeader String authorization) {
 		String token = authorization.substring(7);
@@ -122,6 +149,13 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * Endpoint que elimina a un usuario de la app.
+	 * Autorizacion solo para rol Admin.
+	 * 
+	 * @param userName define el userName del usuario que se quiere eliminar.
+	 * @return mensaje de error o confirmacion.
+	 */
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("delete/userName/{userName}")
 	public ResponseEntity<?> delete(@PathVariable("userName") String userName) {

@@ -5,7 +5,6 @@ package es.ohmybooks.www.security.enums;
  * 
  * @author Group3
  * @version 1.0
- * @see Role
  */
 public enum RoleName {
 	// Admin tiene todos los permisos crud

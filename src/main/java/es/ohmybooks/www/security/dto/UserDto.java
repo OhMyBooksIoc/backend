@@ -22,29 +22,29 @@ public class UserDto {
 	private Boolean status;
 
 	/**
-	 * Método constructor por defecto
+	 * Metodo constructor por defecto
 	 */
 	public UserDto() {
 	}
 
 	/**
-	 * Método constructor con un parámetro
+	 * Metodo constructor con un parametro.
 	 * 
-	 * @param password
+	 * @param password define la contraseña del usuario.
 	 */
 	public UserDto(String password) {
 		this.password = password;
 	}
 
 	/**
-	 * Método constructor con todos los parámetros
+	 * Metodo constructor con todos los parametros.
 	 * 
-	 * @param name
-	 * @param userName
-	 * @param email
-	 * @param password
-	 * @param picture
-	 * @param status
+	 * @param name define el nombre del usuario.
+	 * @param userName define el userName del usuario.
+	 * @param email define el email del usuario.
+	 * @param password define la contraseña del usuario.
+	 * @param picture define el vinculo a la imagen del usuario.
+	 * @param status define el estado del usuario a activado o desactivado.
 	 */
 	public UserDto(@NotBlank String name, @NotBlank String userName, @Email String email, @NotBlank String password,
 			String picture, Boolean status) {
@@ -57,11 +57,11 @@ public class UserDto {
 	}
 
 	/**
-	 * Método constructor con 3 parámetros
+	 * Metodo constructor con 3 parametros
 	 * 
-	 * @param name
-	 * @param email
-	 * @param picture
+	 * @param name define el nombre del usuario.
+	 * @param email define el email del usuario.
+	 * @param picture define el vinculo a la imagen del usuario.
 	 */
 	public UserDto(@NotBlank String name, @Email String email, String picture) {
 		this.name = name;

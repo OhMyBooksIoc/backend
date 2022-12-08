@@ -17,15 +17,15 @@ public class Password {
 
 
 	/**
-	 * Método constructor por defecto
+	 * Metodo constructor por defecto
 	 */
 	public Password() {
 	}
 
 	/**
-	 * Método constructor con todos los parámetros
-	 * @param oldPassword
-	 * @param newPassword
+	 * Metodo constructor con todos los parametros
+	 * @param oldPassword define la constraseña antigua del usuario.
+	 * @param newPassword define la constraseña nueva del usuario.
 	 */
 	public Password(String oldPassword, String newPassword) {
 		this.oldPassword = oldPassword;

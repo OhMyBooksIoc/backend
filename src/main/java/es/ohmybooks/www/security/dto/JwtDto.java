@@ -18,11 +18,11 @@ public class JwtDto {
 	private Collection<? extends GrantedAuthority> authorities;
 
 	/**
-	 * Método constructor con 3 parámetros
+	 * Metodo constructor con 3 parametros
 	 * 
-	 * @param token
-	 * @param userName
-	 * @param authorities
+	 * @param token define el token del usuario.
+	 * @param userName define el userName del usuario.
+	 * @param authorities define la autorizacion (roles) del usuario.
 	 */
 	public JwtDto(String token, String userName, Collection<? extends GrantedAuthority> authorities) {
 		this.token = token;

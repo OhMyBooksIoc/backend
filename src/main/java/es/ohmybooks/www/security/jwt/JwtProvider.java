@@ -19,7 +19,7 @@ import java.util.Date;
 @Component
 public class JwtProvider {
 
-	// Implementa un logger para ver que método da error en caso de fallo
+	// Implementa un logger para ver que metodo da error en caso de fallo
 	private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
 	// Valores que hay en el application.properties
@@ -30,7 +30,7 @@ public class JwtProvider {
 	private int expiration;
 
 	/**
-	 * Método que genera el token del user
+	 * Metodo que genera el token del user
 	 * 
 	 * @param authentication
 	 * @return token
@@ -45,7 +45,7 @@ public class JwtProvider {
 	}
 
 	/**
-	 * Método que recupera el nombre del usuario a través del token
+	 * Metodo que recupera el nombre del usuario a través del token
 	 * 
 	 * @param token
 	 * @return userName
@@ -55,7 +55,7 @@ public class JwtProvider {
 	}
 
 	/**
-	 * Método que valida el token del user
+	 * Metodo que valida el token del user
 	 * 
 	 * @param token
 	 * @return true si el token és correcto y false si el token está mal formado, no

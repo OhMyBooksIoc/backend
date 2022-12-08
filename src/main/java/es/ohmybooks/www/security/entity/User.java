@@ -63,16 +63,16 @@ public class User implements Serializable {
 	private Set<UserBook> books = new HashSet<>();
 
 	/**
-	 * Método constructor por defecto
+	 * Metodo constructor por defecto
 	 */
 	public User() {
 	}
 
 	/**
-	 * Método constructor con 2 parámetros
+	 * Metodo constructor con 2 parametros.
 	 * 
-	 * @param email
-	 * @param password
+	 * @param email define el email del usuario.
+	 * @param password define la contraseña del usuario.
 	 */
 	public User(String email, String password) {
 		this.email = email;
@@ -80,12 +80,12 @@ public class User implements Serializable {
 	}
 
 	/**
-	 * Método constructor con 4 parámetros
+	 * Metodo constructor con 4 parametros.
 	 * 
-	 * @param name
-	 * @param userName
-	 * @param email
-	 * @param password
+	 * @param name define el nombre del usuario.
+	 * @param userName define el userName del usuario.
+	 * @param email define el email del usuario.
+	 * @param password define la contraseña del usuario.
 	 */
 	public User(String name, String userName, String email, String password) {
 		this.name = name;
@@ -95,14 +95,14 @@ public class User implements Serializable {
 	}
 
 	/**
-	 * Método constructor con 6 parámetros
+	 * Metodo constructor con 6 parametros
 	 * 
-	 * @param name
-	 * @param userName
-	 * @param email
-	 * @param password
-	 * @param picture
-	 * @param status
+	 * @param name define el nombre del usuario.
+	 * @param userName define el userName del usuario.
+	 * @param email define el email del usuario.
+	 * @param password define la contraseña del usuario.
+	 * @param picture define el vinculo a la imagen del usuario.
+	 * @param status define el estado del usuario a activado o desactivado.
 	 */
 	public User(String name, String userName, String email, String password, String picture, boolean status) {
 		this.name = name;
@@ -114,17 +114,17 @@ public class User implements Serializable {
 	}
 
 	/**
-	 * Método constructor con todos los parámetros
+	 * Metodo constructor con todos los parametros.
 	 * 
-	 * @param id
-	 * @param name
-	 * @param userName
-	 * @param email
-	 * @param password
-	 * @param picture
-	 * @param status
-	 * @param roles
-	 * @param books
+	 * @param id identificador unico del usuario en la app.
+	 * @param name define el nombre del usuario.
+	 * @param userName define el userName del usuario.
+	 * @param email define el email del usuario.
+	 * @param password define la contraseña del usuario.
+	 * @param picture define el vinculo a la imagen del usuario.
+	 * @param status define el estado del usuario a activado o desactivado.
+	 * @param roles define los roles asociados al usuario.
+	 * @param books define los libros vinculados al usuario.
 	 */
 	public User(int id, String name, String userName, String email, String password, String picture, boolean status,
 			Set<Role> roles, Set<UserBook> books) {
