@@ -1,8 +1,15 @@
 package es.ohmybooks.www.security.enums;
 
+/**
+ * Clase que enumera los valores posibles para la clase Role
+ * 
+ * @author Group3
+ * @version 1.0
+ * @see Role
+ */
 public enum RoleName {
-	// Admin has all crud permissions
-	// User has all crud permissions except delete
-	// Author has all user permissions and access to the authors area
+	// Admin tiene todos los permisos crud
+	// User tiene todos los permisos crud excepto borrar i modificar libro
+	// Author tiene todos los permisos de user más los accesos a áreas privadas de author
 	ROLE_ADMIN, ROLE_USER, ROLE_AUTHOR
 }

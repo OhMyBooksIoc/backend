@@ -9,6 +9,7 @@ import es.ohmybooks.www.security.enums.RoleName;
  * 
  * @author Group3
  * @version 1.0
+ * @see RoleName
  */
 @Entity
 @Table(name = "role")

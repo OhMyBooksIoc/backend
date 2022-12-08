@@ -11,16 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//TODO traducir al inglés
 /**
- * Comprueba si existe un token si no devuelve un 401 no autorizado
+ * Clase que comprueba la autorización del user
+ * 
+ * @author Group3
+ * @version 1.0
  */
 @Component
 public class JwtEntryPoint implements AuthenticationEntryPoint {
 
-	// Implementamos un logger para ver qué metodo da error en caso de falla
+	// Implementa un logger para ver qué metodo da error en caso de fallo
 	private final static Logger logger = LoggerFactory.getLogger(JwtEntryPoint.class);
 
+	/**
+	 * Comprueba si existe un token y si no devuelve un 401 no autorizado
+	 */
 	@Override
 	public void commence(HttpServletRequest request,
 			HttpServletResponse response,
