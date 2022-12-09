@@ -105,8 +105,8 @@ public class UserController {
 	 * Endpoint que modifica el password del user logueado con validacion de password antiguo
 	 * 
    * @param authorization define el token del usuario logueado.
-	 * @param password define un objeto contraseña que contiene los atributos necesarios para 
-	 * validar la contraseña antigua y modificarla por la nueva.
+	 * @param password define un objeto password que contiene los atributos necesarios para 
+	 * validar el password antigua y modificarla por la nueva.
 	 * @return mensaje de error o confirmacion.
 	 */
 	@PutMapping("updatePass")
@@ -124,7 +124,7 @@ public class UserController {
 	}
 
 	/**
-	 * Endpoint que cambia el status de user a enable o disable según estado actual.
+	 * Endpoint que cambia el status de user a enable o disable segun estado actual.
 	 * 
    * @param authorization define el token del usuario logueado.
 	 * @return mensaje de error o confirmacion.

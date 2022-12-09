@@ -1,7 +1,7 @@
 package es.ohmybooks.www.security.enums;
 
 /**
- * Clase que enumera los valores posibles para la clase Role
+ * Clase que enumera los posibles valores para la clase Role
  * 
  * @author Group3
  * @version 1.0

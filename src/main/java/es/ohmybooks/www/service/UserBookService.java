@@ -20,7 +20,7 @@ public interface UserBookService {
   public abstract List<UserBook> findByUserIdAndHide(int userId, boolean hide);
 
   /**
-   * Metodo que devuelve una lista de libros asociados a un usuario y según su
+   * Metodo que devuelve una lista de libros asociados a un usuario y segun su
    * atributo readd.
    * 
    * @param userId define el id del usuario del cual se quiere obtener la lista de
@@ -87,7 +87,7 @@ public interface UserBookService {
   public abstract int countByUserIdAndTrade(int userId, boolean trade);
 
   /**
-   * Metodo que devuelve una lista de libros según el valor del atributo trade
+   * Metodo que devuelve una lista de libros segun el valor del atributo trade
    * (intercambio).
    * 
    * @param trade define si un libro esta para intercambio o no.
@@ -96,7 +96,7 @@ public interface UserBookService {
   public abstract List<UserBook> findByTrade(boolean trade);
 
   /**
-   * Metodo que devuelve una lista de libros según el valor del atributo readd.
+   * Metodo que devuelve una lista de libros segun el valor del atributo readd.
    * 
    * @param readd define si un libro esta leido o no.
    * @return una lista de libros.

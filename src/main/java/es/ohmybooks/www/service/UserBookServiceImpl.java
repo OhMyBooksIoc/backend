@@ -47,7 +47,7 @@ public class UserBookServiceImpl implements UserBookService {
   }
 
     /**
-   * Metodo que devuelve una lista de libros asociados a un usuario y según su
+   * Metodo que devuelve una lista de libros asociados a un usuario y segun su
    * atributo hide.
    * 
    * @param userId define el id del usuario del cual se quiere obtener la lista de

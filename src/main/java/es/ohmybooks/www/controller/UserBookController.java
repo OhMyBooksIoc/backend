@@ -101,7 +101,7 @@ public class UserBookController {
   }
 
   /**
-   * Endpoint que añade un libro según id pasada por parametro a la colección del
+   * Endpoint que añade un libro segun id pasada por parametro a la colección del
    * usuario logueado.
    * 
    * @param authorization define el token del usuario logueado.
@@ -214,7 +214,7 @@ public class UserBookController {
   }
 
   /**
-   * Endpoint que elimina un libro según id pasado por url, de la colección del usuario logueado.
+   * Endpoint que elimina un libro segun id pasado por url, de la colección del usuario logueado.
    * 
    * @param authorization define el token del usuario logueado.
    * @param idBook define el id del libro que se quiere eliminar.

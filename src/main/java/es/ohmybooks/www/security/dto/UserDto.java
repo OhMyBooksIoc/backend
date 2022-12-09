@@ -30,7 +30,7 @@ public class UserDto {
 	/**
 	 * Metodo constructor con un parametro.
 	 * 
-	 * @param password define la contraseña del usuario.
+	 * @param password define el password del usuario.
 	 */
 	public UserDto(String password) {
 		this.password = password;
@@ -42,7 +42,7 @@ public class UserDto {
 	 * @param name define el nombre del usuario.
 	 * @param userName define el userName del usuario.
 	 * @param email define el email del usuario.
-	 * @param password define la contraseña del usuario.
+	 * @param password define el password del usuario.
 	 * @param picture define el vinculo a la imagen del usuario.
 	 * @param status define el estado del usuario a activado o desactivado.
 	 */
