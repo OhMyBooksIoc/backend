@@ -19,6 +19,12 @@ import es.ohmybooks.www.security.service.UserService;
 import es.ohmybooks.www.service.BookService;
 import es.ohmybooks.www.service.UserBookService;
 
+/**
+ * Controller de Stats
+ * 
+ * @author Group3
+ * @version 1.0
+ */
 @RestController
 @RequestMapping("stats")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET })
@@ -35,6 +41,14 @@ public class StatsController {
   @Autowired
   JwtProvider jwtProvider;
 
+  /**
+   * Endpoint que devuelve las estadisticas privadas visibles en el perfil de cada
+   * usuario.
+   * 
+   * @param authorization define el token del usuario logueado.
+   * @return un json con Total de libros, Total de libros leidos, Total de paginas
+   *         leidas, Total de libros para intercambio.
+   */
   @GetMapping("/private")
   public ResponseEntity<?> getPrivateStats(@RequestHeader String authorization) {
     String token = authorization.substring(7);
@@ -51,6 +65,14 @@ public class StatsController {
     return new ResponseEntity<>(json, HttpStatus.OK);
   }
 
+  /**
+   * Endpoint que devuelve las estadisticas visibles en la pagina home.
+   * 
+   * @return un json con Total de libros en la APP, Total de libros leidos en la
+   *         APP, Total de libros para intercambio en la APP, Total de usuarios
+   *         registrados en la APP, Usuario con más libros leidos, Usuario con más
+   *         paginas leidas
+   */
   @GetMapping("/public")
   public ResponseEntity<?> getPublicStats() {
     JsonObject json = new JsonObject();
@@ -74,7 +96,7 @@ public class StatsController {
       User userMorePagesRead = userService.findById(userIdMorePagesRead).get();
       json.put("userWithMorePagesRead", userMorePagesRead.getUserName());
     }
-    
+
     return new ResponseEntity<>(json, HttpStatus.OK);
   }
 }

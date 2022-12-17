@@ -27,6 +27,12 @@ import es.ohmybooks.www.service.UserBookService;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Controller de Login y Registro
+ * 
+ * @author Group3
+ * @version 1.0
+ */
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = "*", methods = { RequestMethod.POST})
@@ -50,6 +56,13 @@ public class AuthController {
 	@Autowired
 	JwtProvider jwtProvider;
 
+	/**
+	 * Endpoint que registra a un nuevo user encriptando el password.
+	 * 
+	 * @param newUser define un objeto newUser con los atributos necesarios para crear un nuevo usuario.
+	 * @param bindingResult validacion del objeto.
+	 * @return mensaje de error o confirmacion.
+	 */
 	@PostMapping("/newUser")
 	public ResponseEntity<?> newUser(@RequestBody NewUser newUser, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
@@ -75,13 +88,20 @@ public class AuthController {
 			roles.add(roleService.getByRoleName(RoleName.ROLE_AUTHOR).get());
 		}
 		user.setRoles(roles);
-		user.setStatus(true); //default is enabled(true)
+		user.setStatus(true); // valor por defecto es true (activado)
 
 		userService.save(user);
 
 		return new ResponseEntity<>(new Message("Created user"), HttpStatus.CREATED);
 	}
 
+	/**
+	 * Endpoint de login de usuario.
+	 * 
+	 * @param login define un objeto login que contiene los atributos para validar el acceso del usuario.
+	 * @param bindingResult validacion del objeto.
+	 * @return mensaje de error en el login o un objeto jwtDto con los datos de token del usuario.
+	 */
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody Login login, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {

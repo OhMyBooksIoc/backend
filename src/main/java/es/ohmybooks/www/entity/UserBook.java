@@ -9,6 +9,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import es.ohmybooks.www.security.entity.User;
 
+/**
+ * Clase que define los atributos de cada UserBook
+ * 
+ * @author Group3
+ * @version 1.0
+ */
 @Entity
 @Table(name = "userBook")
 @IdClass(UserBookId.class)
@@ -46,7 +52,9 @@ public class UserBook {
   @Column(name = "created_at")
   private Date createdAt = new Date();
 
-  
+  /**
+   * Metodo constructor por defecto
+   */
   public UserBook() {
   }
 
@@ -55,6 +63,17 @@ public class UserBook {
     this.book = book;
   }
 
+  /**
+   * Metodo constructor con 7 parametros
+   * 
+   * @param userId identificador del usuario en la app
+   * @param bookId identificador del libro en la app
+   * @param comment comentario sobre el libro
+   * @param readd define si el libro esta leido o pendiente
+   * @param hide define si el libro esta oculto o visible
+   * @param status define si el libro esta activado o desactivado
+   * @param createdAt fecha en que se crea la relación entre usuario y libro
+   */
   public UserBook(int userId, int bookId, String comment, boolean readd, boolean hide, boolean status, Date createdAt) {
     this.userId = userId;
     this.bookId = bookId;

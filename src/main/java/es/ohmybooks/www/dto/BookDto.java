@@ -4,6 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.validation.constraints.*;
 
+/**
+ * Clase que define un objeto BookDto
+ * 
+ * @author Group3
+ * @version 1.0
+ */
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class BookDto {
 
@@ -16,9 +22,23 @@ public class BookDto {
   private int pages;
   private String cover;
 
+  /**
+   * Metodo constructor por defecto
+   */
   public BookDto() {
   }
 
+  /**
+   * Metodo constructor con todos los parametros
+   * 
+   * @param name titulo del libro
+   * @param author autor del libro
+   * @param genre género del libro
+   * @param saga saga del libro
+   * @param year año de primera edición del libro
+   * @param pages paginas del libro
+   * @param cover portada del libro
+   */
   public BookDto(String name, String author, String genre, String saga, int year, int pages, String cover) {
     this.name = name;
     this.author = author;

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 import es.ohmybooks.www.security.entity.Role;
 import es.ohmybooks.www.security.enums.RoleName;
 
+/**
+ * Contiene los metodos CRUD relacionados con Role
+ */
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer> {
 

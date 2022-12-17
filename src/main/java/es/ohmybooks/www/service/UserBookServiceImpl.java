@@ -46,6 +46,15 @@ public class UserBookServiceImpl implements UserBookService {
     return userBookRepository.findByUserId(userId);
   }
 
+    /**
+   * Metodo que devuelve una lista de libros asociados a un usuario y segun su
+   * atributo hide.
+   * 
+   * @param userId define el id del usuario del cual se quiere obtener la lista de
+   *               libros.
+   * @param hide   define si un libro esta oculto o visible
+   * @return una lista de libros.
+   */
   @Override
   public List<UserBook> findByUserIdAndHide(int userId, boolean hide) {
     return userBookRepository.findByUserIdAndHide(userId, hide);

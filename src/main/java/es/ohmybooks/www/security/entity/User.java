@@ -12,6 +12,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import es.ohmybooks.www.entity.UserBook;
 
+/**
+ * Clase que define los atributos de cada user
+ * 
+ * @author Group3
+ * @version 1.0
+ */
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
@@ -47,8 +53,8 @@ public class User implements Serializable {
 	@Column(name = "created_at")
 	private Date createdAt = new Date();
 
-	// A user can have many roles and a role can belong to multiple users
-	// Intermediate table that will have user_id and role_id
+	// Un user puede tener muchos roles y un role puede pertenecer a multiples user
+	// Tabla intermedia que tendrá user_id and role_id
 	@ManyToMany(cascade = { CascadeType.MERGE })
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
@@ -56,14 +62,31 @@ public class User implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	private Set<UserBook> books = new HashSet<>();
 
+	/**
+	 * Metodo constructor por defecto
+	 */
 	public User() {
 	}
 
+	/**
+	 * Metodo constructor con 2 parametros.
+	 * 
+	 * @param email define el email del usuario.
+	 * @param password define el password del usuario.
+	 */
 	public User(String email, String password) {
 		this.email = email;
 		this.password = password;
 	}
 
+	/**
+	 * Metodo constructor con 4 parametros.
+	 * 
+	 * @param name define el nombre del usuario.
+	 * @param userName define el userName del usuario.
+	 * @param email define el email del usuario.
+	 * @param password define el password del usuario.
+	 */
 	public User(String name, String userName, String email, String password) {
 		this.name = name;
 		this.userName = userName;
@@ -71,6 +94,16 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
+	/**
+	 * Metodo constructor con 6 parametros
+	 * 
+	 * @param name define el nombre del usuario.
+	 * @param userName define el userName del usuario.
+	 * @param email define el email del usuario.
+	 * @param password define el password del usuario.
+	 * @param picture define el vinculo a la imagen del usuario.
+	 * @param status define el estado del usuario a activado o desactivado.
+	 */
 	public User(String name, String userName, String email, String password, String picture, boolean status) {
 		this.name = name;
 		this.userName = userName;
@@ -80,6 +113,19 @@ public class User implements Serializable {
 		this.status = status;
 	}
 
+	/**
+	 * Metodo constructor con todos los parametros.
+	 * 
+	 * @param id identificador unico del usuario en la app.
+	 * @param name define el nombre del usuario.
+	 * @param userName define el userName del usuario.
+	 * @param email define el email del usuario.
+	 * @param password define el password del usuario.
+	 * @param picture define el vinculo a la imagen del usuario.
+	 * @param status define el estado del usuario a activado o desactivado.
+	 * @param roles define los roles asociados al usuario.
+	 * @param books define los libros vinculados al usuario.
+	 */
 	public User(int id, String name, String userName, String email, String password, String picture, boolean status,
 			Set<Role> roles, Set<UserBook> books) {
 		this.id = id;

@@ -4,6 +4,12 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
+/**
+ * Clase que define un objeto JwtDto
+ * 
+ * @author Group3
+ * @version 1.0
+ */
 public class JwtDto {
 
 	private String token;
@@ -11,6 +17,13 @@ public class JwtDto {
 	private String userName;
 	private Collection<? extends GrantedAuthority> authorities;
 
+	/**
+	 * Metodo constructor con 3 parametros
+	 * 
+	 * @param token define el token del usuario.
+	 * @param userName define el userName del usuario.
+	 * @param authorities define la autorizacion (roles) del usuario.
+	 */
 	public JwtDto(String token, String userName, Collection<? extends GrantedAuthority> authorities) {
 		this.token = token;
 		this.userName = userName;

@@ -10,23 +10,31 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-// TODO traducir al inglés
 /**
- * Clase que genera el token y valida que este bien fornamdo y no este expirado
+ * Clase que genera el token y valida que este bien formado y no este expirado
+ * 
+ * @author Group3
+ * @version 1.0
  */
 @Component
 public class JwtProvider {
 
-	// Implementamos un logger para ver cual metodo da error en caso de falla
+	// Implementa un logger para ver que metodo da error en caso de fallo
 	private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
-	// Valores que tenemos en el aplicattion.properties
+	// Valores que hay en el application.properties
 	@Value("${jwt.secret}")
 	private String secret;
 
 	@Value("${jwt.expiration}")
 	private int expiration;
 
+	/**
+	 * Metodo que genera el token del user
+	 * 
+	 * @param authentication
+	 * @return token
+	 */
 	public String generateToken(Authentication authentication) {
 		UserMain userMain = (UserMain) authentication.getPrincipal();
 		return Jwts.builder().setSubject(userMain.getUsername())
@@ -36,11 +44,23 @@ public class JwtProvider {
 				.compact();
 	}
 
-	// subject --> Nombre del usuario
+	/**
+	 * Metodo que recupera el nombre del usuario a través del token
+	 * 
+	 * @param token
+	 * @return userName
+	 */
 	public String getUserNameFromToken(String token) {
-		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
+		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject(); // subject --> Nombre del user
 	}
 
+	/**
+	 * Metodo que valida el token del user
+	 * 
+	 * @param token
+	 * @return true si el token és correcto y false si el token está mal formado, no
+	 *         está soportado, ha expirado, está vacío o hay un fallo con la firma
+	 */
 	public Boolean validateToken(String token) {
 		try {
 			Jwts.parser().setSigningKey(secret).parseClaimsJws(token);

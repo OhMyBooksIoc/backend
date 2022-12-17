@@ -4,6 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.validation.constraints.*;
 
+/**
+ * Clase que define un objeto NewUser
+ * 
+ * @author Group3
+ * @version 1.0
+ */
 public class NewUser {
 
 	@NotBlank
@@ -14,8 +20,8 @@ public class NewUser {
 	private String email;
 	@NotBlank
 	private String password;
-	// By default it creates a normal user
-	// If you want an admin or author, you need to pass this field to roles
+	// Por defecto se crea un role user
+	// Si se quiere un admin o author, es necesario pasar este campo en role
 	private Set<String> roles = new HashSet<>();
 
 	public String getName() {

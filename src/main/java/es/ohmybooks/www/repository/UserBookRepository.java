@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import es.ohmybooks.www.entity.UserBook;
 
+/**
+ * Contiene los metodos CRUD relacionados con UserBook
+ */
 @Repository
 public interface UserBookRepository extends JpaRepository<UserBook, Integer> {
 
@@ -15,14 +18,10 @@ public interface UserBookRepository extends JpaRepository<UserBook, Integer> {
   List<UserBook> findByUserIdAndHide(int userId, boolean hide);
 
   List<UserBook> findByUserIdAndReadd(int userId, boolean readd);
-  
+
   List<UserBook> findByBookId(int bookId);
 
   boolean deleteByUserId(int userId);
-
-  boolean existsByUserId(int userId);
-
-  boolean existsByBookId(int bookId);
 
   UserBook findByUserIdAndBookId(int userId, int bookId);
 

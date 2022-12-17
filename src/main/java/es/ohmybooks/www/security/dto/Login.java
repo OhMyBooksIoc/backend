@@ -2,6 +2,12 @@ package es.ohmybooks.www.security.dto;
 
 import javax.validation.constraints.*;
 
+/**
+ * Clase que define un objeto Login
+ * 
+ * @author Group3
+ * @version 1.0
+ */
 public class Login {
 
 	@NotBlank

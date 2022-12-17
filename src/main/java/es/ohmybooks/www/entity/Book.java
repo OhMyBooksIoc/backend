@@ -10,6 +10,12 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * Clase que define los atributos de cada book
+ * 
+ * @author Group3
+ * @version 1.0
+ */
 @Entity
 @Table(name = "book")
 public class Book implements Serializable {
@@ -49,21 +55,21 @@ public class Book implements Serializable {
   private Set<UserBook> users = new HashSet<>();
 
   /**
-   * book constructor without parameters
+   * Metodo constructor por defecto
    */
   public Book() {
   }
 
   /**
-   * book constructor with all parameters
+   * Metodo constructor con 7 parametros
    * 
-   * @param name
-   * @param author
-   * @param genre
-   * @param saga
-   * @param year
-   * @param pages
-   * @param cover
+   * @param name titulo del libro
+   * @param author autor del libro
+   * @param genre género del libro
+   * @param saga saga del libro
+   * @param year año de primera edición del libro
+   * @param pages paginas del libro
+   * @param cover portada del libro
    */
   public Book(String name, String author, String genre, String saga, int year, int pages, String cover) {
     this.name = name;
@@ -75,6 +81,19 @@ public class Book implements Serializable {
     this.cover = cover;
   }
 
+  /**
+   * Metodo constructor con todos los parametros.
+   * 
+   * @param id identificador unico del libro en la app
+   * @param name titulo del libro
+   * @param author autor del libro
+   * @param genre género del libro
+   * @param saga saga del libro
+   * @param year año de primera edición del libro
+   * @param pages paginas del libro
+   * @param cover portada del libro
+   * @param users usuarios que tienen ese libro
+   */
   public Book(int id, String name, String author, String genre, String saga, int year, int pages, String cover,
       Set<UserBook> users) {
     this.id = id;

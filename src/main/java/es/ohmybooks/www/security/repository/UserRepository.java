@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import es.ohmybooks.www.security.entity.User;
 
+/**
+ * Contiene los metodos CRUD relacionados con User
+ */
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 

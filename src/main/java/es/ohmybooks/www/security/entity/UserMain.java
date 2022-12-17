@@ -9,8 +9,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Generate security
- * Implements the privileges of each user
+ * Clase que genera la seguridad
+ * Implementa los privilegios de cada user
+ * 
+ * @author Group3
+ * @version 1.0
  */
 public class UserMain implements UserDetails {
 
@@ -18,9 +21,18 @@ public class UserMain implements UserDetails {
 	private String userName;
 	private String email;
 	private String password;
-	// Variable that gives us the authorization (not to be confused with authentication)
+	// Variable que nos da la autorización (no confundir con autenticación)
 	private Collection<? extends GrantedAuthority> authorities;
 
+	/**
+	 * Metodo constructor con 5 parametros que extiende de GrantedAuthority
+	 * 
+	 * @param name define el nombre del usuario.
+	 * @param userName define el userName del usuario.
+	 * @param email define el email del usuario.
+	 * @param password define la constraseña del usuario.
+	 * @param authorities define la autorizacion (roles) del usuario.
+	 */
 	public UserMain(String name, String userName, String email, String password,
 			Collection<? extends GrantedAuthority> authorities) {
 		this.name = name;
@@ -30,9 +42,15 @@ public class UserMain implements UserDetails {
 		this.authorities = authorities;
 	}
 
-	// Assign privileges (authorization)
+	/**
+	 * Metodo que assigna los privilegios (autorización).
+	 * 
+	 * @param user define el objeto user con los atributos necesarios para convertir 
+	 * los roles de user a GrantedAuthority class.
+	 * @return user
+	 */
 	public static UserMain build(User user) {
-		// Convert the Role class to the GrantedAuthority class
+		// Convierte el role del user a GrantedAuthority class
 		List<GrantedAuthority> authorities = user.getRoles()
 				.stream()
 				.map(role -> new SimpleGrantedAuthority(role.getRoleName().name()))

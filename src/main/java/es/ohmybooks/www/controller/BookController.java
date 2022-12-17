@@ -22,6 +22,12 @@ import es.ohmybooks.www.entity.Book;
 import es.ohmybooks.www.security.service.UserService;
 import es.ohmybooks.www.service.BookService;
 
+/**
+ * Controller de Books
+ * 
+ * @author Group3
+ * @version 1.0
+ */
 @RestController // @Controller + @ResponseBody
 @RequestMapping("book")
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE })
@@ -34,9 +40,9 @@ public class BookController {
   UserService userService;
 
   /**
-   * endpoint that returns all books in the database
+   * Endpoint que devuelve todos los libros de la app.
    * 
-   * @return a json with all books and all their fields
+   * @return un json con todos los libros y sus atributos.
    */
   @GetMapping("list")
   public ResponseEntity<?> listBooks() {
@@ -44,11 +50,10 @@ public class BookController {
   }
 
   /**
-   * endpoint that returns the book with the id equal to the value passed in the
-   * parameter
+   * Endpoint que devuelve el libro con el id igual al valor pasado por parametro.
    * 
-   * @param id
-   * @return a error message or a json with the searched book and all its fields
+   * @param id define el id del libro que se quiere obtener.
+   * @return un mensaje de error o un json con el libro buscado y todos sus atributos.
    */
   @GetMapping("id/{id}")
   public ResponseEntity<?> findBookById(@PathVariable("id") int id) {
@@ -60,11 +65,10 @@ public class BookController {
   }
 
   /**
-   * endpoint that returns the book with the name equal to the value passed in
-   * the parameter
+   * Endpoint que devuelve el libro con el nombre igual al valor pasado por parametro.
    * 
-   * @param name
-   * @return a error message or a json with the searched book and all its fields
+   * @param name define el titulo del libro que se quiere obtener.
+   * @return un mensaje de error o un json con el libro buscado y todos sus atributos.
    */
   @GetMapping("name/{name}")
   public ResponseEntity<?> bookByName(@PathVariable("name") String name) {
@@ -76,11 +80,11 @@ public class BookController {
   }
 
   /**
-   * endpoint that checks if the book passed by parameter exists in the database,
-   * if it exists it returns an error message and if it doesn't add it
+   * Endpoint que comprueba si el libro pasado por parametro existe en la app y, si no, lo añade.
    * 
-   * @param bookDto
-   * @return a confirmation or error message
+   * @param bookDto define el objeto bookDto que contiene los atributos para crear un nuevo libro.
+   * @return si existe el libro devuelve un mensaje de error y, si no existe, devuelve el libro añadido 
+   * con todos sus atributos.
    */
   @PostMapping("add")
   public ResponseEntity<?> addBook(@RequestBody BookDto bookDto) {
@@ -98,22 +102,18 @@ public class BookController {
   }
 
   /**
-   * endpoint that checks if the book passed by parameter exists in the database,
-   * if it exists it returns an error message and if it doesn't add it
+   * Endpoint que modifica el valor de los traibutos de un libro.
+   * Autorizacion solo para Role_Admin.
    * 
-   * @param bookDto
-   * @return a confirmation or error message
+   * @param idBook define el id del libro que se va a modificar.
+   * @param bookDto define el objeto bookDto que contiene los atributos para modificar un libro existente.
+   * @return un mensaje de error o de confirmacion.
    */
   @PreAuthorize("hasRole('ADMIN')")
   @PutMapping("update/{idBook}")
   public ResponseEntity<?> updateBook(@PathVariable("idBook") int idBook, @RequestBody BookDto bookDto) {
     if (!bookService.existsById(idBook)) {
       return new ResponseEntity<>(new Message("The book doesn't exist"), HttpStatus.NOT_FOUND);
-    /** TODO actualizar comprobando nombre y autor pero permitiendo modificar el resto si se estos campos no se modifican
-    } else if (bookService.existsByName(bookDto.getName()) && bookService.existsByAuthor(bookDto.getAuthor())) {
-      return new ResponseEntity<>(new Message("There is already a book with that name and author"),
-          HttpStatus.BAD_REQUEST);
-    */
     } else if (!StringUtils.hasLength(bookDto.getName())) {
       return new ResponseEntity<>(new Message("Name is required"), HttpStatus.BAD_REQUEST);
     } else {
@@ -131,11 +131,10 @@ public class BookController {
   }
 
   /**
-   * endpoint that removes the book with the id equal to the value passed in the
-   * parameter
+   * Endpoint que elimina el libro con id igual al valor pasado por parametro.
    * 
-   * @param idBook
-   * @return a confirmation or error message
+   * @param idBook define el id del libro que se quiere eliminar.
+   * @return un mensaje de error o de confirmacion.
    */
   @PreAuthorize("hasRole('ADMIN')")
   @DeleteMapping("delete/{idBook}")
