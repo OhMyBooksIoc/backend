@@ -1,6 +1,6 @@
 ## Descripción
 
-* API de la app OhMyBooks desarrollado en lenguaje Java haciendo uso de Spring, Hibernate y JPA.
+* API de la app OhMyBooks desarrollado en lenguaje Java haciendo uso de Spring, Hibernate y JPA
 
 ## Autores
 	David Martín
